@@ -19,7 +19,6 @@ const AddEditCities = ()=>{
                         <label htmlFor="">أسم المنطقة</label>
                         <input type="text" />
                     </div>
-                    ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCWj1fPUPxsgZEyVht8fqhtR4xreFP8H7gu6aDsfQIogENmlM+tIXzMHkB5wxG/S0M7h1Qq5ZiNB/936iIgtmiM1Bs8FW8JCD7KhmW/5/LVgqqbhuT+Ta3M4rpUcCb+5yktJx488WxAoWZP0PoW8TxISPo70k0sM8tnE2mE7/Cf40vUSXc4ONf/zqDxVQaHk9UQegZE9v/3Py0kyWtgp83CG13JiFiqIBMxE6srAMGPCCeVc8TOcpt59Dn8s5zwSY6Uyf25fjUQHNUiv4BTIgQSuhavltQlQcgTjWJgNsoMZqjFVrHfxSIcMnn8QPz9WjRhri47UwuqFZ3Lbqn7ZFEDL7tr8a4pOaeo/QDIEyrCZpOcNCWWd9hCPbbA8MeabNt/3MRq30VPEsoUfF5/gXCijET6jT4SdJZTXF+11Jvb7+CscAnd92knTVHotB7HVVY2NIzV0VytNtNjG9aXKJalcvPBBsGL8A+OcjFc2t2Jr/DdUspKN8656rZGQU5AFUnTcXAo8QUMUx7LezhyAgNp7Syluv/1aTRdwHb7wvcRz8qhGY8zegJULWbMVgt9NHZ5boA0oHgXn4XCkVXpyjZnsjMwI3Ls34glHutv18QXA+F2Grcm8LfKF/4ujWxLjkWgRY9t8z2yUhIFAUT/+o/GRcSRUKbXtNGUBoJ/CfK8Hw== your_email@example.com
 
                 </div>
             </div>
