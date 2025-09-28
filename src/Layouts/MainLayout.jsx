@@ -41,7 +41,7 @@ const MainLayout = () => {
             {
               key: '3',
               icon: <UploadOutlined />,
-              label: <Link to="/">المخزون</Link>,
+              label: <Link to="/stock">المخزون</Link>,
             },
             {
               key: '4',
@@ -51,7 +51,7 @@ const MainLayout = () => {
             {
               key: '5',
               icon: <UploadOutlined />,
-              label: <Link to="/">المشتريات</Link>,
+              label: <Link to="/purch">المشتريات</Link>,
             },
             {
               key: '6',

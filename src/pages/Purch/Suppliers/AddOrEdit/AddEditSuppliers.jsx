@@ -4,12 +4,12 @@ import Comp2 from "./Components/Comp2";
 import { SaveOutlined } from "@ant-design/icons";
 import Comp3 from "./Components/Comp3";
 
-const AddEditCustomers = ()=>{
+const AddEditSuppliers = ()=>{
     return(
         <>
             <div className="flex flex-wrap justify-center">
                 <div className="w-full flex justify-between border-b pb-4 mb-4">
-                    <h3 className="text-lg font-bold">إضافة عميل</h3>
+                    <h3 className="text-lg font-bold">إضافة مورد</h3>
                     <Button type="primary" icon={<SaveOutlined />}>حفظ</Button>
                 </div>
 
@@ -27,4 +27,4 @@ const AddEditCustomers = ()=>{
     )
 }
 
-export default AddEditCustomers;
+export default AddEditSuppliers;

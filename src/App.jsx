@@ -62,6 +62,28 @@ import AddEditSalesInvoice from "./pages/Sales/SalesInvoice/AddOrEdit/AddEditSal
 import SalesReturnInvoice from "./pages/Sales/SalesReturnInvoice/SalesReturnInvoice.jsx"
 import AddEditSalesReturnInvoice from "./pages/Sales/SalesReturnInvoice/AddOrEdit/AddEditSalesReturnInvoice.jsx"
 import AddEditAccountCodes from "./pages/Acc/AccountsCodes/AddOrEdit/AddEditAccountCodes.jsx"
+import Purch from "./pages/Purch/Purch.jsx"
+import Suppliers from "./pages/Purch/Suppliers/Suppliers.jsx"
+import AddEditSuppliers from "./pages/Purch/Suppliers/AddOrEdit/AddEditSuppliers.jsx"
+import PurchInvoice from "./pages/Purch/PurchInvoice/PurchInvoice.jsx"
+import AddEditPurchInvoice from "./pages/Purch/PurchInvoice/AddOrEdit/AddEditPurchInvoice.jsx"
+import PurchReturnInvoice from "./pages/Purch/PurchReturnInvoice/PurchReturnInvoice.jsx"
+import AddEditPurchReturnInvoice from "./pages/Purch/PurchReturnInvoice/AddOrEdit/AddEditPurchReturnInvoice.jsx"
+import Units from "./pages/Stock/Units/Units.jsx"
+import AddEditUnits from "./pages/Stock/Units/AddOrEdit/AddEditUnits.jsx"
+import Stock from "./pages/Stock/Stock.jsx"
+import Colors from "./pages/Stock/Colors/Colors.jsx"
+import AddEditColors from "./pages/Stock/Colors/AddOrEdit/AddEditColors.jsx"
+import SizesGroup from "./pages/Stock/SizesGroup/SizesGroup.jsx"
+import AddEditSizesGroup from "./pages/Stock/SizesGroup/AddOrEdit/AddEditSizesGroup.jsx"
+import AddEditSizes from "./pages/Stock/Sizes/AddOrEdit/AddEditSizes.jsx"
+import AddEditCountryOfOrigin from "./pages/Stock/CountryOfOrigin/AddOrEdit/AddEditCountryOfOrigin.jsx"
+import Sizes from "./pages/Stock/Sizes/Sizes.jsx"
+import CountryOfOrigin from "./pages/Stock/CountryOfOrigin/CountryOfOrigin.jsx"
+import Stores from "./pages/Stock/Stores/Stores.jsx"
+import AddEditStores from "./pages/Stock/Stores/AddOrEdit/AddEditStores.jsx"
+import Products from "./pages/Stock/Products/Products.jsx"
+import AddEditProducts from "./pages/Stock/Products/AddOrEdit/AddEditProducts.jsx"
 function App() {
   
   return (
@@ -156,6 +178,55 @@ function App() {
               <Route path="add" element={<AddEditInstallmentsData />} />
             </Route>
           </Route>
+          
+          <Route path="stock">
+            <Route index element={<Stock />} />
+            <Route path="units">
+              <Route index element={<Units />} />
+              <Route path="add" element={<AddEditUnits />} />
+            </Route>
+            <Route path="colors">
+              <Route index element={<Colors />} />
+              <Route path="add" element={<AddEditColors />} />
+            </Route>
+            <Route path="sizes_group">
+              <Route index element={<SizesGroup />} />
+              <Route path="add" element={<AddEditSizesGroup />} />
+            </Route>
+            <Route path="sizes">
+              <Route index element={<Sizes />} />
+              <Route path="add" element={<AddEditSizes />} />
+            </Route>
+            <Route path="country_of_origin">
+              <Route index element={<CountryOfOrigin />} />
+              <Route path="add" element={<AddEditCountryOfOrigin />} />
+            </Route>
+            <Route path="stores">
+              <Route index element={<Stores />} />
+              <Route path="add" element={<AddEditStores />} />
+            </Route>
+            <Route path="products">
+              <Route index element={<Products />} />
+              <Route path="add" element={<AddEditProducts />} />
+            </Route>
+
+          </Route>
+          <Route path="purch">
+            <Route index element={<Purch />} />
+            <Route path="suppliers">
+              <Route index element={<Suppliers />} />
+              <Route path="add" element={<AddEditSuppliers />} />
+            </Route>
+            <Route path="purch_invoice">
+              <Route index element={<PurchInvoice />} />
+              <Route path="add" element={<AddEditPurchInvoice />} />
+            </Route>
+            <Route path="purch_return_invoice">
+              <Route index element={<PurchReturnInvoice />} />
+              <Route path="add" element={<AddEditPurchReturnInvoice />} />
+            </Route>
+          </Route>
+          
           <Route path="sales">
             <Route index element={<Sales />} />
             <Route path="cities">
