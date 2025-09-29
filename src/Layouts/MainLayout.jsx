@@ -19,7 +19,7 @@ const MainLayout = () => {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
   return (
-    <Layout className='h-full'>
+    <Layout className='h-full min-h-screen'>
       <Sider trigger={null} collapsible collapsed={collapsed} theme='light'>
         <div className="demo-logo-vertical" />
         <Menu

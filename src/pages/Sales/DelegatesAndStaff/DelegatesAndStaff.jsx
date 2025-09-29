@@ -8,13 +8,13 @@ import { useEffect } from "react";
 const columns = [
   {
     title: 'كود البائع',
-    dataIndex: 'TaxID',
-    key: 'name',
+    dataIndex: 'SellerID',
+    key: 'SellerID',
   },
   {
     title: 'اسم البائع',
-    dataIndex: 'TaxName',
-    key: 'age',
+    dataIndex: 'SellerName',
+    key: 'SellerName',
   },
 ];
 
@@ -22,7 +22,7 @@ const columns = [
 const DelegatesAndStaff = ()=>{
   let {getData, resultGet, isLoadingGet, errorMsgGet} = useGet();
   useEffect(()=>{
-    getData("Fin/Taxs")
+    getData("Sales/Sellers")
   }, [])
 
     return(

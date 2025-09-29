@@ -8,13 +8,13 @@ import { useEffect } from "react";
 const columns = [
   {
     title: 'كود اللون',
-    dataIndex: 'TaxID',
-    key: 'name',
+    dataIndex: 'ColorID',
+    key: 'ColorID',
   },
   {
     title: 'اسم اللون',
-    dataIndex: 'TaxName',
-    key: 'age',
+    dataIndex: 'ColorName',
+    key: 'ColorName',
   },
 ];
 
@@ -22,7 +22,7 @@ const columns = [
 const Colors = ()=>{
   let {getData, resultGet, isLoadingGet, errorMsgGet} = useGet();
   useEffect(()=>{
-    getData("Fin/Taxs")
+    getData("Stock/Colors")
   }, [])
 
     return(

@@ -8,53 +8,53 @@ import { useEffect } from "react";
 const columns = [
   {
     title: 'رقم الصنف',
-    dataIndex: 'CurrID',
+    dataIndex: 'ProductID',
     key: 'name',
   },
   {
     title: 'إسم الصنف',
-    dataIndex: 'CurrName',
-    key: 'age',
+    dataIndex: 'Productname',
+    key: 'Productname',
   },
   {
     title: 'Product Name',
-    dataIndex: 'CurrRate',
-    key: 'age',
+    dataIndex: 'ProdEngName',
+    key: 'ProdEngName',
   },
   {
-    title: 'الكود المرجعي',
-    dataIndex: 'CurrRate',
-    key: 'age',
+    title: 'الكود المرجعي', 
+    dataIndex: 'CurrRate', // Need Change
+    key: 'age', // Need Change
   },
   {
     title: 'الوحدة',
-    dataIndex: 'CurrRate',
-    key: 'age',
+    dataIndex: 'MainUnitName',
+    key: 'MainUnitName',
   },
   {
     title: 'التصنيف',
-    dataIndex: 'CurrRate',
-    key: 'age',
+    dataIndex: 'CategoryName',
+    key: 'CategoryName',
   },
   {
     title: 'المنشأ',
-    dataIndex: 'CurrRate',
-    key: 'age',
+    dataIndex: 'CountryName',
+    key: 'CountryName',
   },
   {
     title: 'الماركة',
-    dataIndex: 'CurrRate',
-    key: 'age',
+    dataIndex: 'Marka',
+    key: 'Marka',
   },
   {
     title: 'الموديل',
-    dataIndex: 'CurrRate',
-    key: 'age',
+    dataIndex: 'Modale',
+    key: 'Modale',
   },
   {
     title: 'الوصف',
-    dataIndex: 'CurrRate',
-    key: 'age',
+    dataIndex: 'CurrRate', // Need Change
+    key: 'age', // Need Change
   },
 ];
 
@@ -62,7 +62,7 @@ const columns = [
 const Products = ()=>{
   let {getData, resultGet, isLoadingGet, errorMsgGet} = useGet();
   useEffect(()=>{
-    getData("Fin/Currs")
+    getData("Stock/Products")
   }, [])
     return(
         <>

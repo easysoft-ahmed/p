@@ -8,33 +8,33 @@ import { useEffect } from "react";
 const columns = [
   {
     title: 'رقم الفاتورة',
-    dataIndex: 'TaxID',
-    key: 'name',
+    dataIndex: 'DocID',
+    key: 'DocID',
   },
   {
     title: 'اسم الجهة',
-    dataIndex: 'TaxName',
-    key: 'age',
+    dataIndex: 'VendorName',
+    key: 'VendorName',
   },
   {
-    title: 'الرقم الدفتري',
-    dataIndex: 'TaxName',
-    key: 'age',
+    title: 'الرقم الدفتري', 
+    dataIndex: 'TaxName', // Need Change
+    key: 'age', // Need Change
   },
   {
     title: 'تاريخ الفاتورة',
-    dataIndex: 'TaxName',
-    key: 'age',
+    dataIndex: 'DocDate',
+    key: 'DocDate',
   },
   {
     title: 'صافي القيمة',
-    dataIndex: 'TaxName',
-    key: 'age',
+    dataIndex: 'NetTotal',
+    key: 'NetTotal',
   },
   {
     title: 'ملاحظات',
-    dataIndex: 'TaxName',
-    key: 'age',
+    dataIndex: 'Notes',
+    key: 'Notes',
   },
 ];
 
@@ -42,7 +42,7 @@ const columns = [
 const PurchInvoice = ()=>{
   let {getData, resultGet, isLoadingGet, errorMsgGet} = useGet();
   useEffect(()=>{
-    getData("Fin/Taxs")
+    getData("Purch")
   }, [])
 
     return(
