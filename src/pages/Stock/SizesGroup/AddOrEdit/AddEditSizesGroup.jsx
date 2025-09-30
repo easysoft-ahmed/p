@@ -1,7 +1,17 @@
 import { SaveOutlined } from "@ant-design/icons";
 import { Button } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+import { edit_size_group } from "./stateSizeGroup";
 
 const AddEditSizesGroup = ()=>{
+    let myData = useSelector(state => state.size_group.value);
+    let dispatch = useDispatch();
+    let changeValue = (event)=>{
+        let {id, value} = event.target;
+        dispatch(edit_size_group({[id]: value}))
+    }
+
+    
     return(
         <>
             <div className="flex flex-wrap justify-center">
@@ -13,11 +23,11 @@ const AddEditSizesGroup = ()=>{
                 <div className="flex flex-wrap w-full sm:w-8/12 md:w-6/12 lg:w-4/12">
                     <div className="input_label_basic w-4/12">
                         <label htmlFor="">كود المجموعة</label>
-                        <input type="text" />
+                        <input type="text" id="" value={myData} onChange={event => changeValue(event)}/>
                     </div>
                     <div className="input_label_basic ps-2 w-8/12">
                         <label htmlFor="">أسم المجموعة</label>
-                        <input type="text" />
+                        <input type="text" id="" value={myData} onChange={event => changeValue(event)}/>
                     </div>
 
                 </div>

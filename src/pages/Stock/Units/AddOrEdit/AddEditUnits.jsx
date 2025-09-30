@@ -1,7 +1,15 @@
 import { SaveOutlined } from "@ant-design/icons";
 import { Button } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+import { edit_unit } from "./stateUnit";
 
 const AddEditUnits = ()=>{
+    let myData = useSelector(state => state.unit.value);
+    let dispatch = useDispatch();
+    let changeValue = (event)=>{
+        let {id, value} = event.target;
+        dispatch(edit_unit({[id]: value}))
+    }
     return(
         <>
             <div className="flex flex-wrap justify-center">
@@ -12,12 +20,12 @@ const AddEditUnits = ()=>{
 
                 <div className="flex flex-wrap w-full sm:w-8/12 md:w-6/12 lg:w-4/12">
                     <div className="input_label_basic w-4/12">
-                        <label htmlFor="">كود وحدة القياس</label>
-                        <input type="text" />
+                        <label htmlFor="UnitID">كود وحدة القياس</label>
+                        <input type="text" id="UnitID" onChange={event => changeValue(event)} value={myData?.UnitID}/>
                     </div>
                     <div className="input_label_basic ps-2 w-8/12">
-                        <label htmlFor="">أسم وحدة القياس</label>
-                        <input type="text" />
+                        <label htmlFor="UnitName">أسم وحدة القياس</label>
+                        <input type="text" id="UnitName" onChange={event => changeValue(event)} value={myData?.UnitName}/>
                     </div>
 
                 </div>
