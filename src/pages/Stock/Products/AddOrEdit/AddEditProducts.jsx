@@ -8,8 +8,46 @@ import Comp5 from "./components/Comp5";
 import Comp6 from "./components/Comp6";
 import Comp7 from "./components/Comp7";
 import Comp8 from "./components/Comp8";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+import useGet from "../../../../hooks/useGet";
+import { useDispatch } from "react-redux";
+import { edit_product, update_product } from "./stateProduct";
+import { getManyDataForSelectInput } from "../../../../api";
 
 const AddEditProducts = ()=>{
+    let {id} = useParams();
+    let dispatch = useDispatch();
+    let {getDataAsync} = useGet();
+
+    let getDataProductEditPage = async ()=>{
+        try {
+            let data = await getDataAsync(`Stock/Products?ProductID=${id}`);
+            if(data.ResponseObject.length){
+                dispatch(update_product(data.ResponseObject[0]))
+            }
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+    
+    async function callGetManyDataForSelectInput(){
+        try {
+            let data = await getManyDataForSelectInput(["units", "stores", "countries", "categories", "currencies"], getDataAsync)
+            dispatch(edit_product({dataSelects: data}))
+        } catch (error) {
+            console.log("stop");
+        }
+    }
+
+    useEffect(()=>{
+        if(id){
+            getDataProductEditPage()
+        }
+
+        callGetManyDataForSelectInput()
+    }, [id])
     return(
         <>
             <div className="flex flex-wrap justify-center">

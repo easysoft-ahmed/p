@@ -8,12 +8,12 @@ import { useEffect } from "react";
 const columns = [
   {
     title: 'كود بلد المنشأ',
-    dataIndex: 'TaxID',
+    dataIndex: 'CountryID',
     key: 'name',
   },
   {
     title: 'اسم بلد المنشأ',
-    dataIndex: 'TaxName',
+    dataIndex: 'CountryName',
     key: 'age',
   },
 ];
@@ -22,7 +22,7 @@ const columns = [
 const CountryOfOrigin = ()=>{
   let {getData, resultGet, isLoadingGet, errorMsgGet} = useGet();
   useEffect(()=>{
-    getData("Fin/Taxs")
+    getData("Sys/Countries")
   }, [])
 
     return(

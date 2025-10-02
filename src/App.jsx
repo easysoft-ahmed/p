@@ -212,6 +212,7 @@ function App() {
               <Route path="products">
                 <Route index element={<Products />} />
                 <Route path="add" element={<AddEditProducts />} />
+                <Route path="edit/:id" element={<AddEditProducts />} />
               </Route>
 
             </Route>

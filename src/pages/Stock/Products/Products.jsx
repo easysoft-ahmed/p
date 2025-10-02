@@ -56,6 +56,13 @@ const columns = [
     dataIndex: 'CurrRate', // Need Change
     key: 'age', // Need Change
   },
+  {
+    title: 'إجراء',
+    render: (record) => (
+      <Link to={`edit/${record.ProductID}`}>Edit</Link>
+    ),
+  },
+
 ];
 
 
