@@ -75,7 +75,7 @@ const Comp3 = ()=>{
                                     <Select 
                                         className="w-full" 
                                         id={`${index}-UnitId`} 
-                                        value={ele?.CountryID} 
+                                        value={ele?.UnitId} 
                                         onChange={value => changeValue(value, "UnitId")}
                                     >
                                         <Select.Option value={0}>-- غير محدد --</Select.Option>    
