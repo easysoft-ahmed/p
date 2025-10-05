@@ -7,6 +7,12 @@ let dataEndPoint = {
     countries : {end_point: "Sys/Countries", name_en: "بلد المنشأ"},
     categories : {end_point: "Stock/Categories", name_en: "الاصناف"},
     currencies : {end_point: "Fin/Currs", name_en: "العملات"},
+    colors : {end_point: "Stock/Colors", name_en: "الالوان"},
+    meagures : {end_point: "Stock/Meagures", name_en: "المقاسات"},
+    acc_codes : {end_point: "Acc/Accs", name_en: "الحسابات"},
+    suppliers : {end_point: "Purch/Vendors", name_en: "الموردين"},
+    products : {end_point: "Stock/Products", name_en: "الاصناف"},
+    cost_centers : {end_point: "Acc/CostCenters", name_en: "مراكز التكلفة"},
     
 }
 

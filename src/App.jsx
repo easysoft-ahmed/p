@@ -188,10 +188,12 @@ function App() {
               <Route path="units">
                 <Route index element={<Units />} />
                 <Route path="add" element={<AddEditUnits />} />
+                <Route path="edit/:id" element={<AddEditUnits />} />
               </Route>
               <Route path="colors">
                 <Route index element={<Colors />} />
                 <Route path="add" element={<AddEditColors />} />
+                <Route path="edit/:id" element={<AddEditColors />} />
               </Route>
               <Route path="sizes_group">
                 <Route index element={<SizesGroup />} />
@@ -200,14 +202,17 @@ function App() {
               <Route path="sizes">
                 <Route index element={<Sizes />} />
                 <Route path="add" element={<AddEditSizes />} />
+                <Route path="edit/:id" element={<AddEditSizes />} />
               </Route>
               <Route path="country_of_origin">
                 <Route index element={<CountryOfOrigin />} />
                 <Route path="add" element={<AddEditCountryOfOrigin />} />
+                <Route path="edit/:id" element={<AddEditCountryOfOrigin />} />
               </Route>
               <Route path="stores">
                 <Route index element={<Stores />} />
                 <Route path="add" element={<AddEditStores />} />
+                <Route path="edit/:id" element={<AddEditStores />} />
               </Route>
               <Route path="products">
                 <Route index element={<Products />} />

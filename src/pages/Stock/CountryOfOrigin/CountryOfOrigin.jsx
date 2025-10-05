@@ -16,6 +16,14 @@ const columns = [
     dataIndex: 'CountryName',
     key: 'age',
   },
+  {
+    title: 'إجراء',
+    render: (record) => (
+      <Link to={`edit/${record.CountryID}`}>Edit</Link>
+    ),
+    key: 'CountryID',
+  },
+
 ];
 
 

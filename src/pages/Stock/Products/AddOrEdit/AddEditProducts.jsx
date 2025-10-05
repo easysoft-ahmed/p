@@ -34,7 +34,7 @@ const AddEditProducts = ()=>{
     
     async function callGetManyDataForSelectInput(){
         try {
-            let data = await getManyDataForSelectInput(["units", "stores", "countries", "categories", "currencies"], getDataAsync)
+            let data = await getManyDataForSelectInput(["products", "suppliers", "acc_codes", "units", "stores", "countries", "categories", "currencies", "colors", "meagures"], getDataAsync)
             dispatch(edit_product({dataSelects: data}))
         } catch (error) {
             console.log("stop");
@@ -44,6 +44,8 @@ const AddEditProducts = ()=>{
     useEffect(()=>{
         if(id){
             getDataProductEditPage()
+        }else{
+            dispatch(update_product({}))
         }
 
         callGetManyDataForSelectInput()

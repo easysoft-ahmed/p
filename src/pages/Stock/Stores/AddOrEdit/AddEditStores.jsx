@@ -1,15 +1,58 @@
 import { SaveOutlined } from "@ant-design/icons";
 import { Button, Select, Switch } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { edit_stock } from "./stateStock";
+import { edit_stock, update_stock } from "./stateStock";
+import useGet from "../../../../hooks/useGet";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { getManyDataForSelectInput } from "../../../../api";
 
 const AddEditStores = ()=>{
+    let {id} = useParams();
+    let {getDataAsync} = useGet();
+
     let myData = useSelector(state => state.stock.value);
     let dispatch = useDispatch();
-    let changeValue = (event)=>{
-        let {id, value} = event.target;
-        dispatch(edit_stock({[id]: value}))
+    let changeValue = (eventOrValue, prop)=>{
+        
+        if(prop){
+            dispatch(edit_stock({[prop]: eventOrValue}))
+        }else{
+            let {id, value} = eventOrValue.target;
+            dispatch(edit_stock({[id]: value}))
+        }
     }
+
+    let getDataEditPage = async ()=>{
+        try {
+            let data = await getDataAsync(`Stock/Stores?StoreID=${id}`);
+            if(data.ResponseObject.length){
+                dispatch(update_stock(data.ResponseObject[0]))
+            }
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+    async function callGetManyDataForSelectInput(){
+        try {
+            let data = await getManyDataForSelectInput(["cost_centers","acc_codes"], getDataAsync)
+            dispatch(edit_stock({dataSelects: data}))
+        } catch (error) {
+            console.log("stop");
+        }
+    }
+
+    useEffect(()=>{
+        if(id){
+            getDataEditPage()
+        }else{
+            dispatch(update_stock({}))
+        }
+        callGetManyDataForSelectInput()
+
+    }, [id])
+
     return(
         <>
             <div className="flex flex-wrap justify-center">
@@ -21,24 +64,24 @@ const AddEditStores = ()=>{
                 <div className="flex flex-wrap w-full sm:w-8/12 md:w-6/12 lg:w-4/12">
                     <div className="input_label_basic w-4/12">
                         <label htmlFor="StoreID">كود المخزن</label>
-                        <input type="text" id="StoreID" value={myData?.StoreID} onChange={event => changeValue(event)}/>
+                        <input type="text" id="StoreID" value={myData?.StoreID || ""} onChange={event => changeValue(event)}/>
                     </div>
                     <div className="input_label_basic ps-2 w-8/12">
                         <label htmlFor="StoreName">أسم المخزن</label>
-                        <input type="text" id="StoreName" value={myData?.StoreName} onChange={event => changeValue(event)}/>
+                        <input type="text" id="StoreName" value={myData?.StoreName || ""} onChange={event => changeValue(event)}/>
                     </div>
                     <div className="input_label_basic ps-2 w-6/12">
                         <label htmlFor="IsStoped">وقف التعامل</label>
-                        <Switch className="!w-auto" id="IsStoped" value={myData?.IsStoped} onChange={event => changeValue(event)}/>
+                        <Switch className="!w-auto" id="IsStoped" value={myData?.IsStoped || ""} onChange={event => changeValue(event)}/>
                     </div>
                     <div className="input_label_basic ps-2 w-6/12">
                         <label htmlFor="IsRealStock">Real Stock</label>
-                        <Switch className="!w-auto" id="IsRealStock" value={myData?.IsRealStock} onChange={event => changeValue(event)}/>
+                        <Switch className="!w-auto" id="IsRealStock" value={myData?.IsRealStock || ""} onChange={event => changeValue(event)}/>
                     </div>
                     
                     <div className="input_label_basic ps-2 w-full">
                         <label htmlFor="Address">العنوان</label>
-                        <input type="text" id="Address" value={myData?.Address} onChange={event => changeValue(event)}/>
+                        <input type="text" id="Address" value={myData?.Address || ""} onChange={event => changeValue(event)}/>
                     </div>
 
                     <div className="input_label_basic ps-2 w-full">
@@ -46,7 +89,7 @@ const AddEditStores = ()=>{
                         <Select
                             className="w-full"
                             showSearch
-                            allowClear value={myData?.SellerID} onChange={event => changeValue(event)}
+                            allowClear value={myData?.SellerID || ""} onChange={event => changeValue(event)}
                             defaultValue={0} id="SellerID"
                         >
                             <Select.Option value={0}>-- غير محدد --</Select.Option>    
@@ -55,35 +98,50 @@ const AddEditStores = ()=>{
 
                     <div className="input_label_basic ps-2 w-6/12">
                         <label htmlFor="Phone">تليفون</label>
-                        <input type="text" id="Phone" value={myData?.Phone} onChange={event => changeValue(event)}/>
+                        <input type="text" id="Phone" value={myData?.Phone || ""} onChange={event => changeValue(event)}/>
                     </div>
                     <div className="input_label_basic ps-2 w-6/12">
                         <label htmlFor="Mobile">موبايل</label>
-                        <input type="text" id="Mobile" value={myData?.Mobile} onChange={event => changeValue(event)}/>
+                        <input type="text" id="Mobile" value={myData?.Mobile || ""} onChange={event => changeValue(event)}/>
                     </div>
 
                     <div className="input_label_basic ps-2 w-full">
                         <label htmlFor="AccId">التوجية المحاسبي</label>
-                        <Select
-                            className="w-full"
-                            showSearch
-                            allowClear value={myData?.AccId} onChange={event => changeValue(event)}
-                            defaultValue={0} id="AccId"
+                        <Select 
+                            className="w-full" 
+                            id="AccId" 
+                            value={myData?.AccId || ""}
+                            onChange={value => changeValue(value, "AccId")}
                         >
                             <Select.Option value={0}>-- غير محدد --</Select.Option>    
+                                {myData?.dataSelects?.acc_codes?.map(acc => 
+                                    <Select.Option value={acc.AccID}>{acc.AccName}</Select.Option>    
+                                )}
                         </Select>
                     </div>
                     
                     <div className="input_label_basic ps-2 w-full">
                         <label htmlFor="">مركز التكلفة</label>
-                        <Select
+                        <Select 
+                            className="w-full" 
+                            id="CostId" 
+                            value={myData?.CostId} 
+                            onChange={value => changeValue(value, "CostId")}
+                        >
+                            <Select.Option value={0}>-- غير محدد --</Select.Option>    
+                                {myData?.dataSelects?.cost_centers?.map(center => 
+                                    <Select.Option value={center.CostID}>{center.CostName}</Select.Option>    
+                                )}
+                        </Select>
+
+                        {/* <Select
                             className="w-full"
                             showSearch
                             allowClear
                             defaultValue={0} id=""
                         >
                             <Select.Option value={0}>-- غير محدد --</Select.Option>    
-                        </Select>
+                        </Select> */}
                     </div>
                 </div>
             </div>

@@ -16,6 +16,15 @@ const columns = [
     dataIndex: 'ColorName',
     key: 'ColorName',
   },
+  {
+    title: 'إجراء',
+    render: (record) => (
+      <Link to={`edit/${record.ColorID}`}>Edit</Link>
+    ),
+    key: 'ColorID',
+  },
+
+
 ];
 
 

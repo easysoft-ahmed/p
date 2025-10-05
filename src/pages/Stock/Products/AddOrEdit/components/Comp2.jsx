@@ -7,7 +7,6 @@ const Comp2 = ()=>{
     let myData = useSelector(state => state.product.value);
     let dispatch = useDispatch();
     let changeValue = (eventOrValue, prop)=>{
-        
         if(prop){
             dispatch(edit_product({[prop]: eventOrValue}))
         }else{
@@ -38,7 +37,7 @@ const Comp2 = ()=>{
                             </div>
                             <div className="input_label_basic ps-4 w-4/12">
                                 <label htmlFor="">سعر البيع للجمهور</label>
-                                <Input type="text" value={myData?.MainUnitPrice}/>
+                                <Input type="text" disabled value={myData?.MainUnitPrice}/>
                             </div>
                         </div>
 
@@ -55,11 +54,11 @@ const Comp2 = ()=>{
                             </div>
                             <div className="input_label_basic ps-4 w-4/12">
                                 <label htmlFor="">كمية</label>
-                                <Input type="text" value={myData?.SubUnitQty} />
+                                <Input type="text" value={myData?.SubUnitQty} onChange={e => changeValue(e.target.value, "SubUnitQty")} />
                             </div>
                             <div className="input_label_basic ps-4 w-4/12">
                                 <label htmlFor="">سعر البيع للجمهور</label>
-                                <Input type="text" value={myData?.SubUnitPrice}/>
+                                <Input type="text" value={myData?.SubUnitPrice} onChange={e => changeValue(e.target.value, "SubUnitPrice")}/>
                             </div>
                         </div>
 
@@ -76,11 +75,11 @@ const Comp2 = ()=>{
                             </div>
                             <div className="input_label_basic ps-4 w-4/12">
                                 <label htmlFor="">كمية</label>
-                                <Input type="text" value={myData?.UseUnitPrice} />
+                                <Input type="text" value={myData?.UseUnitPrice} onChange={e => changeValue(e.target.value, "UseUnitPrice")} />
                             </div>
                             <div className="input_label_basic ps-4 w-4/12">
                                 <label htmlFor="">سعر البيع للجمهور</label>
-                                <Input type="text" value={myData?.UseUnitQty}/>
+                                <Input type="text" value={myData?.UseUnitQty} onChange={e => changeValue(e.target.value, "UseUnitQty")}/>
                             </div>
                         </div>
                     </div>
@@ -89,61 +88,61 @@ const Comp2 = ()=>{
 
                     <div className="input_label_basic px-1 w-3/12  xl:w-2/12">
                         <label htmlFor="">سعر الجملة</label>
-                        <input type="text" value={myData?.GomlaPrice} />
+                        <input type="text" value={myData?.GomlaPrice} onChange={e => changeValue(e.target.value, "GomlaPrice")} />
                     </div>
                     <div className="input_label_basic px-1 w-3/12  xl:w-2/12">
                         <label htmlFor="">سعر وكلاء</label>
-                        <input type="text" value={myData?.AgentPrice} />
+                        <input type="text" value={myData?.AgentPrice} onChange={e => changeValue(e.target.value, "AgentPrice")} />
                     </div>
                     <div className="input_label_basic px-1 w-3/12  xl:w-2/12">
                         <label htmlFor="">سعر خاص 1</label>
-                        <input type="text" value={myData?.PartPrice} />
+                        <input type="text" value={myData?.PartPrice} onChange={e => changeValue(e.target.value, "PartPrice")} />
                     </div>
 
                     <div className="input_label_basic px-1 w-3/12  xl:w-2/12">
                         <label htmlFor="">سعر خاص 2</label>
-                        <input type="text" value={myData?.UserPrice} />
+                        <input type="text" value={myData?.UserPrice} onChange={e => changeValue(e.target.value, "UserPrice")} />
                     </div>
                     <div className="input_label_basic px-1 w-3/12  xl:w-2/12">
                         <label htmlFor="">اقل سعر بيع</label>
-                        <input type="text" value={myData?.MinPrice} />
+                        <input type="text" value={myData?.MinPrice} onChange={e => changeValue(e.target.value, "MinPrice")} />
                     </div>
                     <div className="input_label_basic px-1 w-3/12  xl:w-2/12">
                         <label htmlFor="">اعلى سعر بيع</label>
-                        <input type="text" value={myData?.MaxPrice} />
+                        <input type="text" value={myData?.MaxPrice} onChange={e => changeValue(e.target.value, "MaxPrice")} />
                     </div>
 
 
                     <div className="input_label_basic px-1 w-3/12  xl:w-2/12">
                         <label htmlFor="">ضريبة قيمة مضافة</label>
-                        <Input type="text" addonAfter={<PercentageOutlined />} value={myData?.TaxPercent}/>
+                        <Input type="text" addonAfter={<PercentageOutlined />} value={myData?.TaxPercent} onChange={e => changeValue(e.target.value, "TaxPercent")}/>
                     </div>
 
 
                     <div className="input_label_basic px-1 w-3/12  xl:w-2/12">
                         <label htmlFor="">خصم اساسي</label>
-                        <input type="text"  value={myData?.MainDesc}/>
+                        <input type="text"  value={myData?.MainDesc} onChange={e => changeValue(e.target.value, "MainDesc")}/>
                     </div>
 
 
                     <div className="input_label_basic px-1 w-3/12  xl:w-2/12">
                         <label htmlFor="">ضريبة خصم 1</label>
-                        <Input type="text" addonAfter={<PercentageOutlined />} value={myData?.TaxDiscP1}/>
+                        <Input type="text" addonAfter={<PercentageOutlined />} value={myData?.TaxDiscP1} onChange={e => changeValue(e.target.value, "TaxDiscP1")}/>
                     </div>
 
                     <div className="input_label_basic px-1 w-3/12  xl:w-2/12">
                         <label htmlFor="">ضريبة خصم 2</label>
-                        <Input type="text" addonAfter={<PercentageOutlined />} value={myData?.TaxDiscP2}/>
+                        <Input type="text" addonAfter={<PercentageOutlined />} value={myData?.TaxDiscP2} onChange={e => changeValue(e.target.value, "TaxDiscP2")}/>
                     </div>
                     <div className="input_label_basic px-1 w-3/12  xl:w-2/12">
                         <label htmlFor="">اقصى نسبة خصم</label>
-                        <Input type="text" addonAfter={<PercentageOutlined />} value={myData?.MaxDiscP}/>
+                        <Input type="text" addonAfter={<PercentageOutlined />} value={myData?.MaxDiscP} onChange={e => changeValue(e.target.value, "MaxDiscP")}/>
                     </div>
                 
 
                     <div className="input_label_basic px-1 w-3/12  xl:w-2/12">
                         <label htmlFor="">مخزن افتراضي</label>
-                        <Select className="w-full" showSearch value={myData?.StoreId} >
+                        <Select className="w-full" showSearch value={myData?.StoreId} onChange={value => changeValue(value, "StoreId")} >
                             <Select.Option value={0}>-- غير محدد --</Select.Option>    
                                 {myData?.dataSelects?.stores?.map(unit => 
                                     <Select.Option value={unit.StoreID}>{unit.StoreName}</Select.Option>    

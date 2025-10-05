@@ -25,7 +25,7 @@ const Comp1 = ()=>{
                     </div>
                     <div className="input_label_basic ps-2 w-8/12">
                         <label htmlFor="">الرقم المرجعي</label>
-                        <input type="text" id="" value={myData} onChange={event => changeValue(event)} />
+                        <input type="text" id="ProductNo" value={myData?.ProductNo || ""} onChange={event => changeValue(event)} />
                     </div>
 
                     <div className="input_label_basic pe-2 w-6/12">
@@ -76,17 +76,17 @@ const Comp1 = ()=>{
                     
                     <div className="input_label_basic ps-2 w-4/12">
                         <label htmlFor="">سعر البيع</label>
-                        <input type="text" id="" value={myData} onChange={event => changeValue(event)} />
+                        <input type="text" id="MainUnitPrice" value={myData?.MainUnitPrice || ""} onChange={event => changeValue(event)} />
                     </div>
                     <div className="input_label_basic ps-2 w-4/12">
                         <label htmlFor="have_barcode">له باركود</label>
                         <Switch id="have_barcode" className="!w-auto"/>
                     </div>
-                    <div className="input_label_basic ps-2 w-4/12">
+                    <div className="input_label_basic ps-2 w-6/12">
                         <label htmlFor="Marka">الماركة</label>
                         <input type="text" id="Marka" value={myData?.Marka || ""} onChange={event => changeValue(event)} />
                     </div>
-                    <div className="input_label_basic ps-2 w-4/12">
+                    <div className="input_label_basic ps-2 w-6/12">
                         <label htmlFor="Modale">الموديل</label>
                         <input type="text" id="Modale" value={myData?.Modale || ""} onChange={event => changeValue(event)} />
                     </div>
@@ -96,17 +96,17 @@ const Comp1 = ()=>{
                     </div>
                     <div className="input_label_basic w-full">
                         <label htmlFor="AccId">الحساب المرتبط</label>
-                        {/* <Select 
+                        <Select 
                             className="w-full" 
-                            id="CountryID" 
-                            value={myData?.CountryID} 
-                            onChange={value => changeValue(value, "CountryID")}
+                            id="AccId" 
+                            value={myData?.AccId} 
+                            onChange={value => changeValue(value, "AccId")}
                         >
                             <Select.Option value={0}>-- غير محدد --</Select.Option>    
-                                {myData?.dataSelects?.countries?.map(country => 
-                                    <Select.Option value={country.CountryID}>{country.CountryName}</Select.Option>    
+                                {myData?.dataSelects?.acc_codes?.map(acc => 
+                                    <Select.Option value={acc.AccID}>{acc.AccName}</Select.Option>    
                                 )}
-                        </Select> */}
+                        </Select>
                     </div>
                 </div>
             </div>

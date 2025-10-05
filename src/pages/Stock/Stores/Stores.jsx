@@ -16,6 +16,14 @@ const columns = [
     dataIndex: 'StoreName',
     key: 'StoreName',
   },
+  {
+    title: 'إجراء',
+    render: (record) => (
+      <Link to={`edit/${record.StoreID}`}>Edit</Link>
+    ),
+    key: 'StoreID',
+  },
+
 ];
 
 

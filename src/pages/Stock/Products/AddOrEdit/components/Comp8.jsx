@@ -1,61 +1,66 @@
-import { InboxOutlined, LoadingOutlined, PlusOutlined } from "@ant-design/icons";
-import { Upload } from "antd"
+import { InboxOutlined, LoadingOutlined, PlusOutlined, UploadOutlined } from "@ant-design/icons";
+import { Button, Radio, Upload } from "antd"
 import Dragger from "antd/es/upload/Dragger";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { edit_product } from "../stateProduct";
 
 const Comp8 = ()=>{
-    const props = {
-    name: 'file',
-    multiple: true,
-    action: 'https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload',
-    onChange(info) {
-        const { status } = info.file;
-        if (status !== 'uploading') {
-        console.log(info.file, info.fileList);
+    let myData = useSelector(state => state.product.value);
+    let dispatch = useDispatch();
+    let changeValue = (eventOrValue, prop)=>{
+        
+        if(prop){
+            dispatch(edit_product({[prop]: eventOrValue}))
+        }else{
+            let {id, value} = eventOrValue.target;
+            dispatch(edit_product({[id]: value}))
         }
-        if (status === 'done') {
-        message.success(`${info.file.name} file uploaded successfully.`);
-        } else if (status === 'error') {
-        message.error(`${info.file.name} file upload failed.`);
-        }
-    },
-    onDrop(e) {
-        console.log('Dropped files', e.dataTransfer.files);
-    },
-    };
+    }
 
+    let [files, setFiles] = useState({
+        file1: "", file2: "", file3: "", file4: "",
+    })
+    let handleChangeImage = (file_type, file)=>{
+        let img = URL.createObjectURL(document.getElementById(file.id).files[0])
+        setFiles(fs =>{return {...fs, [file_type]: img}})
+    }
     return(
         <>
-                {/* <Upload
-                    name="avatar"
-                    listType="picture-card"
-                    className="avatar-uploader"
-                    showUploadList={false}
-                    action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
-                    // beforeUpload={beforeUpload}
-                    // onChange={handleChange}
-                >
-                    {false ? (
-                    <img draggable={false} src={imageUrl} alt="avatar" style={{ width: '100%' }} />
-                    ) : (
-                        <button style={{ border: 0, background: 'none' }} type="button">
-                            {false ? <LoadingOutlined /> : <PlusOutlined />}
-                            <div style={{ marginTop: 8 }}>Upload</div>
-                        </button>
-
-                    )}
-                </Upload> */}
-
-
-                        <Dragger {...props}>
-                            <p className="ant-upload-drag-icon">
-                            <InboxOutlined />
-                            </p>
-                            <p className="ant-upload-text">انقر أو ضع ملف في هذة المنطقة لرفع الملف</p>
-                            <p className="ant-upload-hint">
-                                يمكن رفع ملف او اكثر من هنا
-                            </p>
-                        </Dragger>
-
+        <div className="flex flex-wrap">
+            <div className="w-full sm:w-6/12 lg:w-3/12 p-2">
+                <div className="flex flex-wrap border rounded-md gap-2 h-[250px] content-between p-3">
+                    <img src={files.file1 ? files.file1 : myData.ImagePath1} className="w-full rounded-md" alt="" srcset="" />
+                    <label htmlFor="upload1" className="grow border rounded-md p-1 text-center cursor-pointer [&:hover]:border-blue-400 [&:hover]:text-blue-600"> <UploadOutlined /> Upload</label>
+                    <input type="file" className="hidden" id="upload1" onChange={(e)=>handleChangeImage("file1", e.target)}/>
+                    <input type="radio" onChange={(e)=>changeValue(1, "PrimeImage")} checked={myData?.PrimeImage === 1 ? true:false} value="4" name="isMain" class="w-4 text-blue-600 bg-gray-100 border-gray-300 " />
+                </div>
+            </div>
+            <div className="w-full sm:w-6/12 lg:w-3/12 p-2">
+                <div className="flex flex-wrap  border rounded-md gap-2 h-[250px] content-between p-3">
+                    <img src={files.file2 ? files.file2 : myData.ImagePath2} className="w-full rounded-md" alt="" srcset="" />
+                    <label htmlFor="upload2" className="grow border rounded-md p-1 text-center cursor-pointer [&:hover]:border-blue-400 [&:hover]:text-blue-600"> <UploadOutlined /> Upload</label>
+                    <input type="file" className="hidden" id="upload2" onChange={(e)=>handleChangeImage("file2", e.target)}/>
+                    <input type="radio" onChange={(e)=>changeValue(2, "PrimeImage")} checked={myData?.PrimeImage === 2 ? true:false} value="4" name="isMain" class="w-4 text-blue-600 bg-gray-100 border-gray-300 " />
+                </div>
+            </div>
+            <div className="w-full sm:w-6/12 lg:w-3/12 p-2">
+                <div className="flex flex-wrap border rounded-md gap-2 h-[250px] content-between p-3">
+                    <img src={files.file3 ? files.file3 : myData.ImagePath3} className="w-full rounded-md" alt="" srcset="" />
+                    <label htmlFor="upload3" className="grow border rounded-md p-1 text-center cursor-pointer [&:hover]:border-blue-400 [&:hover]:text-blue-600"> <UploadOutlined /> Upload</label>
+                    <input type="file" className="hidden" id="upload3" onChange={(e)=>handleChangeImage("file3", e.target)}/>
+                    <input type="radio" onChange={(e)=>changeValue(3, "PrimeImage")} checked={myData?.PrimeImage === 3 ? true:false} value="4" name="isMain" class="w-4 text-blue-600 bg-gray-100 border-gray-300 " />
+                </div>
+            </div>
+            <div className="w-full sm:w-6/12 lg:w-3/12 p-2">
+                <div className="flex flex-wrap border rounded-md gap-2 h-[250px] content-between p-3">
+                    <img src={files.file4 ? files.file4 : myData.ImagePath4} className="w-full rounded-md" alt="" srcset="" />
+                    <label htmlFor="upload4" className="grow border rounded-md p-1 text-center cursor-pointer [&:hover]:border-blue-400 [&:hover]:text-blue-600"> <UploadOutlined /> Upload</label>
+                    <input type="file" className="hidden" id="upload4" onChange={(e)=>handleChangeImage("file4", e.target)}/>
+                    <input type="radio" onChange={(e)=>changeValue(4, "PrimeImage")} checked={myData?.PrimeImage === 4 ? true:false} name="isMain" class="w-4 text-blue-600 bg-gray-100 border-gray-300 " />
+                </div>
+            </div>
+        </div>
 
         </>
     )

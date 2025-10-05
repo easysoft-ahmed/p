@@ -1,15 +1,41 @@
 import { SaveOutlined } from "@ant-design/icons";
-import { Button } from "antd";
+import { Button, Input } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { edit_unit } from "./stateUnit";
+import { edit_unit, update_unit } from "./stateUnit";
+import { useParams } from "react-router-dom";
+import useGet from "../../../../hooks/useGet";
+import { useEffect } from "react";
 
 const AddEditUnits = ()=>{
+    let {id} = useParams();
+    let {getDataAsync} = useGet();
+
     let myData = useSelector(state => state.unit.value);
     let dispatch = useDispatch();
     let changeValue = (event)=>{
         let {id, value} = event.target;
         dispatch(edit_unit({[id]: value}))
     }
+    let getDataEditPage = async ()=>{
+        try {
+            let data = await getDataAsync(`Stock/Units?UnitID=${id}`);
+            if(data.ResponseObject.length){
+                dispatch(update_unit(data.ResponseObject[0]))
+            }
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+
+    useEffect(()=>{
+        if(id){
+            getDataEditPage()
+        }else{
+            dispatch(update_unit({}))
+        }
+    }, [id])
+
     return(
         <>
             <div className="flex flex-wrap justify-center">
@@ -21,11 +47,11 @@ const AddEditUnits = ()=>{
                 <div className="flex flex-wrap w-full sm:w-8/12 md:w-6/12 lg:w-4/12">
                     <div className="input_label_basic w-4/12">
                         <label htmlFor="UnitID">كود وحدة القياس</label>
-                        <input type="text" id="UnitID" onChange={event => changeValue(event)} value={myData?.UnitID}/>
+                        <Input type="text" id="UnitID" disabled={id ? true:false} onChange={event => changeValue(event)} value={myData?.UnitID || ""}/>
                     </div>
                     <div className="input_label_basic ps-2 w-8/12">
                         <label htmlFor="UnitName">أسم وحدة القياس</label>
-                        <input type="text" id="UnitName" onChange={event => changeValue(event)} value={myData?.UnitName}/>
+                        <input type="text" id="UnitName" onChange={event => changeValue(event)} value={myData?.UnitName || ""}/>
                     </div>
 
                 </div>

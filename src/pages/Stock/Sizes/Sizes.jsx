@@ -14,8 +14,17 @@ const columns = [
   {
     title: 'اسم المقاس',
     dataIndex: 'MeagureName',
-    key: 'MeagureName',
+    key: 'MeagureID',
   },
+  {
+    title: 'إجراء',
+    render: (record) => (
+      <Link to={`edit/${record.MeagureID}`}>Edit</Link>
+    ),
+    key: 'MeagureID',
+
+  },
+
 ];
 
 
