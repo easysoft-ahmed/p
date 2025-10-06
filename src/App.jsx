@@ -86,6 +86,15 @@ import Products from "./pages/Stock/Products/Products.jsx"
 import AddEditProducts from "./pages/Stock/Products/AddOrEdit/AddEditProducts.jsx"
 import { Provider } from "react-redux"
 import { store } from "./store.js"
+import PrintBarcode from "./pages/Stock/PrintBarcode/PrintBarcode.jsx"
+import StoreMovement from "./pages/Stock/StoreMovement/StoreMovement.jsx"
+import AddEditStoreMovement from "./pages/Stock/StoreMovement/AddOrEdit/AddEditStoreMovement.jsx"
+import StoreTransform from "./pages/Stock/StoreTransform/StoreTransform.jsx"
+import AddEditStoreTransform from "./pages/Stock/StoreTransform/AddOrEdit/AddEditStoreTransform.jsx"
+import RealInventory from "./pages/Stock/RealInventory/RealInventory.jsx"
+import AddEditRealInventory from "./pages/Stock/RealInventory/AddOrEdit/AddEditRealInventory.jsx"
+import PriceList from "./pages/Stock/PriceList/PriceList.jsx"
+import AddEditPriceList from "./pages/Stock/PriceList/AddOrEdit/AddEditPriceList.jsx"
 function App() {
   
   return (
@@ -219,6 +228,23 @@ function App() {
                 <Route path="add" element={<AddEditProducts />} />
                 <Route path="edit/:id" element={<AddEditProducts />} />
               </Route>
+              <Route path="stores_movement">
+                <Route index element={<StoreMovement />} />
+                <Route path="add" element={<AddEditStoreMovement />} />
+              </Route>
+              <Route path="store_transform">
+                <Route index element={<StoreTransform />} />
+                <Route path="add" element={<AddEditStoreTransform />} />
+              </Route>
+              <Route path="real_inventory">
+                <Route index element={<RealInventory />} />
+                <Route path="add" element={<AddEditRealInventory />} />
+              </Route>
+              <Route path="price_list">
+                <Route index element={<PriceList />} />
+                <Route path="add" element={<AddEditPriceList />} />
+              </Route>
+              <Route path="print_barcode" element={<PrintBarcode />} />
 
             </Route>
             <Route path="purch">
