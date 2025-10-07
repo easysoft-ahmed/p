@@ -6,13 +6,14 @@ import product from "./pages/Stock/Products/AddOrEdit/stateProduct"
 import size from "./pages/Stock/Sizes/AddOrEdit/stateSize"
 import size_group from "./pages/Stock/SizesGroup/AddOrEdit/stateSizeGroup"
 import country_of_origin from "./pages/Stock/CountryOfOrigin/AddOrEdit/stateCountryOfOrigin"
+import store_movement from "./pages/Stock/StoreMovement/AddOrEdit/stateStoreMovement"
 import print_barcode from "./pages/Stock/PrintBarcode/statePrintBarcode"
 
 
 
 export const store = configureStore({
   reducer: {
-    unit, color, stock, size, size_group, country_of_origin, product,print_barcode
+    unit, color, stock, size, size_group, country_of_origin, product,print_barcode, store_movement
 
   },
 })

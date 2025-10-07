@@ -4,7 +4,19 @@ import { Link } from "react-router-dom";
 import MessageRequest from "../../../components/MessageRequest";
 import useGet from "../../../hooks/useGet";
 import { useEffect } from "react";
+import { handleOnlyDate } from "../../../helpers";
 
+let switchValue = (key)=>{
+  switch (key) {
+    case 0: return "رصيد أول المدة"; 
+    case 1: return "إضافة"
+    case 2: return "صرف"
+    case 3: return "مرتد صرف"
+    case 4: return "عينات و هدايا واردة"
+    case 5: return "عينات و هدايا صادرة"
+    default: return "تالف"
+  }
+}
 const columns = [
   {
     title: 'رقم المستند',
@@ -13,13 +25,15 @@ const columns = [
   },
   {
     title: 'تاريخ المستند',
-    dataIndex: 'DocDate',
-    key: 'age',
+    render: (record)=>(
+      <span>{handleOnlyDate(record.DocDate)}</span>
+    )
   },
   {
-    title: 'اسم المخزن',
-    dataIndex: 'StoreId',
-    key: 'age',
+    title: 'نوع الحركة',
+    render: (record)=>(
+      <span>{switchValue(record.TransType)}</span>
+    )
   },
   {
     title: 'ملاحظات',
