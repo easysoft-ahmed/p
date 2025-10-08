@@ -43,7 +43,7 @@ const Comp1 = ()=>{
                     </div>
                     <div className="input_label_basic pe-4 w-2/12">
                         <label htmlFor="">تاريخ المستند</label>
-                        <DatePicker value={dayjs(myData.DocDate)} onChange={(date, dateStr)=>changeValue(dateStr, "DocDate")}/>
+                        <DatePicker value={dayjs(myData.DocDate)} allowClear={false} onChange={(date, dateStr)=>changeValue(dateStr, "DocDate")}/>
                     </div>
                     <div className="input_label_basic pe-4 w-full lg:w-2/12">
                         <label htmlFor="">نوع الحركة</label>

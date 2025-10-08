@@ -152,11 +152,11 @@ const Comp2 = ()=>{
 
                     <div className="input_label_basic px-1 w-3/12  xl:w-2/12">
                         <label htmlFor="">قيمة العمولة</label>
-                        <input type="text" value={myData}/>
+                        <input type="text" value={myData?.ComitionV}/>
                     </div>
                     <div className="input_label_basic px-1 w-3/12  xl:w-2/12">
                         <label htmlFor="">نسبة العمولة</label>
-                        <Input type="text" addonAfter={<PercentageOutlined />} value={myData}/>
+                        <Input type="text" addonAfter={<PercentageOutlined />} value={myData?.ComitionP}/>
                     </div>
 
                 </div>

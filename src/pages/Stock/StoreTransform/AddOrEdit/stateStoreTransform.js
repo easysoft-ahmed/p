@@ -2,22 +2,22 @@ import { createSlice } from '@reduxjs/toolkit'
 import dayjs from 'dayjs';
 
 
-export const StoreMovementSlice = createSlice({
-  name: 'store_movement',
+export const StoreTransformSlice = createSlice({
+  name: 'store_transform',
   initialState:{
     value: {}
   },
   reducers: {
-    edit_store_movement: (state, {payload})=>{
+    edit_store_transform: (state, {payload})=>{      
         state.value = {...state.value, ...payload};
     },
-    update_store_movement: (state, {payload})=>{
+    update_store_transform: (state, {payload})=>{
         state.value = payload;
     },
-    init_state_store_movement: (state)=>{
+    init_state_store_transform: (state)=>{
       state.value = {DocDate: dayjs().toString()}
     },
-    modified_tables_store_movement: (state, {payload})=>{
+    modified_tables_store_transform: (state, {payload})=>{
       let {tableName, data, actionType, fakeID, propsAndValue} = payload;
       
       if(actionType === "add"){
@@ -33,14 +33,14 @@ export const StoreMovementSlice = createSlice({
           }
         })
         
-        state.value.Total = state.value[tableName]?.reduce((totalValue, row)=>{return totalValue + row.Total}, 0) || 0
+        state.value.Total = state.value[tableName]?.reduce((totalValue, row)=>{return totalValue + Number(row.Qty)}, 0) || 0
       }
     }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const {modified_tables_store_movement, init_state_store_movement,  update_store_movement, edit_store_movement } = StoreMovementSlice.actions
+export const {edit_store_transform, update_store_transform,  init_state_store_transform, modified_tables_store_transform } = StoreTransformSlice.actions
 
-export default StoreMovementSlice.reducer
+export default StoreTransformSlice.reducer
 

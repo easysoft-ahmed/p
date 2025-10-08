@@ -15,7 +15,7 @@ const AddEditStoreMovement = ()=>{
 
     async function callGetManyDataForSelectInput(){
         try {
-            let data = await getManyDataForSelectInput([ "products" , "stores", "units" ], getDataAsync);
+            let data = await getManyDataForSelectInput([ "products" , "stores", "units", "acc_codes" ], getDataAsync);
             console.log(data);
             
             dispatch(edit_store_movement({dataSelects: data}))

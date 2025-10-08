@@ -21,7 +21,7 @@ const Comp2 = ()=>{
         dispatch(modified_tables_store_movement({tableName, actionType, fakeID, propsAndValue}))
     }
 
-    let defaultRow = {fakeID: unique(),ProductName: "", ProductID: "", UnitID: "", Qty: 4, Price: "", Total: "", StoreId: "", Notes: ""}
+    let defaultRow = {fakeID: unique(),ProductName: "", ProductID: "", UnitID: "", Qty: "", Price: "", Total: "", StoreId: "", Notes: ""}
     return(
         <>
             <div class="relative overflow-x-auto mt-4">
@@ -56,17 +56,15 @@ const Comp2 = ()=>{
                                         className="w-full"
                                         value={ele.ProductName || ele.ProductID ? myData?.dataSelects?.products?.filter(product => product.ProductID == ele.ProductID)[0]["Productname"] || ele.ProductID : ""}                                    
                                         onChange={(value, record) =>{
-                                            handleEditRow("StockItems", "edit", ele.fakeID, {ProductName: value, ProductID: record?.value});
+                                            console.log(record);
+                                            
+                                            handleEditRow("StockItems", "edit", ele.fakeID,{ProductName: value, ProductID: record?.value, Qty: 1, Price: record?.PurchPrice, Total: record?.PurchPrice * 1, StoreId: record?.StoreId});
                                             console.log(record);
                                             
                                         }}
-                                    >
-                                        {/* <Select.Option>-- غير محدد --</Select.Option> */}
-                                        {myData?.dataSelects?.products?.map(product => 
-                                            <Select.Option value={product.ProductID}>{product.Productname}</Select.Option>
 
-                                        )}
-                                    </Select>
+                                        options={myData?.dataSelects?.products?.map(product =>{ return {value: product.ProductID, label: product.Productname, ...product}})}
+                                    />
                                 </td>
                                 <td>
                                     <Select
@@ -97,8 +95,8 @@ const Comp2 = ()=>{
                                 </td>
                                 <td>
                                     <Select
-                                        className="w-full"
-                                        value={ele.StoreId ? myData?.dataSelects?.stores?.filter(store => store.StoreID == ele.StoreId)[0]["StoreName"] || ele.StoreId : ""}
+                                        className="w-full" placeholder="-- غير محدد --"
+                                        value={ele.StoreId ? myData?.dataSelects?.stores?.filter(store => store.StoreID == ele.StoreId)[0]["StoreName"] || ele.StoreId : null}
                                         onChange={(value) => handleEditRow("StockItems", "edit", ele.fakeID, {StoreId: value})}
                                     >
                                         {/* <Select.Option>-- غير محدد --</Select.Option> */}
