@@ -1,9 +1,10 @@
 import { PlusOutlined, SmileOutlined } from "@ant-design/icons";
-import { Button, ConfigProvider, Empty, Spin, Table } from "antd";
+import { Button, ConfigProvider, Empty, message, Popconfirm, Spin, Table } from "antd";
 import { Link } from "react-router-dom";
 import MessageRequest from "../../../components/MessageRequest";
 import useGet from "../../../hooks/useGet";
 import { useEffect } from "react";
+import DeleteBtn from "../../../components/DeleteBtn";
 
 const columns = [
   {
@@ -19,7 +20,10 @@ const columns = [
   {
     title: 'إجراء',
     render: (record) => (
-      <Link to={`edit/${record.UnitID}`}>Edit</Link>
+      <>
+        <Link to={`edit/${record.UnitID}`}>Edit</Link>
+        <DeleteBtn url={`Stock/Units?UnitID=${record.UnitID}`} />
+      </>
     ),
     key: 'UnitID',
   },
@@ -28,6 +32,7 @@ const columns = [
 
 
 const Units = ()=>{
+
   let {getData, resultGet, isLoadingGet, errorMsgGet} = useGet();
   useEffect(()=>{
     getData("Stock/Units")

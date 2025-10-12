@@ -50,7 +50,7 @@ const Comp1 = ()=>{
                         >
                             <Select.Option value={0}>-- غير محدد --</Select.Option>    
                                 {myData?.dataSelects?.categories?.map(category => 
-                                    <Select.Option value={category.CategoryID}>{category.CategoryName}</Select.Option>    
+                                    <Select.Option value={category?.CategoryID?.toString()}>{category.CategoryName}</Select.Option>    
                                 )}
                         </Select>
                     </div>
@@ -79,8 +79,8 @@ const Comp1 = ()=>{
                         <input type="text" id="MainUnitPrice" value={myData?.MainUnitPrice || ""} onChange={event => changeValue(event)} />
                     </div>
                     <div className="input_label_basic ps-2 w-4/12">
-                        <label htmlFor="have_barcode">له باركود</label>
-                        <Switch id="have_barcode" className="!w-auto"/>
+                        <label htmlFor="IsPrintBarcode">له باركود</label>
+                        <Switch id="IsPrintBarcode" value={myData?.IsPrintBarcode} onChange={value => changeValue(value, "IsPrintBarcode")} className="!w-auto"/>
                     </div>
                     <div className="input_label_basic ps-2 w-6/12">
                         <label htmlFor="Marka">الماركة</label>
@@ -104,7 +104,7 @@ const Comp1 = ()=>{
                         >
                             <Select.Option value={0}>-- غير محدد --</Select.Option>    
                                 {myData?.dataSelects?.acc_codes?.map(acc => 
-                                    <Select.Option value={acc.AccID}>{acc.AccName}</Select.Option>    
+                                    <Select.Option value={acc?.AccID?.toString()}>{acc.AccName}</Select.Option>    
                                 )}
                         </Select>
                     </div>

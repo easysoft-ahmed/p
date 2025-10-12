@@ -2,6 +2,7 @@ import TemplateOne from "../../Layouts/TemplateOne";
 
 const sections = [
     {name: "الاكواد" , links: [
+        {label: "أكواد انواع الموردين", path: "suppliers_types"},
         {label: "أكواد الموردين", path: "suppliers"},
     ]},
     {name: "أخرى", links: [

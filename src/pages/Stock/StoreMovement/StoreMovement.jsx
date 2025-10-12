@@ -5,6 +5,7 @@ import MessageRequest from "../../../components/MessageRequest";
 import useGet from "../../../hooks/useGet";
 import { useEffect } from "react";
 import { handleOnlyDate } from "../../../helpers";
+import DeleteBtn from "../../../components/DeleteBtn";
 
 let switchValue = (key)=>{
   switch (key) {
@@ -40,6 +41,18 @@ const columns = [
     dataIndex: 'Notes',
     key: 'age',
   },
+  {
+    title: 'إجراء',
+    render: (record) => (
+      <>
+        <Link to={`edit/${record.TransDoc}`}>Edit</Link>
+        <DeleteBtn url={`Stock/Trans?TransDoc=${record.TransDoc}`} />
+      </>
+
+    ),
+    key: 'StoreID',
+  },
+
 ];
 
 

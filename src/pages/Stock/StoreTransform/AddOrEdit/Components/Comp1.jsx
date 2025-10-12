@@ -4,14 +4,23 @@ import TextArea from "antd/es/input/TextArea";
 import dayjs from "dayjs";
 import usePost from "../../../../../hooks/usePost";
 import { useDispatch, useSelector } from "react-redux";
-import { edit_store_transform } from "../stateStoreTransform";
+import { edit_store_transform, init_state_store_transform } from "../stateStoreTransform";
+import { useNavigate, useParams } from "react-router-dom";
+import usePut from "../../../../../hooks/usePut";
+import { useState } from "react";
+import MessageRequest from "../../../../../components/MessageRequest";
 function genUniqueId() {
   return Math.random().toString(9).substring(2, 7);
 }
 
 const Comp1 = ()=>{
+    let {id} = useParams();
+    let {postDataAsync} = usePost();
+    let {putDataAsync} = usePut();
+    let [msg, setMsg] = useState("");
+    const navigate = useNavigate();
+    
     let myData = useSelector(state => state.store_transform.value);
-    let {postDataAsync} = usePost()
     let dispatch = useDispatch();
     let changeValue = (eventOrValue, prop)=>{
         
@@ -23,23 +32,37 @@ const Comp1 = ()=>{
         }
     }
 
-    let handleSendPostRequest = ()=>{
-        console.log(myData);
-        // postDataAsync("Stock/Trans", myData)
+    let handleSubmit = async()=>{
+        setMsg(false)
+        if(id){
+            let status = await putDataAsync("Stock/TransForm", myData);
+            navigate("/stock/store_transform/add", { replace: true });
+            status?.ResponseObject && dispatch(init_state_store_transform())
+            status?.ResponseObject && setMsg(true);
+        }else{
+            let status = await postDataAsync("Stock/TransForm", myData);
+            status?.ResponseObject && dispatch(init_state_store_transform());
+            status?.ResponseObject && setMsg(true)
+        }
+
     }
+    
+
     return(
         <>
+            <MessageRequest data={msg}/>
+
             <div className="flex flex-wrap justify-center">
                 <div className="w-full flex justify-between border-b pb-4 mb-4">
                     <h3 className="text-lg font-bold">إضافة تحويل من مخزن</h3>
-                    <Button type="primary" onClick={handleSendPostRequest} icon={<SaveOutlined />}>حفظ</Button>
+                    <Button type="primary" onClick={handleSubmit} icon={<SaveOutlined />}>حفظ</Button>
                 </div>
 
                 <div className="flex flex-wrap w-full">
                     <div className=" flex flex-wrap w-full lg:w-6/12">
                         <div className="input_label_basic pe-4 w-6/12">
                             <label htmlFor="">رقم المستند</label>
-                            <input type="text" value={myData?.DocNo || ""} onChange={e => changeValue(e.target.value, "DocNo")}/>
+                            <input type="text" disabled value={myData?.DocNo || ""} onChange={e => changeValue(e.target.value, "DocNo")}/>
                         </div>
                         <div className="input_label_basic pe-4 w-6/12">
                             <label htmlFor="">تاريخ المستند</label>

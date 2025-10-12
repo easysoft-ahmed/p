@@ -95,6 +95,8 @@ import RealInventory from "./pages/Stock/RealInventory/RealInventory.jsx"
 import AddEditRealInventory from "./pages/Stock/RealInventory/AddOrEdit/AddEditRealInventory.jsx"
 import PriceList from "./pages/Stock/PriceList/PriceList.jsx"
 import AddEditPriceList from "./pages/Stock/PriceList/AddOrEdit/AddEditPriceList.jsx"
+import SuppliersTypes from "./pages/Purch/SuppliersTypes/SuppliersTypes.jsx"
+import AddEditSuppliersTypes from "./pages/Purch/SuppliersTypes/AddOrEdit/AddEditSuppliersTypes.jsx"
 function App() {
   
   return (
@@ -231,10 +233,12 @@ function App() {
               <Route path="stores_movement">
                 <Route index element={<StoreMovement />} />
                 <Route path="add" element={<AddEditStoreMovement />} />
+                <Route path="edit/:id" element={<AddEditStoreMovement />} />
               </Route>
               <Route path="store_transform">
                 <Route index element={<StoreTransform />} />
                 <Route path="add" element={<AddEditStoreTransform />} />
+                <Route path="edit/:id" element={<AddEditStoreTransform />} />
               </Route>
               <Route path="real_inventory">
                 <Route index element={<RealInventory />} />
@@ -252,6 +256,12 @@ function App() {
               <Route path="suppliers">
                 <Route index element={<Suppliers />} />
                 <Route path="add" element={<AddEditSuppliers />} />
+                <Route path="edit/:id" element={<AddEditSuppliers />} />
+              </Route>
+              <Route path="suppliers_types">
+                <Route index element={<SuppliersTypes />} />
+                <Route path="add" element={<AddEditSuppliersTypes />} />
+                <Route path="edit/:id" element={<AddEditSuppliersTypes />} />
               </Route>
               <Route path="purch_invoice">
                 <Route index element={<PurchInvoice />} />

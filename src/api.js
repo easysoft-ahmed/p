@@ -13,6 +13,8 @@ let dataEndPoint = {
     suppliers : {end_point: "Purch/Vendors", name_en: "الموردين"},
     products : {end_point: "Stock/Products", name_en: "الاصناف"},
     cost_centers : {end_point: "Acc/CostCenters", name_en: "مراكز التكلفة"},
+    staff : {end_point: "Sales/Sellers", name_en: "الموظفين"},
+    suppliers_types : {end_point: "Purch/VendorTypes", name_en: "انواع الموردين"},
     
 }
 

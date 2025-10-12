@@ -13,11 +13,14 @@ export const unitSlice = createSlice({
     update_unit: (state, {payload})=>{
         state.value = payload;
     },
+    initial_state_units: (state)=>{
+        state.value = {UnitName: "", UnitID: ""} ;
+    }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { edit_unit, update_unit } = unitSlice.actions
+export const {initial_state_units,  edit_unit, update_unit } = unitSlice.actions
 
 export default unitSlice.reducer
 

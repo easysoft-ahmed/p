@@ -13,11 +13,14 @@ export const CountryOfOriginSlice = createSlice({
     update_country_of_origin: (state, {payload})=>{
         state.value = payload;
     },
+    initial_state_country_of_origin: (state)=>{
+        state.value = {CountryId: "", CountryName: ""};
+    }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { edit_country_of_origin, update_country_of_origin } = CountryOfOriginSlice.actions
+export const { initial_state_country_of_origin, edit_country_of_origin, update_country_of_origin } = CountryOfOriginSlice.actions
 
 export default CountryOfOriginSlice.reducer
 

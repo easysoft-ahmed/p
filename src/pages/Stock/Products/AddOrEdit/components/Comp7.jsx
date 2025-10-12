@@ -68,7 +68,7 @@ const Comp7 = ()=>{
                                                         dispatch(edit_row_tables_product({tableName: "ProductReplaces", prop: "ReplaceID", value: Number(object.ProductID), fakeID: ele.fakeID}))
                                                         dispatch(edit_row_tables_product({tableName: "ProductReplaces", prop: "ReplaceName", value: object.Productname, fakeID: ele.fakeID}))
                                                     }}
-                                                    options={myData?.dataSelects?.products?.map(product =>{ return {...product, value: product.ProductID, label: product.Productname}})}
+                                                    options={myData?.dataSelects?.products?.map(product =>{ return {...product, value: product?.ProductID?.toString(), label: product.Productname}})}
                                                 />
                                             </td>
                                             <td>

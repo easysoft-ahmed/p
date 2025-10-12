@@ -54,13 +54,11 @@ const Comp2 = ()=>{
                                 <td>
                                     <Select
                                         className="w-full"
-                                        value={ele.ProductName || ele.ProductID ? myData?.dataSelects?.products?.filter(product => product.ProductID == ele.ProductID)[0]["Productname"] || ele.ProductID : ""}                                    
+                                        value={ele.ProductName || ele.ProductID ? myData?.dataSelects?.products?.filter(product => product.ProductID == ele.ProductID)[0]?.Productname || "الصنف غير متوفر ربما تم حذفة" : ele.ProductID}                                    
                                         onChange={(value, record) =>{
                                             console.log(record);
                                             
                                             handleEditRow("StockItems", "edit", ele.fakeID,{ProductName: value, ProductID: record?.value, Qty: 1, Price: record?.PurchPrice, Total: record?.PurchPrice * 1, StoreId: record?.StoreId});
-                                            console.log(record);
-                                            
                                         }}
 
                                         options={myData?.dataSelects?.products?.map(product =>{ return {value: product.ProductID, label: product.Productname, ...product}})}

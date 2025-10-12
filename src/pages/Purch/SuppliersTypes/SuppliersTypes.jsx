@@ -1,5 +1,5 @@
-import { PlusOutlined, SmileOutlined } from "@ant-design/icons";
-import { Button, ConfigProvider, Empty, Spin, Table } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
+import { Button, Spin, Table } from "antd";
 import { Link } from "react-router-dom";
 import MessageRequest from "../../../components/MessageRequest";
 import useGet from "../../../hooks/useGet";
@@ -8,47 +8,44 @@ import DeleteBtn from "../../../components/DeleteBtn";
 
 const columns = [
   {
-    title: 'كود اللون',
-    dataIndex: 'ColorID',
-    key: 'ColorID',
+    title: 'كود النوع',
+    dataIndex: 'VendorTypeID',
+    key: 'VendorTypeID',
   },
   {
-    title: 'اسم اللون',
-    dataIndex: 'ColorName',
-    key: 'ColorName',
+    title: 'اسم النوع',
+    dataIndex: 'VendorTypeName',
+    key: 'VendorTypeName',
   },
   {
     title: 'إجراء',
     render: (record) => (
       <>
-        <Link to={`edit/${record.ColorID}`}>Edit</Link>
-        <DeleteBtn url={`Stock/Colors?ColorID=${record.ColorID}`} />
+        <Link to={`edit/${record.VendorTypeID}`}>Edit</Link>
+        <DeleteBtn url={`Purch/VendorTypes?VendorTypeID=${record.VendorTypeID}`} />
       </>
-      
+
     ),
-    key: 'ColorID',
+    key: 'StoreID',
   },
 
 
 ];
 
 
-const Colors = ()=>{
+const SuppliersTypes = ()=>{
   let {getData, resultGet, isLoadingGet, errorMsgGet} = useGet();
   useEffect(()=>{
-    getData("Stock/Colors")
+    getData("Purch/VendorTypes")
   }, [])
-
     return(
         <>
             <MessageRequest data={resultGet?.ResponseObject} errorMsg={errorMsgGet}/>
 
             <Link to="add">
-                <Button type="primary" iconPosition="start" icon={<PlusOutlined />}>إضافة لون</Button>
+                <Button type="primary" iconPosition="start" icon={<PlusOutlined />}>إضافة كود</Button>
             </Link>
-
-
-
+            
             <Spin spinning={isLoadingGet} fullscreen />
 
             <Table dataSource={resultGet?.ResponseObject} columns={columns} />
@@ -56,4 +53,4 @@ const Colors = ()=>{
     )
 }
 
-export default Colors;
+export default SuppliersTypes;

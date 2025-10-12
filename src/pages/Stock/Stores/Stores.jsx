@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import MessageRequest from "../../../components/MessageRequest";
 import useGet from "../../../hooks/useGet";
 import { useEffect } from "react";
+import DeleteBtn from "../../../components/DeleteBtn";
 
 const columns = [
   {
@@ -19,7 +20,11 @@ const columns = [
   {
     title: 'إجراء',
     render: (record) => (
-      <Link to={`edit/${record.StoreID}`}>Edit</Link>
+      <>
+        <Link to={`edit/${record.StoreID}`}>Edit</Link>
+        <DeleteBtn url={`Stock/Stores?StoreID=${record.StoreID}`} />
+      </>
+
     ),
     key: 'StoreID',
   },

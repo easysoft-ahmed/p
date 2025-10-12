@@ -9,17 +9,26 @@ export const StoreMovementSlice = createSlice({
   },
   reducers: {
     edit_store_movement: (state, {payload})=>{
-        state.value = {...state.value, ...payload};
+      console.log(payload);
+      
+      state.value = {...state.value, ...payload};
+      console.log({...state.value});
     },
     update_store_movement: (state, {payload})=>{
         state.value = payload;
     },
     init_state_store_movement: (state)=>{
-      state.value = {DocDate: dayjs().toString()}
+      state.value = {
+        TransDoc : "", TransType: "", SerialId: "", DocDate: new Date(), StoreId: "", SideType: "",
+        SideId: "", Notes: "", Total: "", TotalTafqit: "", BranchId: "", StockItems: []
+      }
     },
     modified_tables_store_movement: (state, {payload})=>{
       let {tableName, data, actionType, fakeID, propsAndValue} = payload;
       
+      console.log(payload);
+      
+
       if(actionType === "add"){
         state.value[tableName] = [...state.value[tableName] || [] , data]        
       }else if(actionType === "remove"){

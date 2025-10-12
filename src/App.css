@@ -5,8 +5,8 @@ input{
   padding: 4px 11px;
 }
 
-.section_row{
-  
+:disabled{
+  cursor: not-allowed;
 }
 .section_row h2{
   font-weight: bold;

@@ -13,11 +13,14 @@ export const sizeSlice = createSlice({
     update_size: (state, {payload})=>{
         state.value = payload;
     },
+    initial_state_size: (state)=>{
+      state.value = {MeagureID: "", MeagureName: ""};
+    }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { edit_size, update_size } = sizeSlice.actions
+export const { initial_state_size, edit_size, update_size } = sizeSlice.actions
 
 export default sizeSlice.reducer
 

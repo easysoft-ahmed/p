@@ -1,14 +1,21 @@
 import { SaveOutlined } from "@ant-design/icons";
 import { Button, Input, Select } from "antd";
-import { edit_size, update_size } from "./stateSize";
+import { edit_size, initial_state_size, update_size } from "./stateSize";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useGet from "../../../../hooks/useGet";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import usePost from "../../../../hooks/usePost";
+import usePut from "../../../../hooks/usePut";
+import MessageRequest from "../../../../components/MessageRequest";
 
 const AddEditSizes = ()=>{
     let {id} = useParams();
     let {getDataAsync} = useGet();
+    let {postDataAsync} = usePost();
+    let {putDataAsync} = usePut();
+    let [msg, setMsg] = useState("");
+    const navigate = useNavigate();
 
     let myData = useSelector(state => state.size.value);
     let dispatch = useDispatch();
@@ -28,6 +35,21 @@ const AddEditSizes = ()=>{
 
     }
 
+    let handleSubmit = async()=>{
+        setMsg(false)
+        if(id){
+            let status = await putDataAsync("Stock/Meagures", myData);
+            navigate("/stock/sizes/add", { replace: true });
+            status?.ResponseObject && setMsg(true);
+            status?.ResponseObject && dispatch(initial_state_size())
+        }else{
+            let status = await postDataAsync("Stock/Meagures", myData);
+            status?.ResponseObject && dispatch(initial_state_size());
+            status?.ResponseObject && setMsg(true)
+        }
+
+    }
+
     useEffect(()=>{
         if(id){
             getDataEditPage()
@@ -38,16 +60,18 @@ const AddEditSizes = ()=>{
 
     return(
         <>
+            <MessageRequest data={msg}/>
+
             <div className="flex flex-wrap justify-center">
                 <div className="w-full flex justify-between border-b pb-4 mb-4">
                     <h3 className="text-lg font-bold">إضافة مقاس</h3>
-                    <Button type="primary" icon={<SaveOutlined />}>حفظ</Button>
+                    <Button type="primary" onClick={handleSubmit} icon={<SaveOutlined />}>حفظ</Button>
                 </div>
 
                 <div className="flex flex-wrap w-full sm:w-8/12 md:w-6/12 lg:w-4/12">
                     <div className="input_label_basic w-4/12">
                         <label htmlFor="MeagureID">كود المقاس</label>
-                        <Input type="text" disabled={id ? true:false} id="MeagureID" value={myData?.MeagureID || ""} onChange={event => changeValue(event)} />
+                        <Input type="text" disabled id="MeagureID" value={myData?.MeagureID || ""} onChange={event => changeValue(event)} />
                     </div>
                     <div className="input_label_basic ps-2 w-8/12">
                         <label htmlFor="MeagureName">أسم المقاس</label>

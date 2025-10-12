@@ -44,14 +44,14 @@ const MainLayout = () => {
               label: <Link to="/stock">المخزون</Link>,
             },
             {
-              key: '4',
-              icon: <UploadOutlined />,
-              label: <Link to="/sales">المبيعات</Link>,
-            },
-            {
               key: '5',
               icon: <UploadOutlined />,
               label: <Link to="/purch">المشتريات</Link>,
+            },
+            {
+              key: '4',
+              icon: <UploadOutlined />,
+              label: <Link to="/sales">المبيعات</Link>,
             },
             {
               key: '6',

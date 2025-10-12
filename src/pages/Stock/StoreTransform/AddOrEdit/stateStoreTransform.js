@@ -10,16 +10,19 @@ export const StoreTransformSlice = createSlice({
   reducers: {
     edit_store_transform: (state, {payload})=>{      
         state.value = {...state.value, ...payload};
+        state.value.Total = state.value["TransFormItems"]?.reduce((totalValue, row)=>{return totalValue + Number(row.Qty)}, 0) || 0
+
     },
     update_store_transform: (state, {payload})=>{
         state.value = payload;
     },
     init_state_store_transform: (state)=>{
-      state.value = {DocDate: dayjs().toString()}
+      state.value = {TransDoc: "", DocNo: "", SerialId: "", DocDate: new Date(), Notes: "", BranchId: 1, TransFormItems: []}
     },
     modified_tables_store_transform: (state, {payload})=>{
       let {tableName, data, actionType, fakeID, propsAndValue} = payload;
-      
+            console.log(payload);
+
       if(actionType === "add"){
         state.value[tableName] = [...state.value[tableName] || [] , data]        
       }else if(actionType === "remove"){

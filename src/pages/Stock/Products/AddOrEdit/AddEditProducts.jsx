@@ -8,18 +8,26 @@ import Comp5 from "./components/Comp5";
 import Comp6 from "./components/Comp6";
 import Comp7 from "./components/Comp7";
 import Comp8 from "./components/Comp8";
-import { useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import useGet from "../../../../hooks/useGet";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { edit_product, update_product } from "./stateProduct";
 import { getManyDataForSelectInput } from "../../../../api";
+import usePost from "../../../../hooks/usePost";
+import usePut from "../../../../hooks/usePut";
+import MessageRequest from "../../../../components/MessageRequest";
 
 const AddEditProducts = ()=>{
     let {id} = useParams();
-    let dispatch = useDispatch();
     let {getDataAsync} = useGet();
+    let {postDataAsync} = usePost();
+    let {putDataAsync} = usePut();
+    let [msg, setMsg] = useState("");
+    const navigate = useNavigate();
+    let myData = useSelector(state => state.product.value);
 
+    let dispatch = useDispatch();
     let getDataProductEditPage = async ()=>{
         try {
             let data = await getDataAsync(`Stock/Products?ProductID=${id}`);
@@ -41,6 +49,22 @@ const AddEditProducts = ()=>{
         }
     }
 
+    let handleSubmit = async()=>{
+        setMsg(false)
+        if(id){
+            let status = await putDataAsync("Stock/Products", myData);
+            navigate("/stock/products/add", { replace: true });
+            status?.ResponseObject && setMsg(true);
+            // status?.ResponseObject && dispatch(initial_state_country_of_origin())
+        }else{
+            let status = await postDataAsync("Stock/Products", myData);
+            // status?.ResponseObject && dispatch(initial_state_country_of_origin());
+            status?.ResponseObject && setMsg(true)
+        }
+
+    }
+
+
     useEffect(()=>{
         if(id){
             getDataProductEditPage()
@@ -52,10 +76,13 @@ const AddEditProducts = ()=>{
     }, [id])
     return(
         <>
+            <MessageRequest data={msg}/>
+
+
             <div className="flex flex-wrap justify-center">
                 <div className="w-full flex justify-between border-b pb-4 mb-4">
                     <h3 className="text-lg font-bold">إضافة صنف</h3>
-                    <Button type="primary" icon={<SaveOutlined />}>حفظ</Button>
+                    <Button type="primary" onClick={handleSubmit} icon={<SaveOutlined />}>حفظ</Button>
                 </div>
 
                 <Tabs
