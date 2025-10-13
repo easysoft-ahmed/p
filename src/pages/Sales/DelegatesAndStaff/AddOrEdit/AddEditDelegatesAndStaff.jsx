@@ -8,6 +8,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import useGet from "../../../../hooks/useGet";
 import { edit_delegates_and_staff, init_delegates_and_staff } from "./stateDelegatesAndStaff";
+import MessageRequest from "../../../../components/MessageRequest";
 
 const AddEditDelegatesAndStaff = ()=>{
     let {postDataAsync} = usePost();
@@ -49,12 +50,12 @@ const AddEditDelegatesAndStaff = ()=>{
         console.log(myData);
         
         if(id){
-            let status = await putDataAsync("Purch/Vendors", myData);
-            navigate("/purch/suppliers/add", { replace: true });
+            let status = await putDataAsync("Sales/Sellers", myData);
+            navigate("/sales/delegates_staff/add", { replace: true });
             status?.ResponseObject && dispatch(init_delegates_and_staff())
             status?.ResponseObject && setMsg(true);
         }else{
-            let status = await postDataAsync("Purch/Vendors", myData);
+            let status = await postDataAsync("Sales/Sellers", myData);
             status?.ResponseObject && dispatch(init_delegates_and_staff());
             status?.ResponseObject && setMsg(true)
         }
@@ -74,6 +75,8 @@ const AddEditDelegatesAndStaff = ()=>{
 
     return(
         <>
+            <MessageRequest data={msg}/>
+
             <div className="flex flex-wrap justify-center">
                 <div className="w-full flex justify-between border-b pb-4 mb-4">
                     <h3 className="text-lg font-bold">إضافة مندوب</h3>
@@ -107,14 +110,14 @@ const AddEditDelegatesAndStaff = ()=>{
                     </div>
                     <div className="input_label_basic ps-2 w-3/12">
                         <label htmlFor="Sex">الجنس</label>
-                        <Select className="w-full" id="Sex" value={myData?.Sex || ""} onChange={value => changeValue(value, "Sex")}>
+                        <Select className="w-full" id="Sex" value={myData?.Sex} onChange={value => changeValue(value, "Sex")}>
                             <Select.Option value={0}>ذكر</Select.Option>
                             <Select.Option value={1}>انثى</Select.Option>
                         </Select>
                     </div>
                     <div className="input_label_basic ps-2 w-3/12">
                         <label htmlFor="Religon">الديانة</label>
-                        <Select className="w-full" id="Religon" value={myData?.Religon || ""} onChange={value => changeValue(value, "Religon")} >
+                        <Select className="w-full" id="Religon" value={myData?.Religon} onChange={value => changeValue(value, "Religon")} >
                             <Select.Option value={0}>مسلم</Select.Option>
                             <Select.Option value={1}>مسيحي</Select.Option>
                             <Select.Option value={2}>يهودي</Select.Option>

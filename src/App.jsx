@@ -282,6 +282,7 @@ function App() {
               <Route path="delegates_staff">
                 <Route index element={<DelegatesAndStaff />} />
                 <Route path="add" element={<AddEditDelegatesAndStaff />} />
+                <Route path="edit/:id" element={<AddEditDelegatesAndStaff />} />
               </Route>
               <Route path="customer_source">
                 <Route index element={<CustomerSource />} />
@@ -290,6 +291,7 @@ function App() {
               <Route path="customers">
                 <Route index element={<Customers />} />
                 <Route path="add" element={<AddEditCustomers />} />
+                <Route path="edit/:id" element={<AddEditCustomers />} />
               </Route>
               <Route path="sale">
                 <Route index element={<Sale />} />
