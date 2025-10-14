@@ -15,7 +15,7 @@ export const SupplierTypeSlice = createSlice({
         state.value = payload;
     },
     init_supplier_type: (state)=>{
-      state.value = { VendorTypeID: "", VendorTypeName: "", UpVendorTypeID: "0" }
+      state.value = { VendorTypeID: "", VendorTypeName: "", UpVendorTypeID: "0", UpVendorTypeName: "" }
     },
   },
 })

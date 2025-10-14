@@ -97,6 +97,8 @@ import PriceList from "./pages/Stock/PriceList/PriceList.jsx"
 import AddEditPriceList from "./pages/Stock/PriceList/AddOrEdit/AddEditPriceList.jsx"
 import SuppliersTypes from "./pages/Purch/SuppliersTypes/SuppliersTypes.jsx"
 import AddEditSuppliersTypes from "./pages/Purch/SuppliersTypes/AddOrEdit/AddEditSuppliersTypes.jsx"
+import CustomersTypes from "./pages/Sales/CustomersTypes/CustomersTypes.jsx"
+import AddEditCustomersTypes from "./pages/Sales/CustomersTypes/AddOrEdit/AddEditCustomersTypes.jsx"
 function App() {
   
   return (
@@ -292,6 +294,11 @@ function App() {
                 <Route index element={<Customers />} />
                 <Route path="add" element={<AddEditCustomers />} />
                 <Route path="edit/:id" element={<AddEditCustomers />} />
+              </Route>
+              <Route path="customers_types">
+                <Route index element={<CustomersTypes />} />
+                <Route path="add" element={<AddEditCustomersTypes />} />
+                <Route path="edit/:id" element={<AddEditCustomersTypes />} />
               </Route>
               <Route path="sale">
                 <Route index element={<Sale />} />

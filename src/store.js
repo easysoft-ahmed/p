@@ -13,13 +13,14 @@ import supplier from "./pages/Purch/Suppliers/AddOrEdit/stateSupplier"
 import supplier_type from "./pages/Purch/SuppliersTypes/AddOrEdit/stateSupplierType"
 import delegates_and_staff from "./pages/Sales/DelegatesAndStaff/AddOrEdit/stateDelegatesAndStaff"
 import customer from "./pages/Sales/Customers/AddOrEdit/stateCustomer"
+import customer_type from "./pages/Sales/CustomersTypes/AddOrEdit/stateCustomersTypes"
 
 
 
 export const store = configureStore({
   reducer: {
     unit, color, stock, size, size_group, country_of_origin, product,print_barcode, store_movement, store_transform, supplier, supplier_type,
-    delegates_and_staff, customer
+    delegates_and_staff, customer, customer_type
 
   },
 })

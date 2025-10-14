@@ -5,6 +5,7 @@ const sections = [
         {label: "أكواد المناطق", path: "cities"},
         {label: "أكواد المندوبين", path: "delegates_staff"},
         {label: "أكواد مصدر العميل", path: "customer_source"},
+        {label: "أكواد انواع العملاء", path: "customers_types"},
         {label: "أكواد العملاء", path: "customers"},
     ]},
     {name: "أخرى", links: [
