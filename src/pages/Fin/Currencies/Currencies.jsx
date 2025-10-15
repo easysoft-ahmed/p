@@ -4,23 +4,36 @@ import { Link } from "react-router-dom";
 import MessageRequest from "../../../components/MessageRequest";
 import useGet from "../../../hooks/useGet";
 import { useEffect } from "react";
+import DeleteBtn from "../../../components/DeleteBtn";
 
 const columns = [
   {
     title: 'كود العملة',
     dataIndex: 'CurrID',
-    key: 'name',
+    key: 'CurrID',
   },
   {
     title: 'اسم العملة',
     dataIndex: 'CurrName',
-    key: 'age',
+    key: 'CurrName',
   },
   {
     title: 'معامل العملة',
     dataIndex: 'CurrRate',
-    key: 'age',
+    key: 'CurrRate',
   },
+  {
+    title: 'إجراء',
+    render: (record) => (
+      <>
+        <Link to={`edit/${record.CurrID}`}>Edit</Link>
+        <DeleteBtn url={`Fin/Currs?CurrId=${record.CurrID}`} />
+      </>
+
+    ),
+    key: 'CurrID',
+  },
+
 ];
 
 

@@ -4,23 +4,36 @@ import { Link } from "react-router-dom";
 import MessageRequest from "../../../components/MessageRequest";
 import useGet from "../../../hooks/useGet";
 import { useEffect } from "react";
+import DeleteBtn from "../../../components/DeleteBtn";
 
 const columns = [
   {
     title: 'كود الضريبة',
     dataIndex: 'TaxID',
-    key: 'name',
+    key: 'TaxID',
   },
   {
     title: 'اسم الضريبة',
     dataIndex: 'TaxName',
-    key: 'age',
+    key: 'TaxName',
   },
   {
     title: 'نسبة الضريبة',
     dataIndex: 'TaxRate',
-    key: 'age',
+    key: 'TaxRate',
   },
+  {
+    title: 'إجراء',
+    render: (record) => (
+      <>
+        <Link to={`edit/${record.TaxID}`}>Edit</Link>
+        <DeleteBtn url={`Fin/Taxs?TaxId=${record.TaxID}`} />
+      </>
+
+    ),
+    key: 'TaxID',
+  },
+
 ];
 
 

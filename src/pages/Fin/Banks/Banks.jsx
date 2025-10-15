@@ -4,17 +4,29 @@ import { Link } from "react-router-dom";
 import MessageRequest from "../../../components/MessageRequest";
 import useGet from "../../../hooks/useGet";
 import { useEffect } from "react";
+import DeleteBtn from "../../../components/DeleteBtn";
 
 const columns = [
   {
     title: 'كود البنك',
     dataIndex: 'BankID',
-    key: 'name',
+    key: 'BankID',
   },
   {
     title: 'اسم البنك',
     dataIndex: 'BankName',
-    key: 'age',
+    key: 'BankName',
+  },
+  {
+    title: 'إجراء',
+    render: (record) => (
+      <>
+        <Link to={`edit/${record.BankID}`}>Edit</Link>
+        <DeleteBtn url={`Fin/Banks?BankID=${record.BankID}`} />
+      </>
+
+    ),
+    key: 'BankID',
   },
 
 ];

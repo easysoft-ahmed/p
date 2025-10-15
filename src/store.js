@@ -14,13 +14,17 @@ import supplier_type from "./pages/Purch/SuppliersTypes/AddOrEdit/stateSupplierT
 import delegates_and_staff from "./pages/Sales/DelegatesAndStaff/AddOrEdit/stateDelegatesAndStaff"
 import customer from "./pages/Sales/Customers/AddOrEdit/stateCustomer"
 import customer_type from "./pages/Sales/CustomersTypes/AddOrEdit/stateCustomersTypes"
+import bank from "./pages/Fin/Banks/AddOrEdit/stateBank"
+import tax from "./pages/Fin/Taxes/AddOrEdit/stateTax"
+import currency from "./pages/Fin/Currencies/AddOrEdit/stateCurrency"
+import box from "./pages/Fin/Boxs/AddOrEdit/stateBox"
 
 
 
 export const store = configureStore({
   reducer: {
     unit, color, stock, size, size_group, country_of_origin, product,print_barcode, store_movement, store_transform, supplier, supplier_type,
-    delegates_and_staff, customer, customer_type
+    delegates_and_staff, customer, customer_type, bank, tax, currency, box
 
   },
 })

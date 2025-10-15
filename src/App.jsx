@@ -125,18 +125,22 @@ function App() {
               <Route path="currencies" >
                   <Route index element={<Currencies />} />
                   <Route path="add" element={<AddEditCurrencies />} />
+                  <Route path="edit/:id" element={<AddEditCurrencies />} />
               </Route>
               <Route path="taxes" >
                 <Route index  element={<Taxes />}/>
                 <Route path="add"  element={<AddEditTaxes />}/>
+                <Route path="edit/:id"  element={<AddEditTaxes />}/>
               </Route>
               <Route path="boxs">
                 <Route index element={<Boxs />} />
                 <Route path="add" element={<AddEditBoxs />} />
+                <Route path="edit/:id" element={<AddEditBoxs />} />
               </Route>
               <Route path="banks">
                 <Route index element={<Banks />} />
                 <Route path="add" element={<AddEditBanks />} />
+                <Route path="edit/:id" element={<AddEditBanks />} />
               </Route>
               <Route path="rank_cash_flow">
                 <Route index element={<RankCashFlow />} />
