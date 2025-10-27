@@ -4,11 +4,13 @@ import { Link } from "react-router-dom";
 import MessageRequest from "../../../components/MessageRequest";
 import useGet from "../../../hooks/useGet";
 import { useEffect } from "react";
+import EditBtn from "../../../components/EditBtn";
+import DeleteBtn from "../../../components/DeleteBtn";
 
 const columns = [
   {
     title: 'رقم الفاتورة',
-    dataIndex: 'DocID',
+    dataIndex: 'DocNo',
     key: 'DocID',
   },
   {
@@ -36,6 +38,18 @@ const columns = [
     dataIndex: 'Notes',
     key: 'Notes',
   },
+  {
+    title: 'إجراء',
+    render: (record) => (
+      <>
+        <EditBtn url={`edit/${record.DocNo}`} />
+        <DeleteBtn url={`Purch?DocId=${record.DocID}`} />
+      </>
+
+    ),
+    key: 'StoreID',
+  },
+
 ];
 
 

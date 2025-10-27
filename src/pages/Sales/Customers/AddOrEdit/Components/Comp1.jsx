@@ -39,11 +39,14 @@ const Comp1 = ()=>{
 
                     <div className="input_label_basic w-2/12">
                         <label htmlFor="">نوع العميل</label>
-                        <Select className="w-full" value={myData?.CustTypeID?.toString() || ""} onChange={value => changeValue(value, "CustTypeID")}>
-                            {myData?.dataSelects?.customers_types?.map(Cust => 
-                                <Select.Option value={Cust.CustTypeID?.toString()}>{Cust.CustTypeName}</Select.Option>    
-                            )}
-                        </Select>
+                        <Select className="w-full" 
+                            value={myData?.CustTypeID?.toString() || ""} 
+                            onChange={value => changeValue(value, "CustTypeID")}
+                            showSearch filterOption={(input, option) =>
+                                (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                            }
+                            options={myData?.dataSelects?.customers_types?.map(cust =>{ return {value: cust.CustTypeID?.toString(), label: cust.CustTypeName, ...cust}})}
+                        />
                     </div>
                     <div className="input_label_basic ps-2 w-2/12">
                         <label htmlFor="">المصدر</label>
@@ -89,11 +92,14 @@ const Comp1 = ()=>{
 
                     <div className="input_label_basic ps-2 w-2/12">
                         <label htmlFor="">المنطقة</label>
-                        <Select className="w-full">
-                            <Select.Option value="1">المعادي</Select.Option>
-                            <Select.Option value="2">مدينة نصر</Select.Option>
-                            <Select.Option value="3">اكتوبر</Select.Option>
-                        </Select>
+                        <Select 
+                            className="w-full"
+                            value={myData?.AreaID} onChange={value => changeValue(value, "AreaID")}
+                            showSearch filterOption={(input, option) =>
+                                (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                            }
+                            options={myData?.dataSelects?.countries?.map(count =>{ return {value: count.CountryID?.toString(), label: count.CountryName, ...count}})}
+                        />
                     </div>
                     <div className="input_label_basic ps-2 w-2/12">
                         <label htmlFor="">المندوب</label>

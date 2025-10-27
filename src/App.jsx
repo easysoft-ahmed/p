@@ -84,8 +84,7 @@ import Stores from "./pages/Stock/Stores/Stores.jsx"
 import AddEditStores from "./pages/Stock/Stores/AddOrEdit/AddEditStores.jsx"
 import Products from "./pages/Stock/Products/Products.jsx"
 import AddEditProducts from "./pages/Stock/Products/AddOrEdit/AddEditProducts.jsx"
-import { Provider } from "react-redux"
-import { store } from "./store.js"
+import { Provider, useDispatch, useSelector } from "react-redux"
 import PrintBarcode from "./pages/Stock/PrintBarcode/PrintBarcode.jsx"
 import StoreMovement from "./pages/Stock/StoreMovement/StoreMovement.jsx"
 import AddEditStoreMovement from "./pages/Stock/StoreMovement/AddOrEdit/AddEditStoreMovement.jsx"
@@ -99,10 +98,28 @@ import SuppliersTypes from "./pages/Purch/SuppliersTypes/SuppliersTypes.jsx"
 import AddEditSuppliersTypes from "./pages/Purch/SuppliersTypes/AddOrEdit/AddEditSuppliersTypes.jsx"
 import CustomersTypes from "./pages/Sales/CustomersTypes/CustomersTypes.jsx"
 import AddEditCustomersTypes from "./pages/Sales/CustomersTypes/AddOrEdit/AddEditCustomersTypes.jsx"
+import { Modal } from "antd"
+import { useState } from "react"
+import { edit_global } from "./redux/stateGlobal.js";
+import Chart from "chart.js/auto";
+import { CategoryScale } from "chart.js";
+Chart.register(CategoryScale);
+
 function App() {
-  
+  const dispatch = useDispatch();
+  const globalState = useSelector(state => state.global.value)
   return (
-    <Provider store={store}>
+    <>
+
+
+      <Modal
+        open={globalState.popupF3}
+        footer={false}
+        onCancel={()=>dispatch(edit_global({popupF3: false}))}
+      >
+        {globalState?.popupF3Component}
+      </Modal>
+
 
       <BrowserRouter>
         <Routes>
@@ -114,10 +131,12 @@ function App() {
               <Route path="helps_codes" >
                 <Route index  element={<HelpsCodes />} />
                 <Route path="add" element={<AddEditHelpsCode />}/>
+                <Route path="edit/:id" element={<AddEditHelpsCode />}/>
               </Route>
               <Route path="accounts_codes">
                 <Route index element={<AccountsCodes />} />
                 <Route path="add" element={<AddEditAccountCodes />} />
+                <Route path="edit/:id" element={<AddEditAccountCodes />} />
               </Route>
             </Route>
             <Route path="financial">
@@ -272,10 +291,12 @@ function App() {
               <Route path="purch_invoice">
                 <Route index element={<PurchInvoice />} />
                 <Route path="add" element={<AddEditPurchInvoice />} />
+                <Route path="edit/:id" element={<AddEditPurchInvoice />} />
               </Route>
               <Route path="purch_return_invoice">
                 <Route index element={<PurchReturnInvoice />} />
                 <Route path="add" element={<AddEditPurchReturnInvoice />} />
+                <Route path="edit/:id" element={<AddEditPurchReturnInvoice />} />
               </Route>
             </Route>
             
@@ -315,6 +336,7 @@ function App() {
               <Route path="sales_invoice">
                 <Route index element={<SalesInvoice />} />
                 <Route path="add" element={<AddEditSalesInvoice />} />
+                <Route path="edit/:id" element={<AddEditSalesInvoice />} />
               </Route>
               <Route path="sales_return_invoice">
                 <Route index element={<SalesReturnInvoice />} />
@@ -325,7 +347,7 @@ function App() {
           <Route path="/login" element={<Login />}/>
         </Routes>
       </BrowserRouter>
-    </Provider>
+    </>
       
   )
 }

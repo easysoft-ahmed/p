@@ -38,11 +38,14 @@ const Comp1 = ()=>{
 
                     <div className="input_label_basic w-3/12">
                         <label htmlFor="">نوع المورد</label>
-                        <Select className="w-full" value={myData?.VendorTypeID?.toString() || ""} onChange={value => changeValue(value, "VendorTypeID")}>
-                            {myData?.dataSelects?.suppliers_types?.map(vend => 
-                                <Select.Option value={vend.VendorTypeID?.toString()}>{vend.VendorTypeName}</Select.Option>    
-                            )}
-                        </Select>
+                        <Select 
+                            className="w-full" value={myData?.VendorTypeID?.toString() || ""} 
+                            onChange={value => changeValue(value, "VendorTypeID")}
+                            showSearch filterOption={(input, option) =>
+                                (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                            }
+                            options={myData?.dataSelects?.suppliers_types?.map(vend =>{ return {value: vend.VendorTypeID?.toString(), label: vend.VendorTypeName, ...vend}})}
+                        />
                     </div>
 
 
@@ -74,14 +77,14 @@ const Comp1 = ()=>{
                         <label htmlFor="">مندوب</label>
                         <Select
                             className="w-full"
-                            showSearch
                             allowClear value={myData?.SellerID?.toString() || ""} onChange={value => changeValue(value, "SellerID")}
                             id="SellerID"
-                        >
-                            {myData?.dataSelects?.staff?.map(staf => 
-                                <Select.Option value={staf?.SellerID?.toString()}>{staf.SellerName}</Select.Option>    
-                            )}
-                        </Select>
+                            showSearch filterOption={(input, option) =>
+                                (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                            }
+                            options={myData?.dataSelects?.staff?.map(staf =>{ return {value: staf.SellerID?.toString(), label: staf.SellerName, ...staf}})}
+
+                        />
                     </div>
                     <div className="flex ps-2 w-3/12">
                         <div className="input_label_basic w-9/12">
@@ -90,6 +93,9 @@ const Comp1 = ()=>{
                                 className="w-full" 
                                 value={myData?.CurrId} 
                                 onChange={(value, opt) => dispatch(edit_supplier({CurrId: opt.CurrID, CurrRate: opt.CurrRate}))}
+                                showSearch filterOption={(input, option) =>
+                                    (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                                }
                                 options={myData?.dataSelects?.currencies?.map(currency =>{ 
                                     return {...currency, value: currency.CurrID, label: currency.CurrName}
                                 })}
@@ -131,12 +137,14 @@ const Comp1 = ()=>{
                                     id="AccId" 
                                     value={myData?.AccId} 
                                     onChange={value => changeValue(value, "AccId")}
-                                >
-                                    <Select.Option value={0}>-- غير محدد --</Select.Option>    
-                                        {myData?.dataSelects?.acc_codes?.map(acc => 
-                                            <Select.Option value={acc?.AccID?.toString()}>{acc.AccName}</Select.Option>    
-                                        )}
-                                </Select>
+                                    showSearch filterOption={(input, option) =>
+                                        (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                                    }
+                                    options={myData?.dataSelects?.acc_codes?.map(acc =>{ 
+                                        return {...acc, value: acc.AccID, label: acc.AccName}
+                                    })}
+
+                                />
                             </div>
                             <div className="input_label_basic ps-2 w-4/12">
                                 <label htmlFor="">دفعة مقدمة</label>

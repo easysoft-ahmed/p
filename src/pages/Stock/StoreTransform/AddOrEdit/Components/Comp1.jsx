@@ -87,7 +87,9 @@ const Comp1 = ()=>{
                                     
                                     dispatch(edit_store_transform({ToStoreId: record?.StoreID, ToStoreName: record?.StoreName}));
                                 }}
-
+                                showSearch filterOption={(input, option) =>
+                                    (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                                }
                                 options={myData?.dataSelects?.stores?.map(store =>{ return {value: store.StoreID, label: store.StoreName, ...store}})}
                             />
                         </div>

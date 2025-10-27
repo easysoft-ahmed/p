@@ -105,13 +105,15 @@ const AddEditCustomersTypes = ()=>{
 
                     <div className="input_label_basic ps-2 w-3/12">
                         <label htmlFor="">نوع العميل الرئيسي</label>
-                        <Select className="w-full" value={myData?.UpCustTypeID?.toString() || ""} onChange={value => changeValue(value, "UpCustTypeID")}>
-                            <Select.Option value={"0"}>نوع جذر</Select.Option>    
-
-                            {myData?.dataSelects?.customers_types?.filter(ele => ele.CustTypeID !== myData?.CustTypeID)?.map(cust => 
-                                <Select.Option value={cust.CustTypeID?.toString()}>{cust.CustTypeName}</Select.Option>    
-                            )}
-                        </Select>
+                        <Select 
+                            className="w-full" 
+                            value={myData?.UpCustTypeID?.toString() || ""} 
+                            onChange={value => changeValue(value, "UpCustTypeID")}
+                            showSearch filterOption={(input, option) =>
+                                (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                            }
+                            options={myData?.dataSelects?.customers_types?.filter(ele => ele.CustTypeID !== myData?.CustTypeID)?.map(cust =>{ return {value: cust.CustTypeID?.toString(), label: cust.CustTypeName, ...cust}}).concat({value: "0", label: "نوع جذر"})}
+                        />
                     </div>
 
 

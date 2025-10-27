@@ -55,13 +55,13 @@ const Comp2 = ()=>{
                                     className="w-full"
                                     value={ele.ProductName || ele.ProductID ? myData?.dataSelects?.products?.filter(product => product.ProductID == ele.ProductID)[0]["Productname"] || ele.ProductID : ""}                                    
                                     onChange={(value, record) =>{
-                                        console.log(record);
-                                        
                                         handleEditRow("TransFormItems", "edit", ele.fakeID,
                                             {ProductName: record?.label, ProductID: record?.value, Qty: 1, Price: record?.PurchPrice, StoreId: record?.StoreId || myData.StoreId});
                                         
                                     }}
-
+                                    showSearch filterOption={(input, option) =>
+                                        (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                                    }
                                     options={myData?.dataSelects?.products?.map(product =>{ return {value: product.ProductID, label: product.Productname, ...product}})}
                                 />
                             </td>
@@ -70,13 +70,11 @@ const Comp2 = ()=>{
                                     className="w-full"
                                     value={ele.UnitID ? myData?.dataSelects?.units?.filter(unit => unit.UnitID == ele.UnitID)[0]["UnitName"] || ele.UnitID : ""}                                    
                                     onChange={(value) => handleEditRow("TransFormItems", "edit", ele.fakeID, {UnitID: value})}
-                                >
-                                    {/* <Select.Option>-- غير محدد --</Select.Option> */}
-                                    {myData?.dataSelects?.units?.map(unit => 
-                                        <Select.Option value={unit.UnitID}>{unit.UnitName}</Select.Option>
-
-                                    )}
-                                </Select>
+                                    showSearch filterOption={(input, option) =>
+                                        (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                                    }
+                                    options={myData?.dataSelects?.units?.map(unit =>{ return {value: unit.UnitID, label: unit.UnitName, ...unit}})}
+                                />
                             </td>
                             <td>
                                 <Input
@@ -90,7 +88,9 @@ const Comp2 = ()=>{
                                     onChange={(value, record) =>{
                                         handleEditRow("TransFormItems", "edit", ele.fakeID , {StoreId: record?.StoreID, StoreName: record?.StoreName})
                                     }}
-
+                                    showSearch filterOption={(input, option) =>
+                                        (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                                    }
                                     options={myData?.dataSelects?.stores?.map(store =>{ return {value: store.StoreID, label: store.StoreName, ...store}})}
                                 />
                             </td>
@@ -101,7 +101,9 @@ const Comp2 = ()=>{
                                     onChange={(value, record) =>{
                                         handleEditRow("TransFormItems", "edit", ele.fakeID , {ToStoreId: record?.StoreID, ToStoreName: record?.StoreName})
                                     }}
-
+                                    showSearch filterOption={(input, option) =>
+                                        (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                                    }
                                     options={myData?.dataSelects?.stores?.map(store =>{ return {value: store.StoreID, label: store.StoreName, ...store}})}
                                 />
                             </td>

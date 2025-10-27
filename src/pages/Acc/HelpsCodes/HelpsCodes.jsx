@@ -4,6 +4,8 @@ import { useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import MessageRequest from "../../../components/MessageRequest";
 import useGet from "../../../hooks/useGet";
+import DeleteBtn from "../../../components/DeleteBtn";
+import EditBtn from "../../../components/EditBtn";
 
 const columns = [
   {
@@ -16,6 +18,18 @@ const columns = [
     dataIndex: 'AccDailyName',
     key: 'AccDailyName',
   },
+  {
+    title: 'إجراء',
+    render: (record) => (
+      <>
+        <EditBtn url={`edit/${record.AccDailyId}`} />
+        <DeleteBtn url={`Acc/AccDailys?DailyId=${record.AccDailyId}`} />
+      </>
+
+    ),
+    key: 'AccDailyId',
+  },
+
 ];
 
 

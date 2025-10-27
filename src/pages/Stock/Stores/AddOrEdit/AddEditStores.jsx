@@ -112,15 +112,13 @@ const AddEditStores = ()=>{
                         <label htmlFor="SellerID">مسؤول المخزن</label>
                         <Select
                             className="w-full"
-                            showSearch
                             allowClear value={myData?.SellerID || ""} onChange={value => changeValue(value, "SellerID")}
-                            defaultValue={0} id="SellerID"
-                        >
-                            <Select.Option value={0}>-- غير محدد --</Select.Option>    
-                            {myData?.dataSelects?.staff?.map(staf => 
-                                <Select.Option value={staf?.SellerID?.toString()}>{staf.SellerName}</Select.Option>    
-                            )}
-                        </Select>
+                            id="SellerID"
+                            showSearch filterOption={(input, option) =>
+                                (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                            }
+                            options={myData?.dataSelects?.staff?.map(staf =>{ return {value: staf.SellerID, label: staf.SellerName, ...staf}})}
+                        />
                     </div>
 
                     <div className="input_label_basic ps-2 w-6/12">
@@ -139,12 +137,11 @@ const AddEditStores = ()=>{
                             id="AccId" 
                             value={myData?.AccId || ""}
                             onChange={value => changeValue(value, "AccId")}
-                        >
-                            <Select.Option value={0}>-- غير محدد --</Select.Option>    
-                                {myData?.dataSelects?.acc_codes?.map(acc => 
-                                    <Select.Option value={acc.AccID}>{acc.AccName}</Select.Option>    
-                                )}
-                        </Select>
+                            showSearch filterOption={(input, option) =>
+                                (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                            }
+                            options={myData?.dataSelects?.acc_codes?.map(acc =>{ return {value: acc.AccID, label: acc.AccName, ...acc}})}
+                        />
                     </div>
                     
                     <div className="input_label_basic ps-2 w-full">
@@ -154,12 +151,11 @@ const AddEditStores = ()=>{
                             id="CostId" 
                             value={myData?.CostId} 
                             onChange={value => changeValue(value, "CostId")}
-                        >
-                            <Select.Option value={0}>-- غير محدد --</Select.Option>    
-                                {myData?.dataSelects?.cost_centers?.map(center => 
-                                    <Select.Option value={center.CostID}>{center.CostName}</Select.Option>    
-                                )}
-                        </Select>
+                            showSearch filterOption={(input, option) =>
+                                (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                            }
+                            options={myData?.dataSelects?.cost_centers?.map(center =>{ return {value: center.CostID, label: center.CostName, ...center}})}
+                        />
 
                         {/* <Select
                             className="w-full"

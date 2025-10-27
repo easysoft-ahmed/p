@@ -4,45 +4,59 @@ import { Link } from "react-router-dom";
 import MessageRequest from "../../../components/MessageRequest";
 import useGet from "../../../hooks/useGet";
 import { useEffect } from "react";
+import DeleteBtn from "../../../components/DeleteBtn";
+import EditBtn from "../../../components/EditBtn";
 
 const columns = [
   {
     title: 'رقم الفاتورة',
-    dataIndex: 'TaxID',
+    dataIndex: 'DocID',
     key: 'name',
   },
   {
     title: 'اسم الجهة',
-    dataIndex: 'TaxName',
+    dataIndex: 'CustomerName',
     key: 'age',
   },
   {
     title: 'الرقم الدفتري',
-    dataIndex: 'TaxName',
+    dataIndex: 'DocTr_type',
     key: 'age',
   },
   {
     title: 'تاريخ الفاتورة',
-    dataIndex: 'TaxName',
+    dataIndex: 'DocDate',
     key: 'age',
   },
   {
     title: 'صافي القيمة',
-    dataIndex: 'TaxName',
+    dataIndex: 'NetTotal',
     key: 'age',
   },
   {
     title: 'ملاحظات',
-    dataIndex: 'TaxName',
+    dataIndex: 'Notes',
     key: 'age',
   },
+  {
+    title: 'إجراء',
+    render: (record) => (
+      <>
+        <EditBtn url={`edit/${record.DocNo}`} />
+        <DeleteBtn url={`Sales?DocNumver=${record.DocNo}`} />
+      </>
+
+    ),
+    key: 'StoreID',
+  },
+
 ];
 
 
 const SalesInvoice = ()=>{
   let {getData, resultGet, isLoadingGet, errorMsgGet} = useGet();
   useEffect(()=>{
-    getData("Fin/Taxs")
+    getData("Sales")
   }, [])
 
     return(

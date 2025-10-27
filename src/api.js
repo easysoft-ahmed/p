@@ -16,6 +16,8 @@ let dataEndPoint = {
     staff : {end_point: "Sales/Sellers", name_en: "الموظفين"},
     suppliers_types : {end_point: "Purch/VendorTypes", name_en: "انواع الموردين"},
     customers_types : {end_point: "Sales/CustomerTypes", name_en: "انواع العملاء"},
+    customers : {end_point: "Sales/Customers", name_en: "العملاء"},
+    taxes : {end_point: "Fin/Taxs", name_en: "الضرائب"},
     
 }
 

@@ -38,7 +38,7 @@ const AddEditCustomers = ()=>{
 
     async function callGetManyDataForSelectInput(){
         try {
-            let data = await getManyDataForSelectInput([ "customers_types", "staff", "cost_centers", "acc_codes", "currencies" ], getDataAsync);            
+            let data = await getManyDataForSelectInput([ "customers_types", "countries", "staff", "cost_centers", "acc_codes", "currencies" ], getDataAsync);            
             dispatch(edit_customer({dataSelects: data , CurrID: data?.currencies?.filter(e => e.IsDefualte)[0]?.CurrID, CurrRate: data?.currencies?.filter(e => e.IsDefualte)[0]?.CurrRate}))
         } catch (error) {
             console.log(error);

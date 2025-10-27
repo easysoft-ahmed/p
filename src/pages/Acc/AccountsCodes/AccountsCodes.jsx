@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import MessageRequest from "../../../components/MessageRequest";
 import useGet from "../../../hooks/useGet";
 import { useEffect } from "react";
+import DeleteBtn from "../../../components/DeleteBtn";
+import EditBtn from "../../../components/EditBtn";
 
 const columns = [
   {
@@ -21,6 +23,18 @@ const columns = [
     dataIndex: 'AccRank',
     key: 'age',
   },
+  {
+    title: 'إجراء',
+    render: (record) => (
+      <>
+        <EditBtn url={`edit/${record.AccID}`} />
+        <DeleteBtn url={`Acc/Accs?AccId=${record.AccID}`} />
+      </>
+
+    ),
+    key: 'AccId',
+  },
+
 ];
 
 

@@ -1,14 +1,14 @@
-import { Link } from "react-router-dom"
+import TemplateOne from "../../Layouts/TemplateOne";
 
+const sections = [
+    {name: "الاكواد" , links: [
+        {label: "أكواد الحسابات", path: "accounts_codes"},
+        {label: "أكواد اليوميات المساعدة", path: "helps_codes"},
+    ]},
+]
 const Accounts = ()=>{
     return(
-        <div className="w-full">
-            <h2 className="w-full">الاكواد</h2>
-            <div className="flex gap-4">
-                <Link to="/accounts/accounts_codes">أكواد الحسابات</Link>
-                <Link to="/accounts/helps_codes">أكواد اليوميات المساعدة</Link>
-            </div>
-        </div>
+        <TemplateOne data={sections} />
     )
 }
 

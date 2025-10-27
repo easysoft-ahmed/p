@@ -6,6 +6,7 @@ import useGet from "../../../hooks/useGet";
 import { useEffect } from "react";
 import { handleOnlyDate } from "../../../helpers";
 import DeleteBtn from "../../../components/DeleteBtn";
+import EditBtn from "../../../components/EditBtn";
 
 let switchValue = (key)=>{
   switch (key) {
@@ -45,7 +46,7 @@ const columns = [
     title: 'إجراء',
     render: (record) => (
       <>
-        <Link to={`edit/${record.TransDoc}`}>Edit</Link>
+        <EditBtn url={`edit/${record.TransDoc}`} />
         <DeleteBtn url={`Stock/Trans?TransDoc=${record.TransDoc}`} />
       </>
 

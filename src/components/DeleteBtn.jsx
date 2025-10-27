@@ -1,4 +1,4 @@
-import { message, Popconfirm } from "antd";
+import { Button, message, Popconfirm } from "antd";
 import useDelete from "../hooks/useDelete";
 
 const DeleteBtn = ({url})=>{
@@ -15,7 +15,7 @@ const DeleteBtn = ({url})=>{
         <>
             
             <Popconfirm title="حذف عنصر" description="هل متاكد من حذف العنصر ؟" onConfirm={confirm}  okText="Yes" cancelText="No" >
-                <button href="#">  Delete</button>
+                <Button danger type="primary" className="mx-2">حذف</Button>
             </Popconfirm>
 
         </>

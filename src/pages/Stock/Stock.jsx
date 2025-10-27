@@ -16,7 +16,7 @@ const sections = [
         {label: "التحويلات بين المخازن", path: "store_transform"},
         {label: "حركة الجرد الفعلي", path: "real_inventory"},
         {label: "قائمة الاسعار", path: "price_list"},
-        {label: "بحث متقدم للاصناف", path: "advanced_search"},
+        // {label: "بحث متقدم للاصناف", path: "advanced_search"},
     ]},
 ]
 

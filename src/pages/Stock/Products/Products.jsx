@@ -5,6 +5,7 @@ import MessageRequest from "../../../components/MessageRequest";
 import useGet from "../../../hooks/useGet";
 import { useEffect } from "react";
 import DeleteBtn from "../../../components/DeleteBtn";
+import EditBtn from "../../../components/EditBtn";
 
 const columns = [
   {
@@ -61,7 +62,7 @@ const columns = [
     title: 'إجراء',
     render: (record) => (
       <>
-        <Link to={`edit/${record.ProductID}`}>Edit</Link>
+        <EditBtn url={`edit/${record.ProductID}`} />
         <DeleteBtn url={`Stock/Products?ProductID=${record.ProductID}`} />
       </>
 

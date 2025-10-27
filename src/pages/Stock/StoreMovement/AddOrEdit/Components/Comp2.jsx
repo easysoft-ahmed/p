@@ -7,15 +7,15 @@ import { unique } from "../../../../../helpers";
 const Comp2 = ()=>{
     let myData = useSelector(state => state.store_movement.value);
     let dispatch = useDispatch();
-    let changeValue = (eventOrValue, prop)=>{
+    // let changeValue = (eventOrValue, prop)=>{
         
-        if(prop){
-            dispatch(edit_store_movement({[prop]: eventOrValue}))
-        }else{
-            let {id, value} = eventOrValue.target;
-            dispatch(edit_store_movement({[id]: value}))
-        }
-    }
+    //     if(prop){
+    //         dispatch(edit_store_movement({[prop]: eventOrValue}))
+    //     }else{
+    //         let {id, value} = eventOrValue.target;
+    //         dispatch(edit_store_movement({[id]: value}))
+    //     }
+    // }
 
     let handleEditRow = (tableName, actionType, fakeID, propsAndValue)=>{
         dispatch(modified_tables_store_movement({tableName, actionType, fakeID, propsAndValue}))
@@ -60,7 +60,9 @@ const Comp2 = ()=>{
                                             
                                             handleEditRow("StockItems", "edit", ele.fakeID,{ProductName: value, ProductID: record?.value, Qty: 1, Price: record?.PurchPrice, Total: record?.PurchPrice * 1, StoreId: record?.StoreId});
                                         }}
-
+                                        showSearch filterOption={(input, option) =>
+                                            (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                                        }
                                         options={myData?.dataSelects?.products?.map(product =>{ return {value: product.ProductID, label: product.Productname, ...product}})}
                                     />
                                 </td>
@@ -69,13 +71,12 @@ const Comp2 = ()=>{
                                         className="w-full"
                                         value={ele.UnitID ? myData?.dataSelects?.units?.filter(unit => unit.UnitID == ele.UnitID)[0]["UnitName"] || ele.UnitID : ""}                                    
                                         onChange={(value) => handleEditRow("StockItems", "edit", ele.fakeID, {UnitID: value})}
-                                    >
-                                        {/* <Select.Option>-- غير محدد --</Select.Option> */}
-                                        {myData?.dataSelects?.units?.map(unit => 
-                                            <Select.Option value={unit.UnitID}>{unit.UnitName}</Select.Option>
+                                        showSearch filterOption={(input, option) =>
+                                            (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                                        }
+                                        options={myData?.dataSelects?.units?.map(unit =>{ return {value: unit.UnitID, label: unit.UnitName, ...unit}})}
 
-                                        )}
-                                    </Select>
+                                    />
                                 </td>
                                 <td>
                                     <Input
@@ -96,13 +97,12 @@ const Comp2 = ()=>{
                                         className="w-full" placeholder="-- غير محدد --"
                                         value={ele.StoreId ? myData?.dataSelects?.stores?.filter(store => store.StoreID == ele.StoreId)[0]["StoreName"] || ele.StoreId : null}
                                         onChange={(value) => handleEditRow("StockItems", "edit", ele.fakeID, {StoreId: value})}
-                                    >
-                                        {/* <Select.Option>-- غير محدد --</Select.Option> */}
-                                        {myData?.dataSelects?.stores?.map(unit => 
-                                            <Select.Option value={unit.StoreID}>{unit.StoreName}</Select.Option>
+                                        showSearch filterOption={(input, option) =>
+                                            (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                                        }
+                                        options={myData?.dataSelects?.stores?.map(store =>{ return {value: store.StoreID, label: store.StoreName, ...store}})}
 
-                                        )}
-                                    </Select>
+                                    />
                                 </td>
                                 <td>
                                     <Input defaultValue={ele.Qty} readOnly />

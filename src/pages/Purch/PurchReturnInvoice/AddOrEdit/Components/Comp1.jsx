@@ -1,94 +1,151 @@
 import { SaveOutlined } from "@ant-design/icons";
 import { Button, DatePicker, Radio, Select, Switch } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+import { edit_return_purch_invoice } from "../stateReturnPurchInvoice";
+import dayjs from "dayjs";
 
 const Comp1 = ()=>{
+    let myData = useSelector(state => state.return_purch_invoice.value);
+    let dispatch = useDispatch();
+    let changeValue = (eventOrValue, prop)=>{
+        
+        if(prop){
+            dispatch(edit_return_purch_invoice({[prop]: eventOrValue}))
+        }else{
+            let {id, value} = eventOrValue.target;
+            dispatch(edit_return_purch_invoice({[id]: value}))
+        }
+    }
+
     return(
         <>
             <div className="flex flex-wrap justify-center">
-                <div className="w-full flex justify-between border-b pb-4 mb-4">
-                    <h3 className="text-lg font-bold">إضافة فاتورة مرتد مشتريات</h3>
-                    <Button type="primary" icon={<SaveOutlined />}>حفظ</Button>
-                </div>
-
                 <div className="flex flex-wrap w-full">
                     <div className="input_label_basic pe-4 w-3/12">
                         <label htmlFor="">رقم الفاتورة</label>
-                        <input type="text" />
+                        <input type="text" disabled value={myData?.DocNo || ""} onChange={e => changeValue(e.target.value, "DocNo")} />
                     </div>
                     <div className="input_label_basic pe-4 w-3/12">
                         <label htmlFor="">فاتورة مورد</label>
-                        <input type="text" />
+                        <input type="text" value={myData?.OtherDocNo || ""} onChange={e => changeValue(e.target.value, "OtherDocNo")} />
                     </div>
                     <div className="input_label_basic pe-4 w-3/12">
                         <label htmlFor="">تاريخ الفاتورة</label>
-                        <DatePicker />
+                        <DatePicker value={dayjs(myData.DocDate)} allowClear={false} onChange={(date, dateStr)=>changeValue(dateStr, "DocDate")} />
                     </div>
                     <div className="input_label_basic  w-3/12">
                         <label htmlFor="">تاريخ الاستحقاق</label>
-                        <DatePicker />
+                        <DatePicker value={dayjs(myData.DueDate)} allowClear={false} onChange={(date, dateStr)=>changeValue(dateStr, "DueDate")} />
                     </div>
                     <div className="input_label_basic w-full lg:w-2/12">
                         <label htmlFor="">العملة</label>
-                        <Select className="w-full">
-                            <Select.Option value="1">الجنية المصري</Select.Option>
-                        </Select>
+                        <Select
+                            placeholder="-- غير محدد --"
+                            allowClear
+                            onChange={(val, opt)=>{
+                                dispatch(edit_return_purch_invoice({CurrID: opt.CurrID, CurrRate: opt.CurrRate}))
+                            }}
+                            value={myData?.CurrID}
+                            filterOption={(input, option) =>
+                                (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                            }
+                            showSearch
+                            options={myData?.dataSelects?.currencies?.map(curr =>{ return {...curr, label: curr.CurrName, value: curr.CurrID}})}
+                        />
                     </div>
 
                     <div className="input_label_basic w-full px-4 lg:w-1/12">
                         <label htmlFor="">قيمة العملة</label>
-                        <input type="text" />
+                        <input type="text" value={myData?.CurrRate} onChange={(e) => changeValue(e.target.value, "CurrRate")} />
                     </div>
 
                     <div className="input_label_basic pe-4 w-full lg:w-3/12">
                         <label htmlFor="">نوع الجهة</label>
-                        <Select className="w-full">
-                            <Select.Option value="1">عميل</Select.Option>
-                            <Select.Option value="2">مورد</Select.Option>
-                            <Select.Option value="3">مندوب</Select.Option>
+                        <Select 
+                            className="w-full"
+                            value={myData?.SideType} 
+                            onChange={value => dispatch(edit_return_purch_invoice({SideType: value, CustomerId: "", CustomerName: "", SellerID: "", SellerName: "", VendorID: "", VendorName: ""}))}
+                        >
+                            <Select.Option value={0}>عميل</Select.Option>
+                            <Select.Option value={1}>مورد</Select.Option>
+                            <Select.Option value={2}>مندوب</Select.Option>
                         </Select>
                     </div>
 
                     <div className="input_label_basic pe-4 w-full lg:w-3/12">
                         <label htmlFor="">اسم الجهة</label>
-                        <Select className="w-full">
-                            <Select.Option value="1">عميل نقدي</Select.Option>
-                            <Select.Option value="2">مجد العجلة</Select.Option>
-                            <Select.Option value="3">عبد الكريم عطرة</Select.Option>
-                        </Select>
+                        <Select
+                            className="w-full"
+                            value={myData?.[myData?.SideType === 0 ? "CustomerId" : myData?.SideType === 1 ? "VendorId":"SellerID"]} 
+                            onChange={(value, opt) =>{
+                                console.log(opt);
+                                
+                                dispatch(edit_return_purch_invoice({
+                                    [myData?.SideType === 0 ? "CustomerId" : myData?.SideType === 1 ? "VendorId":"SellerID"]: opt[myData?.SideType === 0 ? "CustomerID" : myData?.SideType === 1 ? "VendorID":"SellerID"] ,
+                                    [myData?.SideType === 0 ? "CustomerName" : myData?.SideType === 1 ? "VendorName":"SellerName"]: opt[myData?.SideType === 0 ? "CustomerName" : myData?.SideType === 1 ? "VendorName":"SellerName"]}))
+                            }}
+                            filterOption={(input, option) =>
+                                (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                            }
+                            showSearch
+                            options={
+                                myData?.dataSelects?.[myData?.SideType === 0 ? "customers" : myData?.SideType === 1 ? "suppliers":"staff"]?.map(item =>{
+                                    let test = {...item, value: item[myData?.SideType === 0 ? "CustomerID" : myData?.SideType === 1 ? "VendorID":"SellerID"], label: item[myData?.SideType === 0 ? "CustomerName" : myData?.SideType === 1 ? "VendorName":"SellerName"]}
+                                    return test
+                                })}
+                        />
                     </div>
 
                     <div className="input_label_basic w-full lg:w-3/12">
                         <label htmlFor="">مندوب الشراء</label>
-                        <Select className="w-full">
-                            <Select.Option value="1">مندوب 1</Select.Option>
-                        </Select>
+                        <Select className="w-full"
+                            value={myData?.SellerID} 
+                            onChange={(val , opt) => dispatch(edit_return_purch_invoice({SellerID: opt.SellerID, SellerName: opt.SellerName}))}
+                            filterOption={(input, option) =>
+                                (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                            }
+                            showSearch
+                            options={myData?.dataSelects?.staff?.map(staf =>{ return {...staf, label: staf.SellerName, value: staf.SellerID}})}
+                            disabled={myData?.SideType === 2 ? true:false}
+                        />
                     </div>
 
                     <div className="input_label_basic w-full pe-4 lg:w-3/12">
                         <label htmlFor="">اسم الحساب</label>
-                        <Select className="w-full">
-                            <Select.Option value="1">الاصول</Select.Option>
-                            <Select.Option value="2">الخصوم</Select.Option>
-                            <Select.Option value="3">الايرادات</Select.Option>
-                        </Select>
+                        <Select 
+                            className="w-full" 
+                            id="AccId" 
+                            value={myData?.AccId || ""}
+                            onChange={value => changeValue(value, "AccId")}
+                            showSearch filterOption={(input, option) =>
+                                (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                            }
+                            options={myData?.dataSelects?.acc_codes?.map(acc =>{ return {value: acc.AccID, label: acc.AccName, ...acc}})}
+                        />
                     </div>
 
                     <div className="input_label_basic w-full pe-4 lg:w-3/12">
                         <label htmlFor="">ملاحظات</label>
-                        <input type="text" />
+                        <input type="text" value={myData?.Notes} onChange={e => changeValue(e.target.value, "Notes")} />
                     </div>
                     <div className="input_label_basic w-full pe-4 lg:w-3/12">
                         <label htmlFor="">المخزن</label>
-                        <Select className="w-full">
-                            <Select.Option value="1">المعادي</Select.Option>
-                            <Select.Option value="2">اكتوبر</Select.Option>
-                            <Select.Option value="3">الشيخ زايد</Select.Option>
+                        <Select
+                            className="w-full"
+                            showSearch
+                            id="StoreId" value={myData?.StoreId || 0} onChange={(value) => changeValue(value, "StoreId")}
+                            disabled
+                        >
+                            <Select.Option value={0}>-- غير محدد --</Select.Option>    
+                                {myData?.dataSelects?.stores?.map(store => 
+                                    <Select.Option value={store.StoreID}>{store.StoreName}</Select.Option>    
+                                )}
                         </Select>
                     </div>
 
                     <div className="input_label_basic w-full pe-4 lg:w-3/12">
                         <label htmlFor="">فاتورة المشتريات</label>
-                        <input type="text" />
+                        <input type="text" value={myData?.RelatedDoc} onChange={e => changeValue(e.target.value, "RelatedDoc")} />
                     </div>
 
 

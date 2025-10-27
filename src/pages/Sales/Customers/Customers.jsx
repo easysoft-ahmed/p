@@ -5,6 +5,7 @@ import MessageRequest from "../../../components/MessageRequest";
 import useGet from "../../../hooks/useGet";
 import { useEffect } from "react";
 import DeleteBtn from "../../../components/DeleteBtn";
+import EditBtn from "../../../components/EditBtn";
 
 const columns = [
   {
@@ -26,7 +27,7 @@ const columns = [
     title: 'إجراء',
     render: (record) => (
       <>
-        <Link to={`edit/${record.CustomerID}`}>Edit</Link>
+        <EditBtn url={`edit/${record.CustomerID}`} />
         <DeleteBtn url={`Sales/Customers?CustomerID=${record.CustomerID}`} />
       </>
 

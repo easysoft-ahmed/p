@@ -107,13 +107,14 @@ const AddEditSuppliersTypes = ()=>{
                         <label htmlFor="">نوع المورد الرئيسي</label>
                         {console.log(myData?.dataSelects)
                         }
-                        <Select className="w-full" value={myData?.UpVendorTypeID?.toString() || ""} onChange={value => changeValue(value, "UpVendorTypeID")}>
-                            <Select.Option value={"0"}>نوع جذر</Select.Option>    
-
-                            {myData?.dataSelects?.suppliers_types?.filter(ele => ele.VendorTypeID !== myData?.VendorTypeID)?.map(vend => 
-                                <Select.Option value={vend.VendorTypeID?.toString()}>{vend.VendorTypeName}</Select.Option>    
-                            )}
-                        </Select>
+                        <Select 
+                            className="w-full" value={myData?.UpVendorTypeID?.toString() || ""}
+                            onChange={value => changeValue(value, "UpVendorTypeID")}
+                            showSearch filterOption={(input, option) =>
+                                (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                            }
+                            options={myData?.dataSelects?.suppliers_types?.filter(ele => ele.VendorTypeID !== myData?.VendorTypeID)?.map(vend =>{ return {value: vend.VendorTypeID?.toString(), label: vend.VendorTypeName, ...vend}})}
+                        />
                     </div>
 
 
