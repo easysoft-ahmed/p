@@ -9,6 +9,9 @@ const Home = ()=>{
             title: '#',
             dataIndex: 'code',
             key: 'name',
+            render: (text)=>(
+              <span style={{color: "crimson"}}>{text}</span>
+            )
         },
         {
             title: 'اسم المنتج',

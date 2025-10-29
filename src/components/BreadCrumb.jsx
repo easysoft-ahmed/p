@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 let pathWebSite = {
+    "add": {title: {ar: "إضافة", en: ""}},
+    "edit": {title: {ar: "تعديل", en: ""}},
     "/": {title: {ar: "الرئيسية"}},
     "accounts": {title: {ar: "الحسابات"}},
     "stock": {title: {ar: "المخزون"}},
@@ -10,6 +12,8 @@ let pathWebSite = {
     "financial": {title: {ar: "الحركة المالية"}},
     "accounts_codes": {title: {ar: "اكواد الحسابات"}},
     "helps_codes": {title: {ar: "أكواد اليوميات المساعدة "}},
+    "settings": {title: {ar: "التثبيت و الخصائص", en: ""}},
+    "setting": {title: {ar: "إعدادات", en: ""}}
 }
 
 
@@ -30,6 +34,7 @@ const Breadcrumb = ()=>{
     } 
     useEffect(()=>{
         let newArrayPath = pathname === "/" ? [""]: pathname.split("/");
+        pathname.includes("edit") && newArrayPath.pop();
         newArrayPath[0] = "/";
         setArrayPath(newArrayPath)
     }, [pathname])

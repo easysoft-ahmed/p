@@ -18,6 +18,9 @@ const sections = [
         {label: "قائمة الاسعار", path: "price_list"},
         // {label: "بحث متقدم للاصناف", path: "advanced_search"},
     ]},
+    {name: "الاعدادات", links: [
+        {label: "التثبيت و الخصائص", path: "settings"},
+    ]}  
 ]
 
 const Stock = ()=>{

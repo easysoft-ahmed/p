@@ -9,6 +9,9 @@ const sections = [
         {label: "فاتورة المشتريات", path: "purch_invoice"},
         {label: "فاتورة مرتد المشتريات", path: "purch_return_invoice"},
     ]},
+    {name: "الاعدادات", links: [
+        {label: "التثبيت و الخصائص", path: "settings"},
+    ]},
 ]
 
 const Purch = ()=>{

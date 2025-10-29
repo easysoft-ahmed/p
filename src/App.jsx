@@ -103,6 +103,9 @@ import { useState } from "react"
 import { edit_global } from "./redux/stateGlobal.js";
 import Chart from "chart.js/auto";
 import { CategoryScale } from "chart.js";
+import SettingsPurch from "./pages/Purch/Settings/Settings.jsx"
+import SettingsStock from "./pages/Stock/Settings/Settings.jsx"
+ "./pages/Purch/Settings/Settings.jsx"
 Chart.register(CategoryScale);
 
 function App() {
@@ -125,6 +128,9 @@ function App() {
         <Routes>
           <Route path="/" element={<MainLayout />}>
             <Route index element={<Home />} />
+            {/* <Route path="settings">
+              <Route index element={<Accounts />} />
+            </Route> */}
             <Route path="accounts">
               <Route index element={<Accounts />} />
               {/* <Route path="accounts_codes" element={} /> */}
@@ -221,6 +227,11 @@ function App() {
             
             <Route path="stock">
               <Route index element={<Stock />} />
+              <Route path="settings">
+                <Route index element={<SettingsStock />} />
+                {/* <Route path="update" element={< />} /> */}
+              </Route>
+
               <Route path="units">
                 <Route index element={<Units />} />
                 <Route path="add" element={<AddEditUnits />} />
@@ -278,6 +289,12 @@ function App() {
             </Route>
             <Route path="purch">
               <Route index element={<Purch />} />
+              
+              <Route path="settings">
+                <Route index element={<SettingsPurch />} />
+                {/* <Route path="update" element={< />} /> */}
+              </Route>
+
               <Route path="suppliers">
                 <Route index element={<Suppliers />} />
                 <Route path="add" element={<AddEditSuppliers />} />
