@@ -105,6 +105,11 @@ import Chart from "chart.js/auto";
 import { CategoryScale } from "chart.js";
 import SettingsPurch from "./pages/Purch/Settings/Settings.jsx"
 import SettingsStock from "./pages/Stock/Settings/Settings.jsx"
+import System from "./pages/System/System.jsx"
+import CompanyData from "./pages/System/CompanyData/CompanyData.jsx"
+import Branches from "./pages/System/Branches/Branches.jsx"
+import AddEditBranch from "./pages/System/Branches/AddOrEdit/AddEditBranches.jsx"
+import Users from "./pages/System/Users/Users.jsx"
  "./pages/Purch/Settings/Settings.jsx"
 Chart.register(CategoryScale);
 
@@ -128,9 +133,23 @@ function App() {
         <Routes>
           <Route path="/" element={<MainLayout />}>
             <Route index element={<Home />} />
-            {/* <Route path="settings">
-              <Route index element={<Accounts />} />
-            </Route> */}
+            <Route path="system">
+              <Route index element={<System />} />
+              <Route path="company_data" >
+                <Route index  element={<CompanyData />} />
+              </Route>
+              <Route path="branches" >
+                <Route index  element={<Branches />} />
+                <Route path="add" element={<AddEditBranch />}/>
+                <Route path="edit/:id" element={<AddEditBranch />}/>
+              </Route>
+              <Route path="users" >
+                <Route index  element={<Users />} />
+                {/* <Route path="add" element={<AddEditBranch />}/>
+                <Route path="edit/:id" element={<AddEditBranch />}/> */}
+              </Route>
+
+            </Route>
             <Route path="accounts">
               <Route index element={<Accounts />} />
               {/* <Route path="accounts_codes" element={} /> */}

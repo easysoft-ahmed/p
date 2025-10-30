@@ -49,8 +49,6 @@ const Settings = ()=>{
                     <Button type="primary" onClick={handleSubmit} icon={<SaveOutlined />}>حفظ</Button>
                 </div>
                 
-                {console.log(myData)
-                }
                 <Form className="flex flex-wrap justify-center gap-2 [&>*]:px-2">
                     <div className="w-full flex flex-wrap justify-around border-b pb-4 mb-4">
                         <div className="w-4/12">

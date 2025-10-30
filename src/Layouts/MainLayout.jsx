@@ -59,6 +59,8 @@ const MainLayout = () => {
       setWhatIsSelect("5")
     }else if(getPath.includes("financial")){
       setWhatIsSelect("6")
+    }else if(getPath.includes("settings")){
+      setWhatIsSelect("7")
     }else{
       setWhatIsSelect("1")
     }
@@ -92,6 +94,7 @@ const MainLayout = () => {
               : pathname.includes("purch") ? "4"
               : pathname.includes("sales") ? "5"
               : pathname.includes("financial") ? "6"
+              : pathname.includes("system") ? "7"
               : "1"
             }
           //   theme="dark"
@@ -130,6 +133,11 @@ const MainLayout = () => {
                 key: '6',
                 icon: <MoneyMovementIcon />,
                 label: <Link to="/financial">الحركة المالية</Link>,
+              },
+              {
+                key: '7',
+                icon: <AccountsIcon  />,
+                label: <Link to="/system">النظام</Link>,
               },
             ]}
           />

@@ -25,6 +25,8 @@ import sales_invoice from "./pages/Sales/SalesInvoice/AddOrEdit/stateSalesInvoic
 import purch_invoice from "./pages/Purch/PurchInvoice/AddOrEdit/statePurchInvoice"
 import purch_setting from "./pages/Purch/Settings/statePurchSetting"
 import return_purch_invoice from "./pages/Purch/PurchReturnInvoice/AddOrEdit/stateReturnPurchInvoice"
+import company_data from "./pages/System/CompanyData/stateCompanyData"
+import branch from "./pages/System/Branches/AddOrEdit/stateBranches"
 import global from "./redux/stateGlobal"
 
 
@@ -33,7 +35,7 @@ export const store = configureStore({
   reducer: { global,
     unit, color, stock, size, size_group, country_of_origin, product,print_barcode, store_movement, store_transform, supplier, supplier_type,
     delegates_and_staff, customer, customer_type, bank, tax, currency, box, acc_code, acc_help, sales_invoice, purch_invoice,
-    return_purch_invoice, purch_setting, stock_setting
+    return_purch_invoice, purch_setting, stock_setting, company_data, branch
   },
 })
 

@@ -13,7 +13,11 @@ let pathWebSite = {
     "accounts_codes": {title: {ar: "اكواد الحسابات"}},
     "helps_codes": {title: {ar: "أكواد اليوميات المساعدة "}},
     "settings": {title: {ar: "التثبيت و الخصائص", en: ""}},
-    "setting": {title: {ar: "إعدادات", en: ""}}
+    "setting": {title: {ar: "إعدادات", en: ""}},
+    "system": {title: {ar: "النظام", en: ""}},
+    "branches": {title: {ar: "الفروع", en: ""}},
+    "users": {title: {ar: "المستخدمين", en: ""}},
+    "company_data": {title: {ar: "بيانات الشركة", en: ""}},
 }
 
 
