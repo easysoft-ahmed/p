@@ -31,16 +31,13 @@ export const SalesInvoiceSlice = createSlice({
       }
     },
     modified_tables_sales_invoice: (state, {payload})=>{
-        let {tableName, data, actionType, fakeID, propsAndValue} = payload;
-
+        let {tableName, data, actionType, fakeID, propsAndValue} = payload;        
               
         if(actionType === "add"){
           state.value[tableName] = [...state.value[tableName] || [] , data]        
         }else if(actionType === "remove"){
           state.value[tableName] = state.value[tableName].filter(row => row.fakeID !== fakeID)
-        }else if(actionType === "edit"){
-          console.log(tableName);
-          
+        }else if(actionType === "edit"){          
           state.value[tableName] = state.value[tableName].map(row => {
             if(row.fakeID === fakeID){
                 return {...row, ...propsAndValue}

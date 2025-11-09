@@ -1,9 +1,4 @@
-export const calcNetTotal = (myState)=>{
-    console.log(myState.DiscountP);
-    console.log(myState.DiscountValue);
-    console.log(myState.TaxRate);
-    console.log(myState.TaxTSP);
-    
+export const calcNetTotal = (myState)=>{    
     let firstStep = Number(myState.DiscountP * myState.SumTotal / 100);
     let secondStep = Number(myState.DiscountValue);
     let thirdStep = Number(myState.SumTotal * myState.TaxRate / 100)

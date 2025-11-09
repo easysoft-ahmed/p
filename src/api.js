@@ -18,6 +18,7 @@ let dataEndPoint = {
     customers_types : {end_point: "Sales/CustomerTypes", name_en: "انواع العملاء"},
     customers : {end_point: "Sales/Customers", name_en: "العملاء"},
     taxes : {end_point: "Fin/Taxs", name_en: "الضرائب"},
+    boxes : {end_point: "Fin/Boxs", name_en: "الخزن"},
     
 }
 
@@ -26,8 +27,7 @@ export async function getManyDataForSelectInput(arrayNameDataEndPoint, actionToC
     for (let nameDataEndPoint = 0; nameDataEndPoint < arrayNameDataEndPoint.length; nameDataEndPoint++) {
         try {
             let data = await actionToCallApi(dataEndPoint[arrayNameDataEndPoint[nameDataEndPoint]].end_point);
-            responseData[arrayNameDataEndPoint[nameDataEndPoint]] = data.ResponseObject;
-            
+            responseData[arrayNameDataEndPoint[nameDataEndPoint]] = data.ResponseObject;            
         } catch (error) {
             console.log("Some Error");
         }

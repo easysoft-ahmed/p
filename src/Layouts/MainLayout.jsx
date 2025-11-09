@@ -29,7 +29,6 @@ const MainLayout = () => {
   let handleLogout = ()=>{
     dispatch(logout_user())
   }
-  console.log(checkLogin.user_login);
   
   const items = [
     {

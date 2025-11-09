@@ -110,6 +110,7 @@ import CompanyData from "./pages/System/CompanyData/CompanyData.jsx"
 import Branches from "./pages/System/Branches/Branches.jsx"
 import AddEditBranch from "./pages/System/Branches/AddOrEdit/AddEditBranches.jsx"
 import Users from "./pages/System/Users/Users.jsx"
+import AddEditUser from "./pages/System/Users/AddOrEdit/AddEditUser.jsx"
  "./pages/Purch/Settings/Settings.jsx"
 Chart.register(CategoryScale);
 
@@ -145,8 +146,8 @@ function App() {
               </Route>
               <Route path="users" >
                 <Route index  element={<Users />} />
-                {/* <Route path="add" element={<AddEditBranch />}/>
-                <Route path="edit/:id" element={<AddEditBranch />}/> */}
+                <Route path="add" element={<AddEditUser />}/>
+                <Route path="edit/:id" element={<AddEditUser />}/>
               </Route>
 
             </Route>

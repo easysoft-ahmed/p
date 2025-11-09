@@ -1,5 +1,5 @@
-import { CloseCircleOutlined, DownOutlined, PlusOutlined, SaveOutlined } from "@ant-design/icons";
-import { Button, DatePicker, Form, Input, Select, Switch, Tree } from "antd";
+import { CloseCircleOutlined, PlusOutlined, SaveOutlined } from "@ant-design/icons";
+import { Button, DatePicker, Form, Input, Select, Switch } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { edit_sales_invoice, modified_tables_sales_invoice, updateTotalValueAndTax } from "../stateSalesInvoice";
 import { unique } from "../../../../../helpers";
@@ -8,15 +8,12 @@ import { useEffect } from "react";
 import { edit_global } from "../../../../../redux/stateGlobal";
 import PopupTable from "../../../../../components/PopupTables";
 import dayjs from "dayjs";
-import { useState } from "react";
-import useGet from "../../../../../hooks/useGet";
-import { treeData } from "../../../../../fakeData";
 
 const Comp2 = ()=>{
     const {F3} = useF3();
     let myData = useSelector(state => state.sales_invoice.value);
     let dispatch = useDispatch();
-    let {getDataAsync} = useGet()
+    
     let changeValue = (eventOrValue, prop)=>{
         
         if(prop){
@@ -26,7 +23,7 @@ const Comp2 = ()=>{
             dispatch(edit_sales_invoice({[id]: value}))
         }
     }
-    let handleEditRow = (tableName, actionType, fakeID, propsAndValue, closePopup)=>{        
+    let handleEditRow = (tableName, actionType, fakeID, propsAndValue, closePopup)=>{
         dispatch(modified_tables_sales_invoice({tableName, actionType, fakeID, propsAndValue}))
         if(closePopup === "close"){
             dispatch(edit_global({popupF3: false, popupF3Compoent: null}))
@@ -62,7 +59,7 @@ const Comp2 = ()=>{
 
 
     useEffect(()=>{
-        dispatch(updateTotalValueAndTax())
+        dispatch(updateTotalValueAndTax())        
     }, [myData?.SalesItems, myData?.TaxRate, myData?.TaxTSP, myData?.DiscountP, myData?.DiscountValue])
 
 
@@ -99,8 +96,7 @@ const Comp2 = ()=>{
                                 <td>
                                     <Select
                                         className="w-full"  
-                                        value={ele.ProductName}                                    
-                                        // value={ele.ProductName || ele.ProductID ? myData?.dataSelects?.products?.filter(product => product.ProductID == ele.ProductID)[0]?.Productname || "الصنف غير متوفر ربما تم حذفة" : ele.ProductID}                                    
+                                        value={ele.ProductName || ele.ProductID ? myData?.dataSelects?.products?.filter(product => product.ProductID == ele.ProductID)[0]?.Productname || "الصنف غير متوفر ربما تم حذفة" : ele.ProductID}                                    
                                         onChange={(value, record) =>{
                                             let unitsGroup = [{value: record?.MainUnitId, label: record?.MainUnitName}];
                                             record?.SubUnitId &&  unitsGroup.push({value: record?.SubUnitId, label: record?.SubUnitName, })
@@ -116,26 +112,6 @@ const Comp2 = ()=>{
                                         showSearch filterOption={(input, option) =>
                                             (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
                                         }
-                                        onKeyDown={
-                                            (e)=>F3(e,
-                                                <>
-                                                    <h3 className="font-bold mb-4"> انواع الاصناف </h3>
-                                                    <div dir="ltr" className="flex flex-wrap justify-between [&>*]:w-5/12 gap-2">
-                                                        <Tree
-                                                            showLine
-                                                            switcherIcon={<DownOutlined />}
-                                                            defaultExpandedKeys={['0-0-0']}
-                                                            onSelect={(keys, info)=>{
-                                                                !info.node.children && handleEditRow("SalesItems", "edit", ele.fakeID, {ProductName: info.node.title, ProductID: info.node.key});
-                                                                !info.node.children && dispatch(edit_global({popupF3: false, popupF3Component: null}))}
-                                                            }
-                                                            treeData={treeData}
-                                                        />
-                                                    </div>
-                                                </>
-                                            )
-                                        }
-
                                         options={myData?.dataSelects?.products?.map(product =>{ return {value: product.ProductID, label: product.Productname, ...product}})}
                                     />
                                 </td>

@@ -1,5 +1,5 @@
-import { CloseCircleOutlined, PlusOutlined, SaveOutlined } from "@ant-design/icons";
-import { Button, DatePicker, Form, Input, Select, Switch } from "antd";
+import { CloseCircleOutlined, DownOutlined, PlusOutlined, SaveOutlined } from "@ant-design/icons";
+import { Button, DatePicker, Form, Input, Select, Switch, Tree } from "antd";
 import { edit_purch_invoice, modified_tables_purch_invoice, updateTotalValueAndTax } from "../statePurchInvoice";
 import { edit_global } from "../../../../../redux/stateGlobal";
 import { unique } from "../../../../../helpers";
@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import PopupTable from "../../../../../components/PopupTables";
 import dayjs from "dayjs";
+import { treeData } from "../../../../../fakeData";
 
 const Comp2 = ()=>{
     const {F3} = useF3();
@@ -92,6 +93,47 @@ const Comp2 = ()=>{
                             </td>
                             <td>
                                 <Select
+                                    className="w-full"
+                                    value={ele.ProductName}
+                                    // value={ele.ProductName || ele.ProductID ? myData?.dataSelects?.products?.filter(product => product.ProductID == ele.ProductID)[0]?.Productname || "الصنف غير متوفر ربما تم حذفة" : ele.ProductID}                                    
+                                    onChange={(value, record) =>{
+                                        let unitsGroup = [{value: record?.MainUnitId, label: record?.MainUnitName}];
+                                        record?.SubUnitId &&  unitsGroup.push({value: record?.SubUnitId, label: record?.SubUnitName, })
+                                        record?.UseUnitID && unitsGroup.push({value: record?.UseUnitID, label: record?.UseUnitName})
+
+
+                                        handleEditRow("PurchItems", "edit", ele.fakeID,{
+                                            ProductName: value, ProductID: record?.value, UnitID: record?.MainUnitId, StoreId: record?.StoreId,
+                                            unitsGroup, Qty: 1, Price: record?.MainUnitPrice, Total: record?.MainUnitPrice * 1,
+                                            record: {...record}
+                                        });
+                                    }}
+                                    showSearch filterOption={(input, option) =>
+                                        (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                                    }
+                                    onKeyDown={
+                                        (e)=>F3(e,
+                                            <>
+                                                <h3 className="font-bold mb-4"> انواع الاصناف </h3>
+                                                <div dir="ltr" className="flex flex-wrap justify-between [&>*]:w-5/12 gap-2">
+                                                    <Tree
+                                                        showLine
+                                                        switcherIcon={<DownOutlined />}
+                                                        defaultExpandedKeys={['0-0-0']}
+                                                        onSelect={(keys, info)=>{
+                                                            !info.node.children && handleEditRow("PurchItems", "edit", ele.fakeID, {ProductName: info.node.title, ProductID: info.node.key});
+                                                            !info.node.children && dispatch(edit_global({popupF3: false, popupF3Component: null}))}
+                                                        }
+                                                        treeData={treeData}
+                                                    />
+                                                </div>
+                                            </>
+                                        )
+                                    }
+
+                                    options={myData?.dataSelects?.products?.map(product =>{ return {value: product.ProductID, label: product.Productname, ...product}})}
+                                />
+                                {/* <Select
                                     className="w-full"  
                                     value={ele.ProductName || ele.ProductID ? myData?.dataSelects?.products?.filter(product => product.ProductID == ele.ProductID)[0]?.Productname || "الصنف غير متوفر ربما تم حذفة" : ele.ProductID}                                    
                                     onChange={(value, record) =>{
@@ -110,7 +152,7 @@ const Comp2 = ()=>{
                                         (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
                                     }
                                     options={myData?.dataSelects?.products?.map(product =>{ return {value: product.ProductID, label: product.Productname, ...product}})}
-                                />
+                                /> */}
                             </td>
                             <td>
                                 <Select
