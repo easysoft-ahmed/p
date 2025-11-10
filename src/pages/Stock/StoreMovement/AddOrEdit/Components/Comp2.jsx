@@ -1,16 +1,20 @@
 import { CloseCircleOutlined, DownOutlined, PlusOutlined, SaveOutlined } from "@ant-design/icons";
-import { Button, Form, Input, Select, Switch, Tree } from "antd";
+import { Button, Dropdown, Form, Input, Menu, Select, Switch, Tree } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { modified_tables_store_movement } from "../stateStoreMovement";
 import { unique } from "../../../../../helpers";
-import { treeData } from "../../../../../fakeData";
 import { edit_global } from "../../../../../redux/stateGlobal";
 import useF3 from "../../../../../hooks/useF3";
+import { useEffect, useState } from "react";
+import useGet from "../../../../../hooks/useGet";
+import TreeProduct from "../../../../../components/TreeProduct";
 
 const Comp2 = ()=>{
     let myData = useSelector(state => state.store_movement.value);
+
     let dispatch = useDispatch();
     const {F3} = useF3();
+
 
     // let changeValue = (eventOrValue, prop)=>{
         
@@ -27,6 +31,7 @@ const Comp2 = ()=>{
     }
 
     let defaultRow = {fakeID: unique(),ProductName: "", ProductID: "", UnitID: "", Qty: "", Price: "", Total: "", StoreId: "", Notes: ""}
+    
     return(
         <>
             <div class="relative overflow-x-auto mt-4">
@@ -77,23 +82,7 @@ const Comp2 = ()=>{
                                             (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
                                         }
                                         onKeyDown={
-                                            (e)=>F3(e,
-                                                <>
-                                                    <h3 className="font-bold mb-4"> انواع الاصناف </h3>
-                                                    <div dir="ltr" className="flex flex-wrap justify-between [&>*]:w-5/12 gap-2">
-                                                        <Tree
-                                                            showLine
-                                                            switcherIcon={<DownOutlined />}
-                                                            defaultExpandedKeys={['0-0-0']}
-                                                            onSelect={(keys, info)=>{
-                                                                !info.node.children && handleEditRow("StockItems", "edit", ele.fakeID, {ProductName: info.node.title, ProductID: info.node.key});
-                                                                !info.node.children && dispatch(edit_global({popupF3: false, popupF3Component: null}))}
-                                                            }
-                                                            treeData={treeData}
-                                                        />
-                                                    </div>
-                                                </>
-                                            )
+                                            (e)=>F3(e,<TreeProduct handleEditRow={handleEditRow} tableName={"StockItems"} ele={ele}/>)
                                         }
 
                                         options={myData?.dataSelects?.products?.map(product =>{ return {value: product.ProductID, label: product.Productname, ...product}})}

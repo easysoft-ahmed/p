@@ -114,6 +114,16 @@ import AddEditUser from "./pages/System/Users/AddOrEdit/AddEditUser.jsx"
  "./pages/Purch/Settings/Settings.jsx"
 Chart.register(CategoryScale);
 
+
+const ContentModel = ()=>{
+  const globalState = useSelector(state => state.global.value)
+  return(
+    <>
+      {globalState?.popupF3Component}
+    </>
+  )
+}
+
 function App() {
   const dispatch = useDispatch();
   const globalState = useSelector(state => state.global.value)
@@ -126,7 +136,8 @@ function App() {
         footer={false}
         onCancel={()=>dispatch(edit_global({popupF3: false}))}
       >
-        {globalState?.popupF3Component}
+        <ContentModel />
+        {/* {globalState?.popupF3Component} */}
       </Modal>
 
 

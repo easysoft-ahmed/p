@@ -5,13 +5,14 @@ import { edit_store_transform, modified_tables_store_transform } from "../stateS
 import { unique } from "../../../../../helpers";
 import useF3 from "../../../../../hooks/useF3";
 import { edit_global } from "../../../../../redux/stateGlobal";
-import { treeData } from "../../../../../fakeData";
+import { useEffect, useState } from "react";
+import useGet from "../../../../../hooks/useGet";
+import TreeProduct from "../../../../../components/TreeProduct";
 
 const Comp2 = ()=>{
     let myData = useSelector(state => state.store_transform.value);
     let dispatch = useDispatch();
     const {F3} = useF3();
-
     let changeValue = (eventOrValue, prop)=>{
         
         if(prop){
@@ -27,7 +28,6 @@ const Comp2 = ()=>{
     }
 
     let defaultRow = {fakeID: unique(),ProductName: "", ProductID: "", UnitID: "", Qty: "", Price: "", ToStoreId: myData.ToStoreId, StoreId: myData.StoreId, Notes: ""}
-
 
     return(
         <>
@@ -76,23 +76,7 @@ const Comp2 = ()=>{
                                             (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
                                         }
                                         onKeyDown={
-                                            (e)=>F3(e,
-                                                <>
-                                                    <h3 className="font-bold mb-4"> انواع الاصناف </h3>
-                                                    <div dir="ltr" className="flex flex-wrap justify-between [&>*]:w-5/12 gap-2">
-                                                        <Tree
-                                                            showLine
-                                                            switcherIcon={<DownOutlined />}
-                                                            defaultExpandedKeys={['0-0-0']}
-                                                            onSelect={(keys, info)=>{
-                                                                !info.node.children && handleEditRow("TransFormItems", "edit", ele.fakeID, {ProductName: info.node.title, ProductID: info.node.key});
-                                                                !info.node.children && dispatch(edit_global({popupF3: false, popupF3Component: null}))}
-                                                            }
-                                                            treeData={treeData}
-                                                        />
-                                                    </div>
-                                                </>
-                                            )
+                                            (e)=>F3(e,<TreeProduct handleEditRow={handleEditRow} tableName={"TransFormItems"} ele={ele}/>)
                                         }
 
                                         options={myData?.dataSelects?.products?.map(product =>{ return {value: product.ProductID, label: product.Productname, ...product}})}

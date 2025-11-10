@@ -11,6 +11,7 @@ import dayjs from "dayjs";
 import { useState } from "react";
 import useGet from "../../../../../hooks/useGet";
 import { treeData } from "../../../../../fakeData";
+import TreeProduct from "../../../../../components/TreeProduct";
 
 const Comp2 = ()=>{
     const {F3} = useF3();
@@ -117,23 +118,7 @@ const Comp2 = ()=>{
                                             (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
                                         }
                                         onKeyDown={
-                                            (e)=>F3(e,
-                                                <>
-                                                    <h3 className="font-bold mb-4"> انواع الاصناف </h3>
-                                                    <div dir="ltr" className="flex flex-wrap justify-between [&>*]:w-5/12 gap-2">
-                                                        <Tree
-                                                            showLine
-                                                            switcherIcon={<DownOutlined />}
-                                                            defaultExpandedKeys={['0-0-0']}
-                                                            onSelect={(keys, info)=>{
-                                                                !info.node.children && handleEditRow("SalesItems", "edit", ele.fakeID, {ProductName: info.node.title, ProductID: info.node.key});
-                                                                !info.node.children && dispatch(edit_global({popupF3: false, popupF3Component: null}))}
-                                                            }
-                                                            treeData={treeData}
-                                                        />
-                                                    </div>
-                                                </>
-                                            )
+                                            (e)=>F3(e,<TreeProduct handleEditRow={handleEditRow} tableName={"SalesItems"} ele={ele}/>)
                                         }
 
                                         options={myData?.dataSelects?.products?.map(product =>{ return {value: product.ProductID, label: product.Productname, ...product}})}
