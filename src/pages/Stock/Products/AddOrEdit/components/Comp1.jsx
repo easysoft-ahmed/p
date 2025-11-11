@@ -17,11 +17,11 @@ const Comp1 = ()=>{
     }
 
     return(
-            <div className="flex flex-wrap justify-center">
-                <div className="flex flex-wrap w-full sm:w-8/12 md:w-6/12 lg:w-4/12">
+            <div className="w-full flex flex-wrap justify-center">
+                <div className="flex flex-wrap w-full sm:w-8/12 md:w-6/12 lg:w-8/12">
                     <div className="input_label_basic w-4/12">
                         <label htmlFor="ProductID">كود الصنف</label>
-                        <input type="text" id="ProductID" value={myData?.ProductID || ""} onChange={event => changeValue(event)} />
+                        <input type="text" id="ProductID" disabled value={myData?.ProductID || ""} onChange={event => changeValue(event)} />
                     </div>
                     <div className="input_label_basic ps-2 w-8/12">
                         <label htmlFor="">الرقم المرجعي</label>

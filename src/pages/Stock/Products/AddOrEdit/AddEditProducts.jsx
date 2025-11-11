@@ -17,6 +17,7 @@ import { getManyDataForSelectInput } from "../../../../api";
 import usePost from "../../../../hooks/usePost";
 import usePut from "../../../../hooks/usePut";
 import MessageRequest from "../../../../components/MessageRequest";
+import TreeProduct from "../../../../components/TreeProduct";
 
 const AddEditProducts = ()=>{
     let {id} = useParams();
@@ -85,20 +86,23 @@ const AddEditProducts = ()=>{
                     <Button type="primary" onClick={handleSubmit} icon={<SaveOutlined />}>حفظ</Button>
                 </div>
 
-                <Tabs
-                className="w-full"
-                    type="card"
-                    items={[
-                        {label: "بيانات اساسية", key: "1", children: <Comp1 />},
-                        {label: "شرائح اضافية ووحدات الصنف", key: "2", children: <Comp2 />},
-                        {label: "موردي الصنف", key: "3", children: <Comp3 />},
-                        {label: "مراقبة المخزون و التحكم في حركات الصنف", key: "4", children: <Comp4 />},
-                        {label: "وصف الصنف", key: "5", children: <Comp5 />},
-                        {label: "الباركود", key: "6", children: <Comp6 />},
-                        {label: "البيانات الاخرى", key: "7", children: <Comp7 />},
-                        {label: "صور الصنف", key: "8", children: <Comp8 />},
-                    ]}
-                />
+                <div className="flex">
+                    <Tabs
+                        className="w-full lg:w-9/12 [&_*]:!transform-none"
+                        type="card"
+                        items={[
+                            {label: "بيانات اساسية", key: "1", children: <Comp1 />},
+                            {label: "شرائح اضافية ووحدات الصنف", key: "2", children: <Comp2 />},
+                            {label: "موردي الصنف", key: "3", children: <Comp3 />},
+                            {label: "مراقبة المخزون و التحكم في حركات الصنف", key: "4", children: <Comp4 />},
+                            {label: "وصف الصنف", key: "5", children: <Comp5 />},
+                            {label: "الباركود", key: "6", children: <Comp6 />},
+                            {label: "البيانات الاخرى", key: "7", children: <Comp7 />},
+                            {label: "صور الصنف", key: "8", children: <Comp8 />},
+                        ]}
+                    />
+                    <TreeProduct onlyCategories={true} edit_product={edit_product} />
+                </div>
             </div>
         </>
     )
