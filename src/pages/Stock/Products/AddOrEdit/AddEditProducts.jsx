@@ -86,7 +86,7 @@ const AddEditProducts = ()=>{
                     <Button type="primary" onClick={handleSubmit} icon={<SaveOutlined />}>حفظ</Button>
                 </div>
 
-                <div className="flex">
+                <div className="flex w-full">
                     <Tabs
                         className="w-full lg:w-9/12 [&_*]:!transform-none"
                         type="card"
@@ -101,7 +101,7 @@ const AddEditProducts = ()=>{
                             {label: "صور الصنف", key: "8", children: <Comp8 />},
                         ]}
                     />
-                    <TreeProduct onlyCategories={true} edit_product={edit_product} />
+                    <TreeProduct updateSelectCategories={true}  />
                 </div>
             </div>
         </>

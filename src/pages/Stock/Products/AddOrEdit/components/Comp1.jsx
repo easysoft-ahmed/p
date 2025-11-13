@@ -1,11 +1,14 @@
-import { SaveOutlined } from "@ant-design/icons";
-import { Button, DatePicker, Select, Switch } from "antd";
+import { ClusterOutlined, SaveOutlined } from "@ant-design/icons";
+import { Button, DatePicker, Modal, Select, Switch } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { edit_product } from "../stateProduct";
+import TreeProduct from "../../../../../components/TreeProduct";
+import { useState } from "react";
 
 const Comp1 = ()=>{
     let myData = useSelector(state => state.product.value);
     let dispatch = useDispatch();
+    let [showTree, setShowTree] = useState(false)
     let changeValue = (eventOrValue, prop)=>{
         
         if(prop){
@@ -18,6 +21,16 @@ const Comp1 = ()=>{
 
     return(
             <div className="w-full flex flex-wrap justify-center">
+                <Modal
+                    title="Basic Modal"
+                    closable={{ 'aria-label': 'Custom Close Button' }}
+                    open={showTree}
+                    footer={false}
+                    onCancel={()=>setShowTree(false)}
+                >
+                    <TreeProduct updateSelectCategories={true} edit_product_type_2={edit_product} onlyCategories={true}  />
+                </Modal>
+
                 <div className="flex flex-wrap w-full sm:w-8/12 md:w-6/12 lg:w-8/12">
                     <div className="input_label_basic w-4/12">
                         <label htmlFor="ProductID">كود الصنف</label>
@@ -32,7 +45,13 @@ const Comp1 = ()=>{
                         <label htmlFor="Productname">اسم الصنف</label>
                         <input type="text" id="Productname" value={myData?.Productname || ""} onChange={event => changeValue(event)} />
                     </div>
-                    <div className="input_label_basic w-6/12">
+
+                    <div className="flex items-end w-1/12 mb-1">
+                        <Button onClick={()=>setShowTree(true)} type="primary" shape="" icon={<ClusterOutlined style={{fontSize: "1.5rem"}} />} />
+
+                    </div>
+
+                    <div className="input_label_basic w-5/12">
                         <label htmlFor="ProdEngName">Product Name</label>
                         <input type="text" id="ProdEngName" value={myData?.ProdEngName || ""} onChange={event => changeValue(event)} />
                     </div>

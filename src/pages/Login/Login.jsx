@@ -12,13 +12,20 @@ const Login = ()=>{
     let dispatch = useDispatch();
     let navigate = useNavigate();
     let [loginForm, setLoginForm] = useState({Email: "" , UserPassword: ""})
-    let {postDataAsync} = usePost()
+    let {postDataAsync} = usePost();
+    let [errMsg, setErrMsg] = useState(false)
     let handleSubmit = async(e)=>{
         e.preventDefault();
+        setErrMsg("")
         let response = await postDataAsync("Identity/LogIn", loginForm);
         if(response?.ResponseObject?.Token){
             dispatch(set_login_user(response.ResponseObject));
             navigate("/")
+        }else{
+            console.log(response?.response?.data?.ErrorMsg);
+            if(response?.response?.data?.ErrorMsg === "User Email or Password Is Invalid"){
+                setErrMsg(true)
+            }
         }
     }
     return(
@@ -32,6 +39,9 @@ const Login = ()=>{
 
                     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
                         <form class="space-y-6">
+                            <div>
+                                <div className={`text-rose-600 ${errMsg ? "":"invisible"}`}>اسم المستخدم او كلمة المرور غير صحيح</div>
+                            </div>
                             <div>
                                 <label for="user_name" class="block text-sm/6 font-medium text-indigo-600">اسم المستخدم</label>
                                 <div class="mt-2">
