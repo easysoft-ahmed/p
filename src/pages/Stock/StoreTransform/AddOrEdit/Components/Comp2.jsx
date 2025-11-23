@@ -99,7 +99,7 @@ const Comp2 = ()=>{
                             <td>
                                 <Select
                                     className="w-full"
-                                    value={ele.UnitID ? myData?.dataSelects?.units?.filter(unit => unit.UnitID == ele.UnitID)[0]["UnitName"] || ele.UnitID : ""}                                    
+                                    value={ele.UnitID ? myData?.dataSelects?.units?.filter(unit => unit.UnitID == ele.UnitID)[0]?.UnitName || ele.UnitID : ""}                                    
                                     onChange={(value) => handleEditRow("TransFormItems", "edit", ele.fakeID, {UnitID: value})}
                                     showSearch filterOption={(input, option) =>
                                         (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
@@ -115,7 +115,7 @@ const Comp2 = ()=>{
                             <td>
                                 <Select
                                     className="w-full"
-                                    value={ele.StoreName || ele.StoreId ? myData?.dataSelects?.stores?.filter(store => store.StoreID == ele.StoreId)[0]["StoreName"] || ele.StoreId : ""}
+                                    value={ele.StoreName || ele.StoreId ? myData?.dataSelects?.stores?.filter(store => store.StoreID == ele.StoreId)[0]?.StoreName || ele.StoreId : ""}
                                     onChange={(value, record) =>{
                                         handleEditRow("TransFormItems", "edit", ele.fakeID , {StoreId: record?.StoreID, StoreName: record?.StoreName})
                                     }}
@@ -128,7 +128,7 @@ const Comp2 = ()=>{
                             <td>
                                 <Select
                                     className="w-full"
-                                    value={ele.ToStoreName || ele.ToStoreId ? ele?.dataSelects?.stores?.filter(store => store.StoreID == ele.ToStoreId)[0]["StoreName"] || ele.ToStoreId : ""}
+                                    value={ele.ToStoreName || ele.ToStoreId ? ele?.dataSelects?.stores?.filter(store => store.StoreID == ele.ToStoreId)[0]?.StoreName || ele.ToStoreId : ""}
                                     onChange={(value, record) =>{
                                         handleEditRow("TransFormItems", "edit", ele.fakeID , {ToStoreId: record?.StoreID, ToStoreName: record?.StoreName})
                                     }}

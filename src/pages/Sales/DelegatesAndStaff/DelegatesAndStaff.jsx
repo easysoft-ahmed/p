@@ -1,15 +1,10 @@
-import { PlusOutlined, SmileOutlined } from "@ant-design/icons";
-import { Button, ConfigProvider, Empty, Spin, Table } from "antd";
-import { Link } from "react-router-dom";
-import MessageRequest from "../../../components/MessageRequest";
-import useGet from "../../../hooks/useGet";
-import { useEffect } from "react";
 import DeleteBtn from "../../../components/DeleteBtn";
 import EditBtn from "../../../components/EditBtn";
+import TableMainData from "../../../components/TableMainData";
 
 const columns = [
   {
-    title: 'كود البائع',
+    title: 'كود المندوب',
     dataIndex: 'SellerID',
     key: 'SellerID',
   },
@@ -35,25 +30,8 @@ const columns = [
 
 
 const DelegatesAndStaff = ()=>{
-  let {getData, resultGet, isLoadingGet, errorMsgGet} = useGet();
-  useEffect(()=>{
-    getData("Sales/Sellers")
-  }, [])
-
     return(
-        <>
-            <MessageRequest data={resultGet?.ResponseObject} errorMsg={errorMsgGet}/>
-
-            <Link to="add">
-                <Button type="primary" iconPosition="start" icon={<PlusOutlined />}>إضافة مندوب</Button>
-            </Link>
-
-
-
-            <Spin spinning={isLoadingGet} fullscreen />
-
-            <Table dataSource={resultGet?.ResponseObject} columns={columns} />
-        </>
+      <TableMainData columns={columns} URL={"Sales/Sellers"} title="مندوب" />
     )
 }
 

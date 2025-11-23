@@ -1,12 +1,7 @@
-import { PlusOutlined, SmileOutlined } from "@ant-design/icons";
-import { Button, ConfigProvider, Empty, Spin, Table } from "antd";
-import { Link } from "react-router-dom";
-import MessageRequest from "../../../components/MessageRequest";
-import useGet from "../../../hooks/useGet";
-import { useEffect } from "react";
 import { handleOnlyDate } from "../../../helpers";
 import DeleteBtn from "../../../components/DeleteBtn";
 import EditBtn from "../../../components/EditBtn";
+import TableMainData from "../../../components/TableMainData";
 
 let switchValue = (key)=>{
   switch (key) {
@@ -23,16 +18,19 @@ const columns = [
   {
     title: 'رقم المستند',
     dataIndex: 'DocNo',
+    search: 'DocNo',
     key: 'name',
   },
   {
     title: 'تاريخ المستند',
+    search: "DocDate",
     render: (record)=>(
       <span>{handleOnlyDate(record.DocDate)}</span>
     )
   },
   {
     title: 'نوع الحركة',
+    search: "TransType",
     render: (record)=>(
       <span>{switchValue(record.TransType)}</span>
     )
@@ -40,6 +38,7 @@ const columns = [
   {
     title: 'ملاحظات',
     dataIndex: 'Notes',
+    search: "Notes",
     key: 'age',
   },
   {
@@ -58,25 +57,8 @@ const columns = [
 
 
 const StoreMovement = ()=>{
-  let {getData, resultGet, isLoadingGet, errorMsgGet} = useGet();
-  useEffect(()=>{
-    getData("Stock/Trans")
-  }, [])
-
     return(
-        <>
-            <MessageRequest data={resultGet?.ResponseObject} errorMsg={errorMsgGet}/>
-
-            <Link to="add">
-                <Button type="primary" iconPosition="start" icon={<PlusOutlined />}>إضافة حركة مخزون</Button>
-            </Link>
-
-
-
-            <Spin spinning={isLoadingGet} fullscreen />
-
-            <Table dataSource={resultGet?.ResponseObject} columns={columns} />
-        </>
+      <TableMainData columns={columns} URL={"Stock/Trans"} title="حركة مخزن" />
     )
 }
 

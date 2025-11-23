@@ -24,6 +24,7 @@ let dataEndPoint = {
 
 export async function getManyDataForSelectInput(arrayNameDataEndPoint, actionToCallApi) {
     let responseData = {}
+    
     for (let nameDataEndPoint = 0; nameDataEndPoint < arrayNameDataEndPoint.length; nameDataEndPoint++) {
         try {
             let data = await actionToCallApi(dataEndPoint[arrayNameDataEndPoint[nameDataEndPoint]].end_point);

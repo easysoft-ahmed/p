@@ -10,6 +10,7 @@ import country_of_origin from "./pages/Stock/CountryOfOrigin/AddOrEdit/stateCoun
 import store_movement from "./pages/Stock/StoreMovement/AddOrEdit/stateStoreMovement"
 import store_transform from "./pages/Stock/StoreTransform/AddOrEdit/stateStoreTransform"
 import print_barcode from "./pages/Stock/PrintBarcode/statePrintBarcode"
+import advanced_search from "./pages/Stock/AdvancedSearch/AddOrEdit/stateAdvancedSearch"
 import supplier from "./pages/Purch/Suppliers/AddOrEdit/stateSupplier"
 import supplier_type from "./pages/Purch/SuppliersTypes/AddOrEdit/stateSupplierType"
 import delegates_and_staff from "./pages/Sales/DelegatesAndStaff/AddOrEdit/stateDelegatesAndStaff"
@@ -36,7 +37,7 @@ export const store = configureStore({
   reducer: { global,
     unit, color, stock, size, size_group, country_of_origin, product,print_barcode, store_movement, store_transform, supplier, supplier_type,
     delegates_and_staff, customer, customer_type, bank, tax, currency, box, acc_code, acc_help, sales_invoice, purch_invoice,
-    return_purch_invoice, purch_setting, stock_setting, company_data, branch, user
+    return_purch_invoice, purch_setting, stock_setting, company_data, branch, user, advanced_search
   },
 })
 

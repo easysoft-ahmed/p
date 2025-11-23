@@ -105,7 +105,7 @@ const Comp2 = ()=>{
                                 <td>
                                     <Select
                                         className="w-full"
-                                        value={ele.UnitID ? myData?.dataSelects?.units?.filter(unit => unit.UnitID == ele.UnitID)[0]["UnitName"] || ele.UnitID : ""}                                    
+                                        value={ele.UnitID ? myData?.dataSelects?.units?.filter(unit => unit.UnitID == ele.UnitID)[0]?.UnitName || ele.UnitID : ""}                                    
                                         onChange={(value) => handleEditRow("StockItems", "edit", ele.fakeID, {UnitID: value})}
                                         showSearch filterOption={(input, option) =>
                                             (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
@@ -131,12 +131,12 @@ const Comp2 = ()=>{
                                 <td>
                                     <Select
                                         className="w-full" placeholder="-- غير محدد --"
-                                        value={ele.StoreId ? myData?.dataSelects?.stores?.filter(store => store.StoreID == ele.StoreId)[0]["StoreName"] || ele.StoreId : null}
+                                        value={ele.StoreId ? myData?.dataSelects?.stores?.filter(store => store.StoreID == ele.StoreId)[0]?.StoreName || ele.StoreId : null}
                                         onChange={(value) => handleEditRow("StockItems", "edit", ele.fakeID, {StoreId: value})}
                                         showSearch filterOption={(input, option) =>
                                             (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
                                         }
-                                        options={myData?.dataSelects?.stores?.map(store =>{ return {value: store.StoreID, label: store.StoreName, ...store}})}
+                                        options={myData?.dataSelects?.stores?.map(store =>{ return {value: store.StoreID, label: store?.StoreName, ...store}})}
 
                                     />
                                 </td>

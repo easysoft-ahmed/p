@@ -6,6 +6,7 @@ import useGet from "../../../hooks/useGet";
 import { useEffect } from "react";
 import DeleteBtn from "../../../components/DeleteBtn";
 import EditBtn from "../../../components/EditBtn";
+import TableMainData from "../../../components/TableMainData";
 
 const columns = [
   {
@@ -50,26 +51,9 @@ const columns = [
 
 
 const StoreTransform = ()=>{
-  let {getData, resultGet, isLoadingGet, errorMsgGet} = useGet();
-  useEffect(()=>{
-    getData("Stock/TransForm")
-  }, [])
-
-    return(
-        <>
-            <MessageRequest data={resultGet?.ResponseObject} errorMsg={errorMsgGet}/>
-
-            <Link to="add">
-                <Button type="primary" iconPosition="start" icon={<PlusOutlined />}>إضافة تحويل الى مخزن اخر</Button>
-            </Link>
-
-
-
-            <Spin spinning={isLoadingGet} fullscreen />
-
-            <Table dataSource={resultGet?.ResponseObject} columns={columns} />
-        </>
-    )
+  return(
+    <TableMainData columns={columns} URL={"Stock/TransForm"} title="تحويل من مخزن الى أخر" />
+  )
 }
 
 export default StoreTransform;

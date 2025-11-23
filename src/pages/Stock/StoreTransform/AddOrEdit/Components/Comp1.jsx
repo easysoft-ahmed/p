@@ -72,7 +72,7 @@ const Comp1 = ()=>{
                         <div className="input_label_basic pe-4 w-full lg:w-6/12">
                             <label htmlFor="">من مخزن</label>
                             <Select className="w-full"
-                                value={myData.StoreName || myData.StoreId ? myData?.dataSelects?.stores?.filter(store => store.StoreID == myData.StoreId)[0]["StoreName"] || myData.StoreId : ""}
+                                value={myData.StoreName || myData.StoreId ? myData?.dataSelects?.stores?.filter(store => store.StoreID == myData.StoreId)[0]?.StoreName || myData.StoreId : ""}
                                 options={myData?.dataSelects?.stores?.map(store =>{ return {value: store.StoreID, label: store.StoreName, ...store}})}
                                 disabled
                             />
@@ -81,7 +81,7 @@ const Comp1 = ()=>{
                             <label htmlFor="">الى مخزن</label>
                             <Select
                                 className="w-full"
-                                value={myData.ToStoreName || myData.ToStoreId ? myData?.dataSelects?.stores?.filter(store => store.StoreID == myData.ToStoreId)[0]["StoreName"] || myData.ToStoreId : ""}
+                                value={myData.ToStoreName || myData.ToStoreId ? myData?.dataSelects?.stores?.filter(store => store.StoreID == myData.ToStoreId)[0]?.StoreName || myData.ToStoreId : ""}
                                 onChange={(value, record) =>{
                                     console.log(myData);
                                     

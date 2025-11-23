@@ -111,6 +111,7 @@ import Branches from "./pages/System/Branches/Branches.jsx"
 import AddEditBranch from "./pages/System/Branches/AddOrEdit/AddEditBranches.jsx"
 import Users from "./pages/System/Users/Users.jsx"
 import AddEditUser from "./pages/System/Users/AddOrEdit/AddEditUser.jsx"
+import AdvancedSearch from "./pages/Stock/AdvancedSearch/AdvancedSearch.jsx"
  "./pages/Purch/Settings/Settings.jsx"
 Chart.register(CategoryScale);
 
@@ -261,6 +262,10 @@ function App() {
               <Route path="settings">
                 <Route index element={<SettingsStock />} />
                 {/* <Route path="update" element={< />} /> */}
+              </Route>
+
+              <Route path="advanced_search">
+                <Route index element={<AdvancedSearch />} />
               </Route>
 
               <Route path="units">

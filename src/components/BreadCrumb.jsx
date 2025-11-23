@@ -18,6 +18,17 @@ let pathWebSite = {
     "branches": {title: {ar: "الفروع", en: ""}},
     "users": {title: {ar: "المستخدمين", en: ""}},
     "company_data": {title: {ar: "بيانات الشركة", en: ""}},
+    "advanced_search": {title: {ar: "بحث متقدم للاصناف", en: ""}},
+    "units": {title: {ar: "وحدات القياس", en: ""}},
+    "colors": {title: {ar: "الالوان", en: ""}},
+    "sizes": {title: {ar: "المقاسات", en: ""}},
+    "country_of_origin": {title: {ar: "بلد المنشأ", en: ""}},
+    "products": {title: {ar: "الاصناف", en: ""}},
+    "stores": {title: {ar: "المخازن", en: ""}},
+    "stores_movement": {title: {ar: "حركة المخزون", en: ""}},
+    "store_transform": {title: {ar: "التحويلات بين المخازن", en: ""}},
+    "price_list": {title: {ar: "قائمة الاسعار", en: ""}},
+    "print_barcode": {title: {ar: "طباعة باركود", en: ""}},
 }
 
 
