@@ -74,7 +74,7 @@ const Comp1 = ()=>{
                             <Select className="w-full"
                                 value={myData.StoreName || myData.StoreId ? myData?.dataSelects?.stores?.filter(store => store.StoreID == myData.StoreId)[0]?.StoreName || myData.StoreId : ""}
                                 options={myData?.dataSelects?.stores?.map(store =>{ return {value: store.StoreID, label: store.StoreName, ...store}})}
-                                disabled
+                                // disabled
                             />
                         </div>
                         <div className="input_label_basic pe-4 w-full lg:w-6/12">

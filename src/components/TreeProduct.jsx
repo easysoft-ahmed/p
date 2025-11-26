@@ -6,18 +6,23 @@ import useGet from "../hooks/useGet";
 import { edit_global } from "../redux/stateGlobal";
 import usePost from "../hooks/usePost";
 import { edit_product } from "../pages/Stock/Products/AddOrEdit/stateProduct";
+import usePut from "../hooks/usePut";
+import useDelete from "../hooks/useDelete";
 
 const TreeProduct = ({tableName, handleEditRow, ele, onlyCategories, updateSelectCategories, edit_product_type_2})=>{
     const [contextMenuVisible, setContextMenuVisible] = useState(false);
     const [contextMenuPosition, setContextMenuPosition] = useState({ x: 0, y: 0 });
     const [selectedNode, setSelectedNode] = useState(null);
     let [UpCategoryID, setUpCategoryID] = useState(0);
+    let [isTypeAction, setIsTypeAction] = useState(null)
     let [CategoryName, setCategoryName] = useState("");
     let [modalAddElement, setModalAddElement] = useState(false);
     let dispatch = useDispatch();
     let getDataSelectsFromProductState = useSelector(state => state.product.value?.dataSelects)
     let {getDataAsync} = useGet();
     let {postDataAsync} = usePost();
+    let {putDataAsync} = usePut();
+    let {deleteDataAsync} = useDelete();
 
     let [treeData, setTreeData] = useState([]);
     let categories = useSelector(state => state.product.value?.dataSelects?.categories)
@@ -37,10 +42,17 @@ const TreeProduct = ({tableName, handleEditRow, ele, onlyCategories, updateSelec
     };
 
     const handleMenuClick = (e) => {
-        console.log(`Clicked menu item: ${e.key} for node: ${selectedNode.title}`);
-
+        console.log(selectedNode);
+        
         if(e.key === "add_root"){
             setUpCategoryID(0);
+            setIsTypeAction("add")
+        }else if(e.key === "add_branch"){
+            setIsTypeAction("add")
+        }else if(e.key === "edit"){
+            setIsTypeAction("edit");
+        }else if(e.key === "delete"){
+            setIsTypeAction("delete");
         }
         setModalAddElement(true);
         // setContextMenuVisible(false);
@@ -64,7 +76,7 @@ const TreeProduct = ({tableName, handleEditRow, ele, onlyCategories, updateSelec
     }
     
     let handleAddCategory = async()=>{        
-        console.log(UpCategoryID + " ---- " + CategoryName);
+        console.log(selectedNode);
         
         let response = await postDataAsync( "Stock/Categories", {UpCategoryID, CategoryName});
         if(response?.ResponseObject){
@@ -75,6 +87,22 @@ const TreeProduct = ({tableName, handleEditRow, ele, onlyCategories, updateSelec
         console.log(response);
         
     }
+    let handleEditCategory = async()=>{        
+        let response = await putDataAsync( "Stock/Categories", {UpCategoryID, CategoryName, CategoryId: selectedNode.key?.slice(0, selectedNode.key?.indexOf("-cat", 0))});
+        if(response?.ResponseObject){
+            handleProductTree(true);
+            setModalAddElement(false);
+            setCategoryName("");
+        }        
+    }
+    let handleDeleteCategory = async()=>{        
+        let response = await deleteDataAsync( `Stock/Categories?CategoryID=${selectedNode.key?.slice(0, selectedNode.key?.indexOf("-cat", 0))}`);
+        if(response?.ResponseObject){
+            handleProductTree(true);
+            setModalAddElement(false);
+            setCategoryName("");
+        }        
+    }
 
     useEffect(()=>{
         handleProductTree()
@@ -84,14 +112,19 @@ const TreeProduct = ({tableName, handleEditRow, ele, onlyCategories, updateSelec
         return(
             <div className={`w-full border-r px-4`}>
                 <h3 className="font-bold mb-4"> شجرة الاصناف </h3>
-                <Modal title={UpCategoryID === 0 ? "إضافة اسم الجذر" : "إضافة اسم العنصر"} closable={{ 'aria-label': 'Custom Close Button' }} open={modalAddElement}
-                    onOk={handleAddCategory}
+                <Modal title={
+                    `${isTypeAction === "add" ? "إضافة" : isTypeAction === "edit" ? "تعديل" : isTypeAction === "delete" && "حذف"} 
+                     ${isTypeAction === "add" ? UpCategoryID === 0 ? "جذر" : "عنصر" : ""}
+                    `                } closable={{ 'aria-label': 'Custom Close Button' }} open={modalAddElement}
+                    onOk={isTypeAction === "add" ? handleAddCategory : isTypeAction === "edit" ?  handleEditCategory : isTypeAction === "delete" && handleDeleteCategory}
                     onCancel={()=>{
                         setCategoryName("")
                         setModalAddElement(false)
                     }}
                 >
-                    <Input value={CategoryName} onChange={(e)=>setCategoryName(e.target.value)} placeholder={UpCategoryID === 0 ? "ادخل اسم الجذر" : "ادخل اسم العنصر"}/>
+                    {isTypeAction !== "delete" &&
+                        <Input value={CategoryName} onChange={(e)=>setCategoryName(e.target.value)} placeholder={UpCategoryID === 0 ? "ادخل اسم الجذر" : "ادخل اسم العنصر"}/>
+                    }
                 </Modal>
 
                 <div dir="ltr" className="w-full flex flex-wrap justify-between gap-2">
@@ -139,6 +172,8 @@ const TreeProduct = ({tableName, handleEditRow, ele, onlyCategories, updateSelec
                                     <Menu id="dropmenu_tree" className="border rounded-md  bg-gray-200" onClick={handleMenuClick}>
                                         <Menu.Item id="dropmenu_item_root" key="add_root">إضافة نوع جذر</Menu.Item>
                                         <Menu.Item id="dropmenu_item_branch" key="add_branch">إضافة نوع فرع</Menu.Item>
+                                        <Menu.Item id="dropmenu_item_edit" key="edit">تعديل</Menu.Item>
+                                        <Menu.Item id="dropmenu_item_delete" key="delete">حذف</Menu.Item>
                                     </Menu>
                             </div>
                         // <Dropdown trigger={['click']} overlay={menu} visible={contextMenuVisible} onVisibleChange={setContextMenuVisible}>
