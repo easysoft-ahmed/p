@@ -43,7 +43,6 @@ const TreeProduct = ({tableName, handleEditRow, ele, onlyCategories, updateSelec
 
     const handleMenuClick = (e) => {
         console.log(selectedNode);
-        
         if(e.key === "add_root"){
             setUpCategoryID(0);
             setIsTypeAction("add")
@@ -51,6 +50,7 @@ const TreeProduct = ({tableName, handleEditRow, ele, onlyCategories, updateSelec
             setIsTypeAction("add")
         }else if(e.key === "edit"){
             setIsTypeAction("edit");
+            setCategoryName(selectedNode.title)
         }else if(e.key === "delete"){
             setIsTypeAction("delete");
         }
@@ -75,28 +75,27 @@ const TreeProduct = ({tableName, handleEditRow, ele, onlyCategories, updateSelec
 
     }
     
-    let handleAddCategory = async()=>{        
-        console.log(selectedNode);
-        
+    let handleAddCategory = async()=>{                
         let response = await postDataAsync( "Stock/Categories", {UpCategoryID, CategoryName});
-        if(response?.ResponseObject){
-            handleProductTree(true);
-            setModalAddElement(false);
-            setCategoryName("");
-        }
-        console.log(response);
-        
-    }
-    let handleEditCategory = async()=>{        
-        let response = await putDataAsync( "Stock/Categories", {UpCategoryID, CategoryName, CategoryId: selectedNode.key?.slice(0, selectedNode.key?.indexOf("-cat", 0))});
         if(response?.ResponseObject){
             handleProductTree(true);
             setModalAddElement(false);
             setCategoryName("");
         }        
     }
+    let handleEditCategory = async()=>{
+        let getCategory = await getDataAsync(`Stock/Categories?CategoryID=${selectedNode.key?.replace("-cat", "")}`);
+        if(getCategory?.ResponseObject[0]?.UpCategoryID){
+            let response = await putDataAsync( "Stock/Categories", {UpCategoryID: getCategory?.ResponseObject[0]?.UpCategoryID, CategoryName, CategoryId: selectedNode.key?.replace("-cat", "")});
+            if(response?.ResponseObject){
+                handleProductTree(true);
+                setModalAddElement(false);
+                setCategoryName("");
+            }        
+        }
+    }
     let handleDeleteCategory = async()=>{        
-        let response = await deleteDataAsync( `Stock/Categories?CategoryID=${selectedNode.key?.slice(0, selectedNode.key?.indexOf("-cat", 0))}`);
+        let response = await deleteDataAsync( `Stock/Categories?CategoryID=${selectedNode.key?.replace("-cat", "")}`);
         if(response?.ResponseObject){
             handleProductTree(true);
             setModalAddElement(false);
@@ -129,6 +128,7 @@ const TreeProduct = ({tableName, handleEditRow, ele, onlyCategories, updateSelec
 
                 <div dir="ltr" className="w-full flex flex-wrap justify-between gap-2">
                     <Tree
+                        titleRender={(node)=>{return <span>{node?.title} <span className="font-bold"> - {node?.key?.replace("-cat", "")}</span></span>}}
                         showLine
                         switcherIcon={<DownOutlined />}
                         defaultExpandedKeys={['0-0-0']}
