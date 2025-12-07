@@ -42,7 +42,6 @@ const TreeProduct = ({tableName, handleEditRow, ele, onlyCategories, updateSelec
     };
 
     const handleMenuClick = (e) => {
-        console.log(selectedNode);
         if(e.key === "add_root"){
             setUpCategoryID(0);
             setIsTypeAction("add")

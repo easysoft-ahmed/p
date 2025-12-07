@@ -75,11 +75,11 @@ const Comp2 = ()=>{
                             </div>
                             <div className="input_label_basic ps-4 w-4/12">
                                 <label htmlFor="">كمية</label>
-                                <Input type="text" value={myData?.UseUnitQty} onChange={e => changeValue(e.target.value, "UseUnitPrice")} />
+                                <Input type="text" value={myData?.UseUnitQty} onChange={e => changeValue(e.target.value, "UseUnitQty")} />
                             </div>
                             <div className="input_label_basic ps-4 w-4/12">
                                 <label htmlFor="">سعر البيع للجمهور</label>
-                                <Input type="text" value={myData?.UseUnitPrice} onChange={e => changeValue(e.target.value, "UseUnitQty")}/>
+                                <Input type="text" value={myData?.UseUnitPrice} onChange={e => changeValue(e.target.value, "UseUnitPrice")}/>
                             </div>
                         </div>
                     </div>

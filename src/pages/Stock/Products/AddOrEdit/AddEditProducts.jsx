@@ -101,7 +101,7 @@ const AddEditProducts = ()=>{
                             {label: "صور الصنف", key: "8", children: <Comp8 />},
                         ]}
                     />
-                    <TreeProduct updateSelectCategories={true}  />
+                    <TreeProduct updateSelectCategories={true} edit_product_type_2={edit_product} />
                 </div>
             </div>
         </>
