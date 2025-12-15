@@ -42,7 +42,7 @@ const Comp2 = ()=>{
                                 <button onClick={()=>dispatch(modified_tables_store_movement({tableName: "StockItems", data: defaultRow, actionType: "add"}))}><PlusOutlined /></button>
                             </th>
                             <th scope="col" class="px-6 py-3">كود الصنف</th>
-                            <th scope="col" class="px-6 py-3">اسم الصنف</th>
+                            <th scope="col" class="w-80 px-6 py-3">اسم الصنف</th>
                             <th scope="col" class="px-6 py-3">اسم الوحدة</th>
                             <th scope="col" class="px-6 py-3">الكمية</th>
                             <th scope="col" class="px-6 py-3">السعر</th>

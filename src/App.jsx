@@ -112,6 +112,32 @@ import AddEditBranch from "./pages/System/Branches/AddOrEdit/AddEditBranches.jsx
 import Users from "./pages/System/Users/Users.jsx"
 import AddEditUser from "./pages/System/Users/AddOrEdit/AddEditUser.jsx"
 import AdvancedSearch from "./pages/Stock/AdvancedSearch/AdvancedSearch.jsx"
+import TotalPurch from "./pages/Purch/Reports/TotalPurch.jsx"
+import SuppliersAccountStatement from "./pages/Purch/Reports/SuppliersAccountStatement.jsx"
+import PurchExpenses from "./pages/Purch/Reports/PurchExpenses.jsx"
+import TotalOrderPurch from "./pages/Purch/Reports/TotalOrderPurch.jsx"
+import TotalCommandPurch from "./pages/Purch/Reports/TotalCommandPurch.jsx"
+import DailyStock from "./pages/Stock/Reports/DailyStock.jsx"
+import DailyTransformStock from "./pages/Stock/Reports/DailyTransformStock.jsx"
+import CardProduct from "./pages/Stock/Reports/CardProduct.jsx"
+import QtyProducts from "./pages/Stock/Reports/QtyProducts.jsx"
+import LowProducts from "./pages/Stock/Reports/LowProducts.jsx"
+import LimitProducts from "./pages/Stock/Reports/LimitProducts.jsx"
+import TotalSales from "./pages/Sales/Reports/TotalSales.jsx"
+import CustomersAccountStatement from "./pages/Sales/Reports/CustomersAccountStatement.jsx"
+import ProfitSalesProducts from "./pages/Sales/Reports/ProfitSalesProducts.jsx"
+import TotalCustomersMovement from "./pages/Sales/Reports/TotalCustomersMovement.jsx"
+import LowCustomers from "./pages/Sales/Reports/LowCustomers.jsx"
+import TotalDueInvoice from "./pages/Sales/Reports/TotalDueInvoice.jsx"
+import TotalDailyRestrict from "./pages/Acc/Reports/TotalDailyRestrict.jsx"
+import GeneralLedgerStatement from "./pages/Acc/Reports/GeneralLedgerStatement.jsx"
+import FinalReport from "./pages/Acc/Reports/FinalReport.jsx"
+import CashInReport from "./pages/Fin/Reports/CashInReport.jsx"
+import TotalChecks from "./pages/Fin/Reports/TotalChecks.jsx"
+import TotalTransformFin from "./pages/Fin/Reports/TotalTransformFin.jsx"
+import AccountStatementBox from "./pages/Fin/Reports/AccountStatementBox.jsx"
+import AccountStatementBank from "./pages/Fin/Reports/AccountStatementBank.jsx"
+import AccountStatementEntity from "./pages/Fin/Reports/AccountStatementEntity.jsx"
  "./pages/Purch/Settings/Settings.jsx"
 Chart.register(CategoryScale);
 
@@ -166,6 +192,11 @@ function App() {
             <Route path="accounts">
               <Route index element={<Accounts />} />
               {/* <Route path="accounts_codes" element={} /> */}
+              <Route path="reports" >
+                <Route path="total_daily_restrict" element={<TotalDailyRestrict />}/>
+                <Route path="general_ledger_statement" element={<GeneralLedgerStatement />}/>
+                <Route path="final_report" element={<FinalReport />}/>
+              </Route>
               <Route path="helps_codes" >
                 <Route index  element={<HelpsCodes />} />
                 <Route path="add" element={<AddEditHelpsCode />}/>
@@ -179,6 +210,14 @@ function App() {
             </Route>
             <Route path="financial">
               <Route index element={<Financial />} />
+              <Route path="reports" >
+                  <Route path="cashin_report" element={<CashInReport />} />
+                  <Route path="total_checks" element={<TotalChecks />} />
+                  <Route path="total_transform_fin" element={<TotalTransformFin />} />
+                  <Route path="acc_statement_box" element={<AccountStatementBox />} />
+                  <Route path="acc_statement_bank" element={<AccountStatementBank />} />
+                  <Route path="acc_statement_entity" element={<AccountStatementEntity />} />
+              </Route>
               <Route path="currencies" >
                   <Route index element={<Currencies />} />
                   <Route path="add" element={<AddEditCurrencies />} />
@@ -263,6 +302,14 @@ function App() {
                 <Route index element={<SettingsStock />} />
                 {/* <Route path="update" element={< />} /> */}
               </Route>
+              <Route path="reports">
+                <Route path="daily_stock" element={<DailyStock />} />
+                <Route path="daily_transform_stock" element={<DailyTransformStock />} />
+                <Route path="card_product" element={<CardProduct />} />
+                <Route path="qty_products" element={<QtyProducts />} />
+                <Route path="low_products" element={<LowProducts />} />
+                <Route path="limit_products" element={<LimitProducts />} />
+              </Route>
 
               <Route path="advanced_search">
                 <Route index element={<AdvancedSearch />} />
@@ -330,6 +377,13 @@ function App() {
                 <Route index element={<SettingsPurch />} />
                 {/* <Route path="update" element={< />} /> */}
               </Route>
+              <Route path="reports">
+                <Route path="total_purch" element={<TotalPurch />} />
+                <Route path="suppliers_acc_statement" element={<SuppliersAccountStatement />} />
+                <Route path="purch_expenses" element={<PurchExpenses />} />
+                <Route path="total_order_purch" element={<TotalOrderPurch />} />
+                <Route path="total_command_purch" element={<TotalCommandPurch />} />
+              </Route>
 
               <Route path="suppliers">
                 <Route index element={<Suppliers />} />
@@ -355,6 +409,15 @@ function App() {
             
             <Route path="sales">
               <Route index element={<Sales />} />
+              <Route path="reports">
+                <Route path="total_sales" element={<TotalSales />} />
+                <Route path="customers_acc_statement" element={<CustomersAccountStatement />} />
+                <Route path="profit_sales_products" element={<ProfitSalesProducts />} />
+                <Route path="total_customers_movement" element={<TotalCustomersMovement />} />
+                <Route path="low_customers" element={<LowCustomers />} />
+                <Route path="total_due_invoice" element={<TotalDueInvoice />} />
+              </Route>
+
               <Route path="cities">
                 <Route index element={<Cities />} />
                 <Route path="add" element={<AddEditCities />} />

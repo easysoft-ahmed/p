@@ -31,7 +31,15 @@ const sections = [
     {name: "الاقساط", links: [
         {label: "إضافة بيانات الاقساط", path: "installments_data"},
         {label: "التسويات المالية", path: "fin_adjustments"},
-    ]}
+    ]},
+    {name: "التقارير", links: [
+        {label: "المقبوضات", path: "reports/cashin_report"},
+        {label: "إجمالي الشيكات", path: "reports/total_checks"},
+        {label: "إجمالي التحويلات المالية", path: "reports/total_transform_fin"},
+        {label: "كشف حساب خزينة", path: "reports/acc_statement_box"},
+        {label: "كشف حساب بنك", path: "reports/acc_statement_bank"},
+        {label: "كشف حساب جهة", path: "reports/acc_statement_entity"},
+    ]},
 ]
 
 const Financial = ()=>{

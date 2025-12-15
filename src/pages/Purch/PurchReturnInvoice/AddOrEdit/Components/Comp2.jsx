@@ -69,8 +69,8 @@ const Comp2 = ()=>{
                             <th scope="col" class="px-2">
                                 <button onClick={()=> dispatch(modified_tables_return_purch_invoice({tableName: "PurchItems", data: defaultRowPurchItems, actionType: "add"}))}><PlusOutlined /></button>
                             </th>
-                            <th scope="col" class="px-6 py-3">كود الصنف</th>
-                            <th scope="col" class="px-6 py-3">اسم الصنف</th>
+                            <th scope="col" class="w-40 px-6 py-3">كود الصنف</th>
+                            <th scope="col" class="w-80 px-6 py-3">اسم الصنف</th>
                             <th scope="col" class="px-6 py-3">اسم الوحدة</th>
                             <th scope="col" class="px-6 py-3">الكمية</th>
                             <th scope="col" class="px-6 py-3">السعر</th>

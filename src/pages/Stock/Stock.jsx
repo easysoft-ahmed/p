@@ -18,6 +18,14 @@ const sections = [
         {label: "قائمة الاسعار", path: "price_list"},
         {label: "بحث متقدم للاصناف", path: "advanced_search"},
     ]},
+    {name: "التقارير", links: [
+        {label: "يومية المخزون", path: "reports/daily_stock"},
+        {label: "يومية التحويلات المخزنية", path: "reports/daily_transform_stock"},
+        {label: "كارت الصنف", path: "reports/card_product"},
+        {label: "ارصدة الاصناف", path: "reports/qty_products"},
+        {label: "الاصناف الراكدة", path: "reports/low_products"},
+        {label: "الحدود المخزنية للاصناف", path: "reports/limit_products"},
+    ]},
     {name: "الاعدادات", links: [
         {label: "التثبيت و الخصائص", path: "settings"},
     ]}  
