@@ -29,6 +29,8 @@ let pathWebSite = {
     "store_transform": {title: {ar: "التحويلات بين المخازن", en: ""}},
     "price_list": {title: {ar: "قائمة الاسعار", en: ""}},
     "print_barcode": {title: {ar: "طباعة باركود", en: ""}},
+    "purch_order": {title: {ar: "امر شراء", en: ""}},
+    "purch_request": {title: {ar: "طلب شراء", en: ""}},
 }
 
 

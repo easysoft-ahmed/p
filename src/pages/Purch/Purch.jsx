@@ -6,10 +6,12 @@ const sections = [
         {label: "أكواد الموردين", path: "suppliers"},
     ]},
     {name: "أخرى", links: [
+        {label: "امر شراء", path: "purch_order"},
+        {label: "طلب شراء", path: "purch_request"},
         {label: "فاتورة المشتريات", path: "purch_invoice"},
         {label: "فاتورة مرتد المشتريات", path: "purch_return_invoice"},
     ]},
-    {name: "أخرى", links: [
+    {name: "التقارير", links: [
         {label: "إجمالي المشتريات", path: "reports/total_purch"},
         {label: "كشف حساب / ارصدة الموردين", path: "reports/suppliers_acc_statement"},
         {label: "تقرير مصروفات المشتريات", path: "reports/purch_expenses"},

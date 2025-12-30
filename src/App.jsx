@@ -138,6 +138,10 @@ import TotalTransformFin from "./pages/Fin/Reports/TotalTransformFin.jsx"
 import AccountStatementBox from "./pages/Fin/Reports/AccountStatementBox.jsx"
 import AccountStatementBank from "./pages/Fin/Reports/AccountStatementBank.jsx"
 import AccountStatementEntity from "./pages/Fin/Reports/AccountStatementEntity.jsx"
+import PurchOrder from "./pages/Purch/PurchOrder/PurchOrder.jsx"
+import AddEditPurchOrder from "./pages/Purch/PurchOrder/AddOrEdit/AddEditPurchOrder.jsx"
+import PurchRequest from "./pages/Purch/PurchRequest/PurchRequest.jsx"
+import AddEditPurchRequest from "./pages/Purch/PurchRequest/AddOrEdit/AddEditPurchRequest.jsx"
  "./pages/Purch/Settings/Settings.jsx"
 Chart.register(CategoryScale);
 
@@ -404,6 +408,16 @@ function App() {
                 <Route index element={<PurchReturnInvoice />} />
                 <Route path="add" element={<AddEditPurchReturnInvoice />} />
                 <Route path="edit/:id" element={<AddEditPurchReturnInvoice />} />
+              </Route>
+              <Route path="purch_order">
+                <Route index element={<PurchOrder />} />
+                <Route path="add" element={<AddEditPurchOrder />} />
+                <Route path="edit/:id" element={<AddEditPurchOrder />} />
+              </Route>
+              <Route path="purch_request">
+                <Route index element={<PurchRequest />} />
+                <Route path="add" element={<AddEditPurchRequest />} />
+                <Route path="edit/:id" element={<AddEditPurchRequest />} />
               </Route>
             </Route>
             
