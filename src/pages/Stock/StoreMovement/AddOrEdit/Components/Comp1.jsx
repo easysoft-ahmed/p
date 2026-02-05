@@ -9,6 +9,7 @@ import usePost from "../../../../../hooks/usePost";
 import MessageRequest from "../../../../../components/MessageRequest";
 import usePut from "../../../../../hooks/usePut";
 import { useState } from "react";
+import ButtonPrintReportPage from "../../../../../components/PrintReport";
 function genUniqueId() {
   return Math.random().toString(9).substring(2, 7);
 }
@@ -55,7 +56,12 @@ const Comp1 = ()=>{
             <div className="flex flex-wrap justify-center">
                 <div className="w-full flex justify-between border-b pb-4 mb-4">
                     <h3 className="text-lg font-bold">إضافة حركة مخزن</h3>
-                    <Button onClick={handleSubmit} type="primary" icon={<SaveOutlined />}>حفظ</Button>
+                    <div className="flex gap-4">
+                        <Button onClick={handleSubmit} type="primary" icon={<SaveOutlined />}>حفظ</Button>
+                        {id &&
+                            <ButtonPrintReportPage WindowName={"StockInvoice"} DocId={id} />
+                        }
+                    </div>
                 </div>
 
                 <div className="flex flex-wrap w-full">

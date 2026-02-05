@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import usePost from "../../../../hooks/usePost";
 import usePut from "../../../../hooks/usePut";
 import MessageRequest from "../../../../components/MessageRequest";
+import ButtonPrintReportPage from "../../../../components/PrintReport";
 
 const AddEditUnits = ()=>{
     let {id} = useParams();
@@ -65,7 +66,12 @@ const AddEditUnits = ()=>{
             <div className="flex flex-wrap justify-center">
                 <div className="w-full flex justify-between border-b pb-4 mb-4">
                     <h3 className="text-lg font-bold">{id ? "تعديل" : "إضافة"} وحدة القياس</h3>
-                    <Button type="primary" onClick={handleSubmit} icon={<SaveOutlined />}>حفظ</Button>
+                    <div className="flex gap-4">
+                        <Button type="primary" onClick={handleSubmit} icon={<SaveOutlined />}>حفظ</Button>
+                        {id &&
+                            <ButtonPrintReportPage WindowName={"UnitsReport"} DocId={id} />
+                        }
+                    </div>
                 </div>
                 <div className="flex flex-wrap w-full sm:w-8/12 md:w-6/12 lg:w-4/12">
                     <div className="input_label_basic w-4/12">

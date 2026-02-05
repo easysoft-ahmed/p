@@ -9,6 +9,7 @@ import { getManyDataForSelectInput } from "../../../../api";
 import MessageRequest from "../../../../components/MessageRequest";
 import usePost from "../../../../hooks/usePost";
 import usePut from "../../../../hooks/usePut";
+import ButtonPrintReportPage from "../../../../components/PrintReport";
 
 const AddEditStores = ()=>{
     let {id} = useParams();
@@ -82,7 +83,12 @@ const AddEditStores = ()=>{
             <div className="flex flex-wrap justify-center">
                 <div className="w-full flex justify-between border-b pb-4 mb-4">
                     <h3 className="text-lg font-bold">إضافة مخزن</h3>
-                    <Button type="primary" onClick={handleSubmit} icon={<SaveOutlined />}>حفظ</Button>
+                    <div className="flex gap-4">
+                        <Button type="primary" onClick={handleSubmit} icon={<SaveOutlined />}>حفظ</Button>
+                        {id &&
+                            <ButtonPrintReportPage WindowName={"StoresReport"} DocId={id} />
+                        }
+                    </div>
                 </div>
 
                 <div className="flex flex-wrap w-full sm:w-8/12 md:w-6/12 lg:w-4/12">

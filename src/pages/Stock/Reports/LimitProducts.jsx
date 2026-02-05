@@ -1,6 +1,9 @@
 import { SearchOutlined } from "@ant-design/icons";
 import { Button, Modal, Select } from "antd";
 import { useState } from "react";
+import { SelectReportFiles } from "../../../components/SelectDataApi/SelectReportFiles";
+import PrintMainReport from "../../../components/PrintMainReport";
+import { SelectCategories } from "../../../components/SelectDataApi/SelectCategories";
 
 const LimitProducts = ()=>{
     let [pdfName, setPdfName] = useState();
@@ -29,28 +32,14 @@ const LimitProducts = ()=>{
                 <div className="flex flex-wrap items-end w-full [&>*]:px-2">
                     <div className="input_label_basic w-4/12">
                         <label htmlFor="">نوع الصنف</label>
-                        <Select
-                        defaultValue={0}
-                            className="w-full"
-                            options={[
-                                { value: 0, label: 'بدون تحديد' },
-                            ]}
-                        />
+                        <SelectCategories currentValue={isFilter?.CategoryID} methodSelect={(option)=> setIsFilter(state => {return {...state, CategoryID: option?.CategoryID}})}  />
                     </div>
                     <div className="input_label_basic w-4/12">
                         <label htmlFor="">التقارير</label>
-                        <Select
-                        defaultValue={0}
-                            className="w-full"
-                            options={[
-                                { value: 0, label: 'تقرير 1' },
-                                { value: 1, label: 'تقرير 2' },
-                                { value: 2, label: 'تقرير 3' },
-                            ]}
-                        />
+                        <SelectReportFiles currentValue={isFilter?.ReportName} methodSelect={(value)=> setIsFilter(state => {return {...state, ReportName: value}})} WindowName={"StockMinReport"} />
                     </div>
                     <div className="input_label_basic w-4/12">
-                        <Button danger type="primary" onClick={handleGetPdf} icon={<SearchOutlined />}>عرض التقرير</Button>
+                        <PrintMainReport WindowName={"StockMinReport"} Filters={isFilter} />
                     </div>
                 </div>
             </div>

@@ -2,6 +2,7 @@ import { SaveOutlined } from "@ant-design/icons";
 import { Button, DatePicker, Radio, Select, Switch } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import dayjs from "dayjs";
+import ButtonPrintReportPage from "../../../../../components/PrintReport";
 function genUniqueId() {
   return Math.random().toString(9).substring(2, 7);
 }
@@ -12,7 +13,12 @@ const Comp1 = ()=>{
             <div className="flex flex-wrap justify-center">
                 <div className="w-full flex justify-between border-b pb-4 mb-4">
                     <h3 className="text-lg font-bold">إضافة حركة جرد مخزني</h3>
-                    <Button type="primary" icon={<SaveOutlined />}>حفظ</Button>
+                    {/* <div className="flex gap-4">
+                        <Button type="primary" onClick={handleSubmit} icon={<SaveOutlined />}>حفظ</Button>
+                        {id &&
+                            <ButtonPrintReportPage WindowName={"TransFormInvoice"} DocId={id} />
+                        }
+                    </div> */}
                 </div>
 
                 <div className="flex flex-wrap w-full">

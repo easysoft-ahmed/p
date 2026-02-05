@@ -9,6 +9,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import usePut from "../../../../../hooks/usePut";
 import { useState } from "react";
 import MessageRequest from "../../../../../components/MessageRequest";
+import ButtonPrintReportPage from "../../../../../components/PrintReport";
 function genUniqueId() {
   return Math.random().toString(9).substring(2, 7);
 }
@@ -55,7 +56,13 @@ const Comp1 = ()=>{
             <div className="flex flex-wrap justify-center">
                 <div className="w-full flex justify-between border-b pb-4 mb-4">
                     <h3 className="text-lg font-bold">إضافة تحويل من مخزن</h3>
-                    <Button type="primary" onClick={handleSubmit} icon={<SaveOutlined />}>حفظ</Button>
+                    <div className="flex gap-4">
+                        <Button type="primary" onClick={handleSubmit} icon={<SaveOutlined />}>حفظ</Button>
+                        {id &&
+                            <ButtonPrintReportPage WindowName={"TransFormInvoice"} DocId={id} />
+                        }
+                    </div>
+
                 </div>
 
                 <div className="flex flex-wrap w-full">

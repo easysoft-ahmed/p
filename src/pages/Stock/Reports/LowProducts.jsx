@@ -2,8 +2,15 @@ import { SearchOutlined } from "@ant-design/icons";
 import { Button, DatePicker, Input, Modal, Radio, Select } from "antd";
 import dayjs from "dayjs";
 import { useState } from "react";
+import PrintMainReport from "../../../components/PrintMainReport";
+import { SelectReportFiles } from "../../../components/SelectDataApi/SelectReportFiles";
+import { SelectStores } from "../../../components/SelectDataApi/SelectStores";
+import { SelectCostCenters } from "../../../components/SelectDataApi/SelectCostCenters";
+import { SelectCategories } from "../../../components/SelectDataApi/SelectCategories";
 
 const LowProducts = ()=>{
+    let [isFilter, setIsFilter] = useState({});    
+
     let [pdfName, setPdfName] = useState();
     let [openReport, setOpenReport] = useState(false)
     const handleGetPdf = ()=>{
@@ -38,48 +45,22 @@ const LowProducts = ()=>{
                     </div>
                     <div className="input_label_basic w-4/12">
                         <label htmlFor="">نوع الصنف</label>
-                        <Select
-                        defaultValue={0}
-                            className="w-full"
-                            options={[
-                                { value: 0, label: 'بدون تحديد' },
-                            ]}
-                        />
+                        <SelectCategories currentValue={isFilter?.CategoryID} methodSelect={(option)=> setIsFilter(state => {return {...state, CategoryID: option?.CategoryID}})}  />
                     </div>
                     <div className="input_label_basic w-4/12">
                         <label htmlFor="">مركز التكلفة</label>
-                        <Select
-                        defaultValue={0}
-                            className="w-full"
-                            options={[
-                                { value: 0, label: 'بدون تحديد' },
-                            ]}
-                        />
+                        <SelectCostCenters currentValue={isFilter?.CostID} methodSelect={(option)=> setIsFilter(state => {return {...state, CostID: option?.CostID}})} />
                     </div>
                     <div className="input_label_basic w-4/12">
                         <label htmlFor="">المخزن</label>
-                        <Select
-                        defaultValue={0}
-                            className="w-full"
-                            options={[
-                                { value: 0, label: 'بدون تحديد' },
-                            ]}
-                        />
+                        <SelectStores currentValue={isFilter?.StoreID} methodSelect={(option)=> setIsFilter(state => {return {...state, StoreID: option?.StoreID}})} />
                     </div>
                     <div className="input_label_basic w-4/12">
                         <label htmlFor="">التقارير</label>
-                        <Select
-                        defaultValue={0}
-                            className="w-full"
-                            options={[
-                                { value: 0, label: 'تقرير 1' },
-                                { value: 1, label: 'تقرير 2' },
-                                { value: 2, label: 'تقرير 3' },
-                            ]}
-                        />
+                        <SelectReportFiles currentValue={isFilter?.ReportName} methodSelect={(value)=> setIsFilter(state => {return {...state, ReportName: value}})} WindowName={"ProductLastUseReport"} />
                     </div>
                     <div className="input_label_basic w-4/12">
-                        <Button danger type="primary" onClick={handleGetPdf} icon={<SearchOutlined />}>عرض التقرير</Button>
+                        <PrintMainReport WindowName={"ProductLastUseReport"} Filters={isFilter} />
                     </div>
                 </div>
             </div>
