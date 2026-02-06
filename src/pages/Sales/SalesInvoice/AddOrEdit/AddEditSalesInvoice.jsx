@@ -12,6 +12,7 @@ import MessageRequest from "../../../../components/MessageRequest";
 import { Button } from "antd";
 import { SaveOutlined } from "@ant-design/icons";
 import { unique } from "../../../../helpers";
+import ButtonPrintReportPage from "../../../../components/PrintReport";
 
 const AddEditSalesInvoice = ()=>{
     let {id} = useParams();
@@ -93,7 +94,12 @@ const AddEditSalesInvoice = ()=>{
             <div className="flex flex-wrap justify-center">
                 <div className="w-full flex justify-between border-b pb-4 mb-4">
                     <h3 className="text-lg font-bold">إضافة فاتورة مبيعات</h3>
-                    <Button type="primary" onClick={handleSubmit} icon={<SaveOutlined />}>حفظ</Button>
+                    <div className="flex gap-4">
+                        <Button type="primary" onClick={handleSubmit} icon={<SaveOutlined />}>حفظ</Button>
+                        {id &&
+                            <ButtonPrintReportPage WindowName={"SalesInvoice"} DocId={id} />
+                        }
+                    </div>
                 </div>
                 <Comp1 />
                 <Comp2 />

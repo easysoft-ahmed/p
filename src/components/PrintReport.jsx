@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { getFilesReport, postPrintReport } from "../services/PrintReportApi";
 import { LoadingOutlined, PrinterFilled } from "@ant-design/icons";
 
-const ButtonPrintReportPage = ({WindowName, DocId})=>{
+const ButtonPrintReportPage = ({WindowName, DocId, title})=>{
     let [isFilesReport, setIsFilesReport] = useState([]);
     let [isLoading, setIsLoading] = useState(null);
     let callGetFilesReport = async()=>{
@@ -46,12 +46,12 @@ const ButtonPrintReportPage = ({WindowName, DocId})=>{
         <iframe id="my-iframe" style={{display: "none"}} />
         {
             isFilesReport?.length === 1 ?
-                <Button icon={isLoading ? <LoadingOutlined /> : <PrinterFilled />} disabled={isLoading} onClick={()=> callPostPrintReport(isFilesReport[0]) }>طباعة</Button>
+                <Button icon={isLoading ? <LoadingOutlined /> : <PrinterFilled />} disabled={isLoading} onClick={()=> callPostPrintReport(isFilesReport[0]) }>{title ? title : "طباعة"}</Button>
                 :
-                <Dropdown menu={{ items:  isFilesReport.map(ele => {return {label: <div type="text">{ele}</div>}})}} trigger={['click']}>
+                <Dropdown menu={{ items:  isFilesReport.map(ele => {return {label: <div onClick={()=> callPostPrintReport(isFilesReport[0]) }>{ele}</div>}})}} trigger={['click']}>
                     <a onClick={(e) => e.preventDefault()}>
                         <Space>
-                            <Button disabled={isLoading} icon={isLoading ? <LoadingOutlined /> : <PrinterFilled />}>طباعة</Button>
+                            <Button disabled={isLoading} icon={isLoading ? <LoadingOutlined /> : <PrinterFilled />}>{title ? title : "طباعة"}</Button>
                         </Space>
                     </a>
                 </Dropdown>    

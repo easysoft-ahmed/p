@@ -2,6 +2,7 @@ import { SaveOutlined } from "@ant-design/icons";
 import { Button,  Select } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { edit_advanced_search } from "../stateAdvancedSearch";
+import ButtonPrintReportPage from "../../../../../components/PrintReport";
 
 const Comp1 = ()=>{
     let myData = useSelector(state => state.advanced_search.value);
@@ -22,7 +23,10 @@ const Comp1 = ()=>{
             <div className="flex flex-wrap justify-center">
                 <div className="w-full flex justify-between border-b pb-4 mb-4">
                     <h3 className="text-lg font-bold">بحث متقدم للاصناف</h3>
-                    <Button type="primary" icon={<SaveOutlined />}>حفظ</Button>
+                    <div className="flex gap-4">
+                        <Button type="primary" icon={<SaveOutlined />}>حفظ</Button>
+                        {/* <ButtonPrintReportPage WindowName={"ProductSearch"} /> */}
+                    </div>
                 </div>
 
                 <div className="flex flex-wrap w-full">

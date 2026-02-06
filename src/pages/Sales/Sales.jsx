@@ -1,3 +1,4 @@
+import ButtonPrintReportPage from "../../components/PrintReport";
 import TemplateOne from "../../Layouts/TemplateOne";
 
 const sections = [
@@ -26,7 +27,19 @@ const sections = [
 
 const Sales = ()=>{
     return(
-        <TemplateOne data={sections} />
+        <>
+            <TemplateOne data={sections} />
+            <div className="section_row">
+                <h2 className="w-full">اوامر طباعة</h2>
+                <div className="flex flex-wrap gap-4 w-full pt-4">
+                    <ButtonPrintReportPage title="المناطق" WindowName={"AreasReport"} DocId={1}/>
+                    <ButtonPrintReportPage title="المندوبين" WindowName={"StaffReport"}  DocId={1}/>
+                    <ButtonPrintReportPage title="مصادر العملاء" WindowName={"SourcesReport"}  DocId={1}/>
+                    <ButtonPrintReportPage title="العملاء" WindowName={"CustomersReport"}  DocId={1}/>
+                </div>
+            </div>
+
+        </>
     )
 }
 

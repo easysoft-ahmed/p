@@ -3,11 +3,17 @@ import { getAllCategories } from "../../services/CategoriesApi"
 import { Select } from "antd"
 
 export const SelectCategories = ({currentValue, methodSelect})=>{
-    let [data, setData] = useState([])
+    let [data, setData] = useState(null)
+    let [isLoading, setIsLoading] = useState(false)
 
     let callApi = async()=>{
-        let response = await getAllCategories();
-        setData(response || []);            
+        setIsLoading(true)
+        try {
+            let response = await getAllCategories();
+            setData(response || []);
+        } finally {
+            setIsLoading(false)
+        }
     }
     
     useEffect(()=>{
@@ -21,6 +27,7 @@ export const SelectCategories = ({currentValue, methodSelect})=>{
                 value={currentValue} // هذا السطر هو الذي يجعله "يختار" فعلياً ويظهر النص
                 onSelect={(_ , option) => methodSelect(option)} // تحديث الحالة عند التغيير
                 className="w-full" 
+                notFoundContent={isLoading && !data ? "جاري البحث ..." : " لم يتم العثور على بيانات"}
                 options={data} fieldNames={{value: "CategoryID", label: "CategoryName"}}
             />
         </>

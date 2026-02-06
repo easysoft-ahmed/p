@@ -1,20 +1,21 @@
 import { useEffect, useState } from "react"
-import { getAllCostCenters } from "../../services/CostCentersApi"
 import { Select } from "antd"
+import { getAllCustomersTypes } from "../../services/CustomersTypeApi"
 
-export const SelectCostCenters = ({currentValue, methodSelect})=>{
+export const SelectCustomersTypes = ({currentValue, methodSelect})=>{    
     let [data, setData] = useState(null)
     let [isLoading, setIsLoading] = useState(false)
+
     let callApi = async()=>{
         setIsLoading(true)
         try {
-            let response = await getAllCostCenters();
+            let response = await getAllCustomersTypes();
             setData(response || []);
         } finally {
             setIsLoading(false)
         }
     }
-    
+
     useEffect(()=>{
         callApi()
     }, []);
@@ -27,7 +28,7 @@ export const SelectCostCenters = ({currentValue, methodSelect})=>{
                 onSelect={(_ , option) => methodSelect(option)} // تحديث الحالة عند التغيير
                 className="w-full" 
                 notFoundContent={isLoading && !data ? "جاري البحث ..." : " لم يتم العثور على بيانات"}
-                options={data || []} fieldNames={{value: "CostID", label: "CostName"}}
+                options={data} fieldNames={{value: "CustTypeID", label: "CustTypeName"}}
             />
         </>
     )

@@ -193,7 +193,7 @@ const Comp2 = ()=>{
                             <td>
                                 <Select
                                     className="w-full" placeholder="-- غير محدد --"
-                                    value={ele.StoreId ? myData?.dataSelects?.stores?.filter(store => store.StoreID == ele.StoreId)[0]["StoreName"] || ele.StoreId : ""}
+                                    value={ele.StoreId ? myData?.dataSelects?.stores?.filter(store => store.StoreID == ele.StoreId)[0]?.StoreName || ele.StoreId : ""}
                                     onChange={(value) => handleEditRow("PurchItems", "edit", ele.fakeID, {StoreId: value})}
                                     showSearch filterOption={(input, option) =>
                                         (option?.label ?? '').toLowerCase().includes(input.toLowerCase())

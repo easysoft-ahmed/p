@@ -2,17 +2,17 @@ import { SearchOutlined } from "@ant-design/icons";
 import { Button, DatePicker, Modal, Radio, Select, Switch } from "antd";
 import dayjs from "dayjs";
 import { useState } from "react";
+import { SelectCustomersTypes } from "../../../components/SelectDataApi/SelectCustomersType";
+import { SelectCustomers } from "../../../components/SelectDataApi/SelectCustomers";
+import { SelectCountries } from "../../../components/SelectDataApi/SelectCountries";
+import { SelectStaff } from "../../../components/SelectDataApi/SelectStaff";
+import { SelectReportFiles } from "../../../components/SelectDataApi/SelectReportFiles";
+import PrintMainReport from "../../../components/PrintMainReport";
 
 
 
 const CustomersAccountStatement = ()=>{
-    let [pdfName, setPdfName] = useState();
-    let [openReport, setOpenReport] = useState(false)
-    
-    const handleGetPdf = ()=>{
-        setPdfName("/test_pdf.pdf")
-        setOpenReport(true)
-    }
+    let [isFilter, setIsFilter] = useState({});    
     
     const options = [
         {value: 0, label: "اليوم"},
@@ -27,20 +27,6 @@ const CustomersAccountStatement = ()=>{
     ]
     return (
         <>
-            <Modal
-                open={openReport}
-                onCancel={()=>setOpenReport(false)}
-                className="[&_.ant-modal-content]:h-screen [&_.ant-modal-body]:h-full [&_.ant-modal-body]:pt-5  top-0 p-0"
-                footer={false}
-                width={{
-                    xs: '90%',
-                    sm: '80%',
-                    md: '70%',
-                    lg: '60%',
-                }}
-            >
-                <iframe src={pdfName} className="w-full h-full"  />
-            </Modal>
             <div className="flex flex-wrap justify-between items-start w-full">
                 <div className="w-full">
                     <Radio.Group block buttonStyle="solid" optionType="button" options={options} defaultValue="Apple" />
@@ -57,56 +43,24 @@ const CustomersAccountStatement = ()=>{
                     </div>
                     <div className="input_label_basic w-6/12">
                         <label htmlFor="">نوع العميل</label>
-                        <Select
-                        defaultValue={0}
-                            className="w-full"
-                            options={[
-                                { value: 0, label: 'بدون تحديد' },
-                            ]}
-                        />
+                        <SelectCustomersTypes currentValue={isFilter?.VendorTypeID} methodSelect={(option)=> setIsFilter(state => {return {...state, VendorTypeID: option?.VendorTypeID}})}  />
                     </div>
                     <div className="input_label_basic w-6/12">
                         <label htmlFor="">العميل</label>
-                        <Select
-                        defaultValue={0}
-                            className="w-full"
-                            options={[
-                                { value: 0, label: 'بدون تحديد' },
-                            ]}
-                        />
+                        <SelectCustomers currentValue={isFilter?.VendorTypeID} methodSelect={(option)=> setIsFilter(state => {return {...state, VendorTypeID: option?.VendorTypeID}})}  />
                     </div>
                     <div className="input_label_basic w-6/12">
                         <label htmlFor="">المنطقة</label>
-                        <Select
-                        defaultValue={0}
-                            className="w-full"
-                            options={[
-                                { value: 0, label: 'بدون تحديد' },
-                            ]}
-                        />
+                        <SelectCountries currentValue={isFilter?.CountryID} methodSelect={(option)=> setIsFilter(state => {return {...state, CountryID: option?.CountryID}})}  />
                     </div>
                     <div className="input_label_basic w-6/12">
                         <label htmlFor="">المندوب</label>
-                        <Select
-                        defaultValue={0}
-                            className="w-full"
-                            options={[
-                                { value: 0, label: 'بدون تحديد' },
-                            ]}
-                        />
+                        <SelectStaff currentValue={isFilter?.SellerID} methodSelect={(option)=> setIsFilter(state => {return {...state, SellerID: option?.SellerID}})}  />
                     </div>
 
                     <div className="input_label_basic w-6/12">
                         <label htmlFor="">التقارير</label>
-                        <Select
-                        defaultValue={0}
-                            className="w-full"
-                            options={[
-                                { value: 0, label: 'تقرير 1' },
-                                { value: 1, label: 'تقرير 2' },
-                                { value: 2, label: 'تقرير 3' },
-                            ]}
-                        />
+                        <SelectReportFiles currentValue={isFilter?.ReportName} methodSelect={(value)=> setIsFilter(state => {return {...state, ReportName: value}})} WindowName={"CustomersCardReport"} />
                     </div>
                     <div className="input_label_basic text-center w-3/12">
                         <label htmlFor="" className="">عرض رصيد ماسبق</label>
@@ -114,7 +68,7 @@ const CustomersAccountStatement = ()=>{
                     </div>
 
                     <div className="input_label_basic w-3/12">
-                        <Button danger type="primary" onClick={handleGetPdf} icon={<SearchOutlined />}>عرض التقرير</Button>
+                        <PrintMainReport WindowName={"CustomersCardReport"} Filters={isFilter} />
                     </div>
                 </div>
             </div>
