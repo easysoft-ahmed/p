@@ -30,13 +30,14 @@ const TreeProduct = ({tableName, handleEditRow, ele, onlyCategories, updateSelec
 
     const handleRightClick = ({ event, node }) => {
         event.preventDefault(); // Prevent default browser context menu
-
         
+        if(treeData[0]?.key){
+            setUpCategoryID(node.key?.slice(0, node.key?.indexOf("-cat", 0)))
+        }
         setSelectedNode(node);
-        setUpCategoryID(node.key?.slice(0, node.key?.indexOf("-cat", 0)))
         setContextMenuPosition({ x: event.clientX, y: event.clientY });
 
-        if(node.ProdType === 1){
+        if(node?.ProdType === 1 || treeData[0]?.key === null){
             setContextMenuVisible(true);
         }
     };
@@ -94,7 +95,7 @@ const TreeProduct = ({tableName, handleEditRow, ele, onlyCategories, updateSelec
         }
     }
     let handleDeleteCategory = async()=>{        
-        let response = await deleteDataAsync( `Stock/Categories?CategoryID=${selectedNode.key?.replace("-cat", "")}`);
+        let response = await deleteDataAsync( `Stock/Categories?CategoryID=${selectedNode?.key?.replace("-cat", "")}`);
         if(response?.ResponseObject){
             handleProductTree(true);
             setModalAddElement(false);
@@ -108,7 +109,7 @@ const TreeProduct = ({tableName, handleEditRow, ele, onlyCategories, updateSelec
         
 
         return(
-            <div className={`w-full border-r px-4`}>
+            <div className={`w-full ${!onlyCategories && "border-r"} px-4`} onContextMenu={event => handleRightClick({event})}>
                 <h3 className="font-bold mb-4"> شجرة الاصناف </h3>
                 <Modal title={
                     `${isTypeAction === "add" ? "إضافة" : isTypeAction === "edit" ? "تعديل" : isTypeAction === "delete" && "حذف"} 
@@ -125,7 +126,7 @@ const TreeProduct = ({tableName, handleEditRow, ele, onlyCategories, updateSelec
                     }
                 </Modal>
 
-                <div dir="ltr" className="w-full flex flex-wrap justify-between gap-2">
+                <div dir="ltr" className="w-full flex flex-wrap justify-between gap-2" >
                     <Tree
                         titleRender={(node)=>{return <span>{node?.title} <span className="font-bold"> - {node?.key?.replace("-cat", "")}</span></span>}}
                         showLine
@@ -170,9 +171,13 @@ const TreeProduct = ({tableName, handleEditRow, ele, onlyCategories, updateSelec
                             }}>
                                     <Menu id="dropmenu_tree" className="border rounded-md  bg-gray-200" onClick={handleMenuClick}>
                                         <Menu.Item id="dropmenu_item_root" key="add_root">إضافة نوع جذر</Menu.Item>
-                                        <Menu.Item id="dropmenu_item_branch" key="add_branch">إضافة نوع فرع</Menu.Item>
-                                        <Menu.Item id="dropmenu_item_edit" key="edit">تعديل</Menu.Item>
-                                        <Menu.Item id="dropmenu_item_delete" key="delete">حذف</Menu.Item>
+                                        {treeData[0]?.key &&
+                                            <>
+                                                <Menu.Item  id="dropmenu_item_branch" key="add_branch">إضافة نوع فرع</Menu.Item>
+                                                <Menu.Item id="dropmenu_item_edit" key="edit">تعديل</Menu.Item>
+                                                <Menu.Item id="dropmenu_item_delete" key="delete">حذف</Menu.Item>
+                                            </>
+                                        }
                                     </Menu>
                             </div>
                         // <Dropdown trigger={['click']} overlay={menu} visible={contextMenuVisible} onVisibleChange={setContextMenuVisible}>

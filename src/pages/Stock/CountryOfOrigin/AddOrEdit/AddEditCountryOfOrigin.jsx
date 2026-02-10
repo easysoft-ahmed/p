@@ -1,5 +1,5 @@
 import { SaveOutlined } from "@ant-design/icons";
-import { Button, Input, Select } from "antd";
+import { Button, Input, message, Select } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import useGet from "../../../../hooks/useGet";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,14 +8,15 @@ import { useEffect, useState } from "react";
 import usePost from "../../../../hooks/usePost";
 import usePut from "../../../../hooks/usePut";
 import MessageRequest from "../../../../components/MessageRequest";
+import { getAllCountries, postNewCountry, putCountry } from "../../../../services/CountriesApi";
 
 const AddEditCountryOfOrigin = ()=>{
     let {id} = useParams();
     let {getDataAsync} = useGet();
-    let {postDataAsync} = usePost();
-    let {putDataAsync} = usePut();
-    let [msg, setMsg] = useState("");
     const navigate = useNavigate();
+    const [messageApi, statusRequestMessage] = message.useMessage();
+
+    let [isAllCountries, setIsAllCountries] = useState([])
 
     let myData = useSelector(state => state.country_of_origin.value);
     let dispatch = useDispatch();
@@ -34,20 +35,38 @@ const AddEditCountryOfOrigin = ()=>{
         }
 
     }
-    
-    let handleSubmit = async()=>{
-        setMsg(false)
-        if(id){
-            let status = await putDataAsync("Sys/Countries", myData);
-            navigate("/stock/country_of_origin/add", { replace: true });
-            status?.ResponseObject && setMsg(true);
-            status?.ResponseObject && dispatch(initial_state_country_of_origin())
-        }else{
-            let status = await postDataAsync("Sys/Countries", myData);
-            status?.ResponseObject && dispatch(initial_state_country_of_origin());
-            status?.ResponseObject && setMsg(true)
-        }
 
+    let handleAddPage = async()=>{
+        let allCountries = await getAllCountries();
+        setIsAllCountries(allCountries)
+        dispatch(initial_state_country_of_origin())
+    }
+
+    let handleSubmit = async()=>{
+        if(id){
+            let checkNameCountryFirst = isAllCountries.filter(store => store?.CountryName === myData?.CountryName && store?.CountryID !== id);
+            if(checkNameCountryFirst.length){
+                messageApi.error("هذا الاسم مسجل مسبقا !")
+            }else{
+                let status = await putCountry(myData);
+                if(status === true){
+                    navigate("/stock/country_of_origin/add", { replace: true });
+                    messageApi.success("تم تعديل البلد بنجاح !")
+                    dispatch(initial_state_country_of_origin());
+                }
+            }
+        }else{
+            let checkNameCountryFirst = isAllCountries.filter(store => store?.CountryName === myData?.CountryName);            
+            if(checkNameCountryFirst.length){
+                messageApi.error("هذا الاسم مسجل مسبقا !")
+            }else{
+                let status = await postNewCountry(myData);
+                if(status === true){
+                    await handleAddPage()
+                    messageApi.success("تم اضافة البلد بنجاح !")
+                }
+            }
+        }
     }
 
     useEffect(()=>{
@@ -60,12 +79,13 @@ const AddEditCountryOfOrigin = ()=>{
 
     return(
         <>
-            <MessageRequest data={msg}/>
 
+            {statusRequestMessage}
+            
             <div className="flex flex-wrap justify-center">
                 <div className="w-full flex justify-between border-b pb-4 mb-4">
                     <h3 className="text-lg font-bold">إضافة بلد منشأ</h3>
-                    <Button type="primary" onClick={handleSubmit} icon={<SaveOutlined />}>حفظ</Button>
+                    <Button type="primary" disabled={!myData?.CountryName} onClick={handleSubmit} icon={<SaveOutlined />}>حفظ</Button>
                 </div>
 
                 <div className="flex flex-wrap w-full sm:w-8/12 md:w-6/12 lg:w-4/12">

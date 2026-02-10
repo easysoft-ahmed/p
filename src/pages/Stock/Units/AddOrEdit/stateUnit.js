@@ -13,8 +13,8 @@ export const unitSlice = createSlice({
     update_unit: (state, {payload})=>{
         state.value = payload;
     },
-    initial_state_units: (state)=>{
-        state.value = {UnitName: "", UnitID: ""} ;
+    initial_state_units: (state)=>{      
+        state.value = {UnitName: "", UnitID: ""};
     }
   },
 })

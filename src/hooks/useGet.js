@@ -8,7 +8,7 @@ const useGet = () => {
     const [isLoadingGet, setIsLoadingGet] = useState(null);
 
     const getData = (path)=>{
-        let token = "TWc9PTpWR1Z6ZENCVmMyVnk6YXc9PTpiR2t5Tm5kNE9FaENPV005Ok1BPT0="
+        let token = localStorage.getItem("token")
         let headers =   { 'Authorization': `Bearer ${token}` }
         setIsLoadingGet(true)
         axios.get(baseUrl.concat(path), {headers})
@@ -32,7 +32,7 @@ const useGet = () => {
     }
 
     const getDataAsync = async(path)=>{
-        let token = "TWc9PTpWR1Z6ZENCVmMyVnk6YXc9PTpiR2t5Tm5kNE9FaENPV005Ok1BPT0="
+        let token = localStorage.getItem("token")
         let headers =   { 'Authorization': `Bearer ${token}` }
 
         let res = axios.get(baseUrl.concat(path), {headers})

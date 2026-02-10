@@ -8,8 +8,6 @@ export const productSlice = createSlice({
   },
   reducers: {
     edit_product: (state, {payload})=>{
-            console.log(payload);
-
       state.value = {...state.value, ...payload};
     },
     update_product: (state, {payload})=>{
@@ -62,12 +60,15 @@ export const productSlice = createSlice({
           return ele;
         }
       })
+    },
+    initial_state_product: (state)=>{
+      state.value = {}
     }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { edit_product, edit_row_tables_product, update_product, add_new_row_tables_product, remove_row_tables_product } = productSlice.actions
+export const { edit_product, edit_row_tables_product, initial_state_product, update_product, add_new_row_tables_product, remove_row_tables_product } = productSlice.actions
 
 export default productSlice.reducer
 

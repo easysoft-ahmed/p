@@ -18,7 +18,7 @@ export const globalSlice = createSlice({
     set_login_user: (state, {payload})=>{
       if(payload?.Token){
         localStorage.setItem("user_login", JSON.stringify(payload));
-        localStorage.setItem("token", JSON.stringify(payload?.Token));
+        localStorage.setItem("token", payload?.Token);
         state.value.user_login = payload;
       }else{
         state.value.user_login = null

@@ -12,13 +12,14 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useGet from "../../../../hooks/useGet";
 import { useDispatch, useSelector } from "react-redux";
-import { edit_product, update_product } from "./stateProduct";
+import { edit_product, initial_state_product, update_product } from "./stateProduct";
 import { getManyDataForSelectInput } from "../../../../api";
 import usePost from "../../../../hooks/usePost";
 import usePut from "../../../../hooks/usePut";
 import MessageRequest from "../../../../components/MessageRequest";
 import TreeProduct from "../../../../components/TreeProduct";
 import ButtonPrintReportPage from "../../../../components/PrintReport";
+import { postNewProduct, putProduct } from "../../../../services/ProductsApi";
 
 const AddEditProducts = ()=>{
     let {id} = useParams();
@@ -54,14 +55,18 @@ const AddEditProducts = ()=>{
     let handleSubmit = async()=>{
         setMsg(false)
         if(id){
-            let status = await putDataAsync("Stock/Products", myData);
-            navigate("/stock/products/add", { replace: true });
-            status?.ResponseObject && setMsg(true);
-            // status?.ResponseObject && dispatch(initial_state_country_of_origin())
+            let status = await putProduct(myData);
+            if(status === true){
+                setMsg(true)
+                navigate("/stock/products/add", { replace: true });
+                dispatch(initial_state_product());
+            }
         }else{
-            let status = await postDataAsync("Stock/Products", myData);
-            // status?.ResponseObject && dispatch(initial_state_country_of_origin());
-            status?.ResponseObject && setMsg(true)
+            let status = await postNewProduct(myData);
+            if(status === true){
+                setMsg(true)
+                dispatch(initial_state_product());
+            }
         }
 
     }
@@ -85,10 +90,7 @@ const AddEditProducts = ()=>{
                 <div className="w-full flex justify-between border-b pb-4 mb-4">
                     <h3 className="text-lg font-bold">إضافة صنف</h3>
                     <div className="flex gap-4">
-                        <Button type="primary" onClick={handleSubmit} icon={<SaveOutlined />}>حفظ</Button>
-                        {id &&
-                            <ButtonPrintReportPage WindowName={"ProductsReport"} DocId={id} />
-                        }
+                        <Button type="primary" disabled={!myData?.Productname || !myData?.CategoryId} onClick={handleSubmit} icon={<SaveOutlined />}>حفظ</Button>
                     </div>
                 </div>
 

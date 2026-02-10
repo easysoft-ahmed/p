@@ -5,7 +5,7 @@ import { message } from "antd";
 const usePost = () => {
 
     const postDataAsync = async(path, body)=>{
-        let token = "TWc9PTpWR1Z6ZENCVmMyVnk6YXc9PTpiR2t5Tm5kNE9FaENPV005Ok1BPT0="
+        let token = localStorage.getItem("token")
         let headers =   { 'Authorization': `Bearer ${token}` }
 
         let res = axios.post(baseUrl.concat(path), body , {headers})

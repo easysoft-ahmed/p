@@ -22,8 +22,6 @@ const Comp1 = ()=>{
     return(
             <div className="w-full flex flex-wrap justify-center">
                 <Modal
-                    title="Basic Modal"
-                    closable={{ 'aria-label': 'Custom Close Button' }}
                     open={showTree}
                     footer={false}
                     onCancel={()=>setShowTree(false)}
@@ -68,6 +66,9 @@ const Comp1 = ()=>{
                             defaultValue={0}
                         >
                             <Select.Option value={0}>-- غير محدد --</Select.Option>    
+                                {/* {[{CategoryID: "1", CategoryName: "Cate Test"},{CategoryID: "2", CategoryName: "Cate Test 2"}].map(category => 
+                                    <Select.Option value={category?.CategoryID?.toString()}>{category.CategoryName}</Select.Option>    
+                                )} */}
                                 {myData?.dataSelects?.categories?.map(category => 
                                     <Select.Option value={category?.CategoryID?.toString()}>{category.CategoryName}</Select.Option>    
                                 )}

@@ -8,3 +8,21 @@ export const getAllStores = async()=>{
         console.error("خطاء في جلب المخازن");
     }
 }
+
+export const postNewStore = async(data)=>{
+    try {
+        let response = await MainAPI.post(`Stock/Stores`, data)
+        return response?.data?.ResponseObject;       
+    } catch (error) {
+        console.error("خطاء في اضافة المخزن");
+    }
+}
+
+export const putStore = async(data)=>{
+    try {
+        let response = await MainAPI.put(`Stock/Stores`, data)
+        return response?.data?.ResponseObject;       
+    } catch (error) {
+        console.error("خطاء في تعديل المخزن");
+    }
+}

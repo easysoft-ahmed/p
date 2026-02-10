@@ -8,10 +8,8 @@ export const MainAPI = axios.create({
 
 MainAPI.interceptors.request.use(
   (config) => {
-    const token = "TWc9PTpWR1Z6ZENCVmMyVnk6YXc9PTpiR2t5Tm5kNE9FaENPV005Ok1BPT0="; // جلب التوكن من التخزين المحلي
+    let token = localStorage.getItem("token")
     // const token = localStorage.getItem('token'); // جلب التوكن من التخزين المحلي
-    console.log(token);
-    
     if (token) {
       config.headers['Authorization'] = `Bearer ${token}`; //
     }

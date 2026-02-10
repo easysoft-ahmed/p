@@ -5,7 +5,7 @@ let pathWebSite = {
     "add": {title: {ar: "إضافة", en: ""}},
     "edit": {title: {ar: "تعديل", en: ""}},
     "/": {title: {ar: "الرئيسية"}},
-    "accounts": {title: {ar: "الحسابات"}},
+    "/accounts": {title: {ar: "الحسابات"}},
     "stock": {title: {ar: "المخزون"}},
     "purch": {title: {ar: "المشتريات"}},
     "sales": {title: {ar: "المبيعات"}},
@@ -41,11 +41,17 @@ const Breadcrumb = ()=>{
     let handleMakeCurrentPath = (arrayPath, strCurrentPath)=>{
         let myPath = ""
         for (let i = 0; i < arrayPath.length; i++) {
-            myPath += arrayPath[i];
+            
+            if(i !== 0){
+                myPath += "/" + arrayPath[i];
+            }
             if(arrayPath[i] === strCurrentPath){
                 break;
             }   
         }
+        
+        console.log(myPath);
+        
         return myPath;
         
     } 

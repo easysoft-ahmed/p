@@ -1,5 +1,5 @@
 import { SaveOutlined } from "@ant-design/icons";
-import { Button, Select, Switch } from "antd";
+import { Button, message, Select, Switch } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { edit_stock, initial_state_stores, update_stock } from "./stateStock";
 import useGet from "../../../../hooks/useGet";
@@ -10,15 +10,17 @@ import MessageRequest from "../../../../components/MessageRequest";
 import usePost from "../../../../hooks/usePost";
 import usePut from "../../../../hooks/usePut";
 import ButtonPrintReportPage from "../../../../components/PrintReport";
+import { getAllStores, postNewStore, putStore } from "../../../../services/StoresApi";
 
 const AddEditStores = ()=>{
     let {id} = useParams();
     let {getDataAsync} = useGet();
-    let {postDataAsync} = usePost();
-    let {putDataAsync} = usePut();
-    let [msg, setMsg] = useState("");
+    const [messageApi, statusRequestMessage] = message.useMessage();
+
+
     const navigate = useNavigate();
 
+    let [isAllStores, setIsAllStores] = useState([])
     let myData = useSelector(state => state.stock.value);
     let dispatch = useDispatch();
     let changeValue = (eventOrValue, prop)=>{
@@ -32,16 +34,24 @@ const AddEditStores = ()=>{
     }
 
     let getDataEditPage = async ()=>{
-        try {
-            let data = await getDataAsync(`Stock/Stores?StoreID=${id}`);
-            if(data?.ResponseObject?.length){
-                dispatch(update_stock(data.ResponseObject[0]))
-            }
-        } catch (error) {
-            console.log(error);
-        }
+        let allStores = await getAllStores();
+        setIsAllStores(allStores)
+        if(allStores){
+            let searchInStoresById = allStores.filter(store => store?.StoreID === id)[0];
+            dispatch(update_stock(searchInStoresById))            
+        }else{
+            console.log("خطاء في جلب المخزن");
 
+        }
     }
+
+    let handleAddPage = async()=>{
+        let allStores = await getAllStores();
+        setIsAllStores(allStores)
+        dispatch(initial_state_stores())
+    }
+
+
     async function callGetManyDataForSelectInput(){
         try {
             let data = await getManyDataForSelectInput(["cost_centers","acc_codes","staff"], getDataAsync)
@@ -51,17 +61,32 @@ const AddEditStores = ()=>{
         }
     }
 
-    let handleSubmit = async()=>{
-        setMsg(false)
+    let handleSubmit = async()=>{        
         if(id){
-            let status = await putDataAsync("Stock/Stores", myData);
-            navigate("/stock/stores/add", { replace: true });
-            status?.ResponseObject && setMsg(true);
-            status?.ResponseObject && dispatch(initial_state_stores())
+            let checkNameStoreFirst = isAllStores.filter(store => store?.StoreName === myData?.StoreName && store?.StoreID !== id);
+            if(checkNameStoreFirst.length){
+                messageApi.error("هذا الاسم مسجل مسبقا !")
+            }else{
+                let status = await putStore(myData);
+                if(status === true){
+                    navigate("/stock/stores/add", { replace: true });
+                    messageApi.success("تم تعديل المخزن بنجاح !")
+                    dispatch(initial_state_stores());
+                }
+            }
+
         }else{
-            let status = await postDataAsync("Stock/Stores", myData);
-            status?.ResponseObject && dispatch(initial_state_stores());
-            status?.ResponseObject && setMsg(true)
+            let checkNameStoreFirst = isAllStores.filter(store => store?.StoreName === myData?.StoreName);            
+            if(checkNameStoreFirst.length){
+                messageApi.error("هذا الاسم مسجل مسبقا !")
+            }else{
+                let status = await postNewStore(myData);
+                if(status === true){
+                    // dispatch(initial_state_stores());
+                    await handleAddPage()
+                    messageApi.success("تم اضافة المخزن بنجاح !")
+                }
+            }
         }
 
     }
@@ -70,7 +95,7 @@ const AddEditStores = ()=>{
         if(id){
             getDataEditPage()
         }else{
-            dispatch(update_stock({}))
+            handleAddPage()
         }
         callGetManyDataForSelectInput()
 
@@ -78,16 +103,13 @@ const AddEditStores = ()=>{
 
     return(
         <>
-            <MessageRequest data={msg}/>
-
+            {/* <MessageRequest data={msg} errorMsg={isErrMsg}/> */}
+            {statusRequestMessage}
             <div className="flex flex-wrap justify-center">
                 <div className="w-full flex justify-between border-b pb-4 mb-4">
                     <h3 className="text-lg font-bold">إضافة مخزن</h3>
                     <div className="flex gap-4">
-                        <Button type="primary" onClick={handleSubmit} icon={<SaveOutlined />}>حفظ</Button>
-                        {id &&
-                            <ButtonPrintReportPage WindowName={"StoresReport"} DocId={id} />
-                        }
+                        <Button type="primary" disabled={!myData?.StoreName || !myData?.SellerID} onClick={handleSubmit} icon={<SaveOutlined />}>حفظ</Button>
                     </div>
                 </div>
 
@@ -97,7 +119,7 @@ const AddEditStores = ()=>{
                         <input type="text" id="StoreID" disabled value={myData?.StoreID || ""} onChange={event => changeValue(event)}/>
                     </div>
                     <div className="input_label_basic ps-2 w-8/12">
-                        <label htmlFor="StoreName">أسم المخزن</label>
+                        <label htmlFor="StoreName" className="label_required">أسم المخزن</label>
                         <input type="text" id="StoreName" value={myData?.StoreName || ""} onChange={event => changeValue(event)}/>
                     </div>
                     <div className="input_label_basic ps-2 w-6/12">
@@ -115,7 +137,7 @@ const AddEditStores = ()=>{
                     </div>
 
                     <div className="input_label_basic ps-2 w-full">
-                        <label htmlFor="SellerID">مسؤول المخزن</label>
+                        <label htmlFor="SellerID" className="label_required">مسؤول المخزن</label>
                         <Select
                             className="w-full"
                             allowClear value={myData?.SellerID || ""} onChange={value => changeValue(value, "SellerID")}

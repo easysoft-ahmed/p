@@ -87,8 +87,12 @@ input{
 
 
 
-
-
+.label_required::before{
+  content: "*";
+  padding-left: 5px;
+  color: crimson;
+  font-weight: bold;
+}
 
 
 
