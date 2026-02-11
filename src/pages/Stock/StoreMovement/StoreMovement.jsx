@@ -1,9 +1,12 @@
 import { handleOnlyDate } from "../../../helpers";
 import DeleteBtn from "../../../components/DeleteBtn";
 import EditBtn from "../../../components/EditBtn";
-import TableMainData from "../../../components/TableMainData";
+import TableMainData, { getColumnSearchProps } from "../../../components/TableMainData";
+import ButtonPrintReportPage from "../../../components/PrintReport";
 
 let switchValue = (key)=>{
+  console.log(key);
+  
   switch (key) {
     case 0: return "رصيد أول المدة"; 
     case 1: return "إضافة"
@@ -18,28 +21,42 @@ const columns = [
   {
     title: 'رقم المستند',
     dataIndex: 'DocNo',
-    search: 'DocNo',
-    key: 'name',
+    ...getColumnSearchProps('DocNo', "رقم المستند")
   },
   {
     title: 'تاريخ المستند',
     search: "DocDate",
     render: (record)=>(
       <span>{handleOnlyDate(record.DocDate)}</span>
-    )
+    ),
+    ...getColumnSearchProps('DocDate', "تاريخ المستند")
+
   },
   {
     title: 'نوع الحركة',
-    search: "TransType",
+    dataIndex: 'TransType',
+    
+    filters: [
+      { text: 'رصيد أول المدة', value: 0 },
+      { text: 'إضافة', value: 1 },
+      { text: "صرف", value: 2 },
+      { text: "مرتد صرف", value: 3 },
+      { text: "عينات و هدايا واردة", value: 4 },
+      { text: "عينات و هدايا صادرة", value: 5 },
+      { text: "تالف", value: 6 },
+    ],
+    
+    onFilter: (value, record) => record.TransType === value,
+    filterMultiple: true,
     render: (record)=>(
-      <span>{switchValue(record.TransType)}</span>
-    )
+      <span>{switchValue(record)}</span>
+    ),
   },
   {
     title: 'ملاحظات',
     dataIndex: 'Notes',
     search: "Notes",
-    key: 'age',
+    ...getColumnSearchProps('Notes', "ملاحظات")
   },
   {
     title: 'إجراء',
@@ -47,6 +64,8 @@ const columns = [
       <>
         <EditBtn url={`edit/${record.TransDoc}`} />
         <DeleteBtn url={`Stock/Trans?TransDoc=${record.TransDoc}`} />
+        <ButtonPrintReportPage WindowName={"StockInvoice"} DocId={record.TransDoc} />
+
       </>
 
     ),

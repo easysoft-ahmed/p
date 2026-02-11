@@ -71,7 +71,6 @@ const Comp2 = ()=>{
                                             record?.SubUnitId &&  unitsGroup.push({value: record?.SubUnitId, label: record?.SubUnitName, })
                                             record?.UseUnitID && unitsGroup.push({value: record?.UseUnitID, label: record?.UseUnitName})
 
-
                                             handleEditRow("StockItems", "edit", ele.fakeID,{
                                                 ProductName: value, ProductID: record?.value, UnitID: record?.MainUnitId, StoreId: record?.StoreId,
                                                 unitsGroup, Qty: 1, Price: record?.MainUnitPrice, Total: record?.MainUnitPrice * 1,
@@ -117,7 +116,8 @@ const Comp2 = ()=>{
                                 <td>
                                     <Input
                                         value={ele.Qty}
-                                        onChange={(e) => handleEditRow("StockItems", "edit", ele.fakeID, {Qty: e.target.value, Total: e.target.value * ele.Price})}/>
+                                        onChange={(e) => handleEditRow("StockItems", "edit", ele.fakeID, {Qty: e.target.value, Total: e.target.value * ele.Price})}
+                                    />
                                 </td>
                                 <td>
                                     <Input

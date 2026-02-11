@@ -20,7 +20,7 @@ export const getUnit = async(UnitID)=>{
 
 export const getNextCodeUnit = async()=>{
     try {
-        let response = await MainAPI.get(`Stock/Units/NextCode`)
+        let response = await MainAPI.get(`Stock/Units/NextId`)
         return response?.data?.ResponseObject;       
     } catch (error) {
         console.error("خطاء في جلب الكود التالي");

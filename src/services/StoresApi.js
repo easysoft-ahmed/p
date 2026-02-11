@@ -8,6 +8,14 @@ export const getAllStores = async()=>{
         console.error("خطاء في جلب المخازن");
     }
 }
+export const getNextCodeStore = async()=>{
+    try {
+        let response = await MainAPI.get(`Stock/Stores/NextId`)
+        return response?.data?.ResponseObject;       
+    } catch (error) {
+        console.error("خطاء في جلب الكود التالي");
+    }
+}
 
 export const postNewStore = async(data)=>{
     try {

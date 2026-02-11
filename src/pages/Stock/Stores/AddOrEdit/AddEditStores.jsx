@@ -1,4 +1,4 @@
-import { SaveOutlined } from "@ant-design/icons";
+import { LoadingOutlined, SaveOutlined } from "@ant-design/icons";
 import { Button, message, Select, Switch } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { edit_stock, initial_state_stores, update_stock } from "./stateStock";
@@ -10,12 +10,13 @@ import MessageRequest from "../../../../components/MessageRequest";
 import usePost from "../../../../hooks/usePost";
 import usePut from "../../../../hooks/usePut";
 import ButtonPrintReportPage from "../../../../components/PrintReport";
-import { getAllStores, postNewStore, putStore } from "../../../../services/StoresApi";
+import { getAllStores, getNextCodeStore, postNewStore, putStore } from "../../../../services/StoresApi";
 
 const AddEditStores = ()=>{
     let {id} = useParams();
     let {getDataAsync} = useGet();
     const [messageApi, statusRequestMessage] = message.useMessage();
+    let [isLoading, setIsLoading] = useState(false)
 
 
     const navigate = useNavigate();
@@ -45,10 +46,16 @@ const AddEditStores = ()=>{
         }
     }
 
-    let handleAddPage = async()=>{
+    let getNextCode = async()=>{
+        const nextCode = await getNextCodeStore();
+        dispatch(update_stock({StoreID: nextCode}));
+    }
+
+    let handleAddPage = async(nextCode = true)=>{
         let allStores = await getAllStores();
         setIsAllStores(allStores)
         dispatch(initial_state_stores())
+        nextCode && await getNextCode();
     }
 
 
@@ -61,32 +68,36 @@ const AddEditStores = ()=>{
         }
     }
 
-    let handleSubmit = async()=>{        
-        if(id){
-            let checkNameStoreFirst = isAllStores.filter(store => store?.StoreName === myData?.StoreName && store?.StoreID !== id);
-            if(checkNameStoreFirst.length){
-                messageApi.error("هذا الاسم مسجل مسبقا !")
+    let handleSubmit = async()=>{
+        setIsLoading(true)
+        try {
+            if(id){
+                let checkNameStoreFirst = isAllStores.filter(store => store?.StoreName === myData?.StoreName && store?.StoreID !== id);
+                if(checkNameStoreFirst.length){
+                    messageApi.error("هذا الاسم مسجل مسبقا !")
+                }else{
+                    let status = await putStore(myData);
+                    if(status === true){
+                        navigate("/stock/stores/add", { replace: true });
+                        messageApi.success("تم تعديل المخزن بنجاح !")
+                    }
+                }
             }else{
-                let status = await putStore(myData);
-                if(status === true){
-                    navigate("/stock/stores/add", { replace: true });
-                    messageApi.success("تم تعديل المخزن بنجاح !")
-                    dispatch(initial_state_stores());
+                let checkNameStoreFirst = isAllStores.filter(store => store?.StoreName === myData?.StoreName);            
+                if(checkNameStoreFirst.length){
+                    messageApi.error("هذا الاسم مسجل مسبقا !")
+                }else{
+                    let status = await postNewStore(myData);
+                    if(status === true){
+                        // dispatch(initial_state_stores());
+                        await handleAddPage()
+                        messageApi.success("تم اضافة المخزن بنجاح !")
+                    }
                 }
             }
-
-        }else{
-            let checkNameStoreFirst = isAllStores.filter(store => store?.StoreName === myData?.StoreName);            
-            if(checkNameStoreFirst.length){
-                messageApi.error("هذا الاسم مسجل مسبقا !")
-            }else{
-                let status = await postNewStore(myData);
-                if(status === true){
-                    // dispatch(initial_state_stores());
-                    await handleAddPage()
-                    messageApi.success("تم اضافة المخزن بنجاح !")
-                }
-            }
+            setIsLoading(false)
+        } finally {
+            setIsLoading(false)
         }
 
     }
@@ -109,7 +120,7 @@ const AddEditStores = ()=>{
                 <div className="w-full flex justify-between border-b pb-4 mb-4">
                     <h3 className="text-lg font-bold">إضافة مخزن</h3>
                     <div className="flex gap-4">
-                        <Button type="primary" disabled={!myData?.StoreName || !myData?.SellerID} onClick={handleSubmit} icon={<SaveOutlined />}>حفظ</Button>
+                        <Button type="primary" disabled={!myData?.StoreName || !myData?.SellerID || isLoading} onClick={handleSubmit} icon={isLoading ? <LoadingOutlined /> : <SaveOutlined />}>حفظ</Button>
                     </div>
                 </div>
 

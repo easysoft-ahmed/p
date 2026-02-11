@@ -1,7 +1,7 @@
 import { Button, Tabs } from "antd";
 import Comp1 from "./components/Comp1";
 import Comp2 from "./components/Comp2";
-import { SaveOutlined } from "@ant-design/icons";
+import { LoadingOutlined, SaveOutlined } from "@ant-design/icons";
 import Comp3 from "./components/Comp3";
 import Comp4 from "./components/Comp4";
 import Comp5 from "./components/Comp5";
@@ -19,14 +19,15 @@ import usePut from "../../../../hooks/usePut";
 import MessageRequest from "../../../../components/MessageRequest";
 import TreeProduct from "../../../../components/TreeProduct";
 import ButtonPrintReportPage from "../../../../components/PrintReport";
-import { postNewProduct, putProduct } from "../../../../services/ProductsApi";
+import { getNextCodeProduct, postNewProduct, putProduct } from "../../../../services/ProductsApi";
 
 const AddEditProducts = ()=>{
     let {id} = useParams();
     let {getDataAsync} = useGet();
-    let {postDataAsync} = usePost();
-    let {putDataAsync} = usePut();
     let [msg, setMsg] = useState("");
+    let [isLoading, setIsLoading] = useState(false)
+
+
     const navigate = useNavigate();
     let myData = useSelector(state => state.product.value);
 
@@ -42,7 +43,20 @@ const AddEditProducts = ()=>{
         }
 
     }
+
+    let getNextCode = async()=>{
+        const nextCode = await getNextCodeProduct();
+        dispatch(edit_product({ProductID: nextCode}));
+    }
     
+    let handleAddProduct = async(nextCode = true)=>{
+        dispatch(initial_state_product());
+        if(nextCode){
+            await getNextCode()
+        }
+        await callGetManyDataForSelectInput()
+
+    }
     async function callGetManyDataForSelectInput(){
         try {
             let data = await getManyDataForSelectInput(["products", "suppliers", "acc_codes", "units", "stores", "countries", "categories", "currencies", "colors", "meagures"], getDataAsync)
@@ -54,19 +68,24 @@ const AddEditProducts = ()=>{
 
     let handleSubmit = async()=>{
         setMsg(false)
-        if(id){
-            let status = await putProduct(myData);
-            if(status === true){
-                setMsg(true)
-                navigate("/stock/products/add", { replace: true });
-                dispatch(initial_state_product());
+        setIsLoading(true)
+        try {
+            if(id){
+                let status = await putProduct(myData);
+                if(status === true){
+                    setMsg(true)
+                    navigate("/stock/products/add", { replace: true });
+                }
+            }else{
+                let status = await postNewProduct(myData);
+                if(status === true){
+                    setMsg(true);
+                    await handleAddProduct()
+                }
             }
-        }else{
-            let status = await postNewProduct(myData);
-            if(status === true){
-                setMsg(true)
-                dispatch(initial_state_product());
-            }
+            setIsLoading(false)
+        } finally {
+            setIsLoading(false)
         }
 
     }
@@ -76,10 +95,8 @@ const AddEditProducts = ()=>{
         if(id){
             getDataProductEditPage()
         }else{
-            dispatch(update_product({}))
+            handleAddProduct()
         }
-
-        callGetManyDataForSelectInput()
     }, [id])
     return(
         <>
@@ -90,7 +107,7 @@ const AddEditProducts = ()=>{
                 <div className="w-full flex justify-between border-b pb-4 mb-4">
                     <h3 className="text-lg font-bold">إضافة صنف</h3>
                     <div className="flex gap-4">
-                        <Button type="primary" disabled={!myData?.Productname || !myData?.CategoryId} onClick={handleSubmit} icon={<SaveOutlined />}>حفظ</Button>
+                        <Button type="primary" disabled={!myData?.Productname || !myData?.CategoryId || isLoading} onClick={handleSubmit} icon={isLoading ? <LoadingOutlined /> : <SaveOutlined />}>حفظ</Button>
                     </div>
                 </div>
 

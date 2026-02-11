@@ -6,18 +6,18 @@ import useGet from "../../../hooks/useGet";
 import { useEffect } from "react";
 import DeleteBtn from "../../../components/DeleteBtn";
 import EditBtn from "../../../components/EditBtn";
-import TableMainData from "../../../components/TableMainData";
+import TableMainData, { getColumnSearchProps } from "../../../components/TableMainData";
 
 const columns = [
   {
     title: 'كود المخزن',
     dataIndex: 'StoreID',
-    key: 'StoreID',
+    ...getColumnSearchProps('StoreID', "كود المخزن")
   },
   {
     title: 'اسم المخزن',
     dataIndex: 'StoreName',
-    key: 'StoreName',
+    ...getColumnSearchProps('StoreName', "اسم المخزن")
   },
   {
     title: 'إجراء',
@@ -28,9 +28,7 @@ const columns = [
       </>
 
     ),
-    key: 'StoreID',
   },
-
 ];
 
 

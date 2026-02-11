@@ -1,57 +1,52 @@
 import DeleteBtn from "../../../components/DeleteBtn";
 import EditBtn from "../../../components/EditBtn";
-import TableMainData from "../../../components/TableMainData";
+import TableMainData, { getColumnSearchProps } from "../../../components/TableMainData";
 
 const columns = [
   {
     title: 'رقم الصنف',
     dataIndex: 'ProductID',
-    key: 'name',
+    ...getColumnSearchProps('ProductID', "رقم الصنف")
   },
   {
     title: 'إسم الصنف',
     dataIndex: 'Productname',
-    key: 'Productname',
+    ...getColumnSearchProps('Productname', "إسم الصنف")
   },
   {
     title: 'Product Name',
     dataIndex: 'ProdEngName',
-    key: 'ProdEngName',
+    ...getColumnSearchProps('ProdEngName', "Product Name")
   },
   {
     title: 'الكود المرجعي', 
     dataIndex: 'CurrRate', // Need Change
-    key: 'age', // Need Change
+    ...getColumnSearchProps('CurrRate', "الكود المرجعي")
   },
   {
     title: 'الوحدة',
     dataIndex: 'MainUnitName',
-    key: 'MainUnitName',
+    ...getColumnSearchProps('MainUnitName', "الوحدة")
   },
   {
     title: 'التصنيف',
     dataIndex: 'CategoryName',
-    key: 'CategoryName',
+    ...getColumnSearchProps('CategoryName', "التصنيف")
   },
   {
     title: 'المنشأ',
     dataIndex: 'CountryName',
-    key: 'CountryName',
+    ...getColumnSearchProps('CountryName', "المنشأ")
   },
   {
     title: 'الماركة',
     dataIndex: 'Marka',
-    key: 'Marka',
+    ...getColumnSearchProps('Marka', "الماركة")
   },
   {
     title: 'الموديل',
     dataIndex: 'Modale',
-    key: 'Modale',
-  },
-  {
-    title: 'الوصف',
-    dataIndex: 'CurrRate', // Need Change
-    key: 'age', // Need Change
+    ...getColumnSearchProps('Modale', "الموديل")
   },
   {
     title: 'إجراء',

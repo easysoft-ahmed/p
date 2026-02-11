@@ -1,4 +1,4 @@
-import { SaveOutlined } from "@ant-design/icons";
+import { LoadingOutlined, SaveOutlined } from "@ant-design/icons";
 import { Button, Input, message, Select } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import useGet from "../../../../hooks/useGet";
@@ -8,14 +8,14 @@ import { useEffect, useState } from "react";
 import usePost from "../../../../hooks/usePost";
 import usePut from "../../../../hooks/usePut";
 import MessageRequest from "../../../../components/MessageRequest";
-import { getAllCountries, postNewCountry, putCountry } from "../../../../services/CountriesApi";
+import { getAllCountries, getNextCodeCountry, postNewCountry, putCountry } from "../../../../services/CountriesApi";
 
 const AddEditCountryOfOrigin = ()=>{
     let {id} = useParams();
     let {getDataAsync} = useGet();
     const navigate = useNavigate();
     const [messageApi, statusRequestMessage] = message.useMessage();
-
+    let [isLoading, setIsLoading] = useState(false)
     let [isAllCountries, setIsAllCountries] = useState([])
 
     let myData = useSelector(state => state.country_of_origin.value);
@@ -36,36 +36,47 @@ const AddEditCountryOfOrigin = ()=>{
 
     }
 
-    let handleAddPage = async()=>{
+    let getNextCode = async()=>{
+        const nextCode = await getNextCodeCountry();
+        dispatch(edit_product({CountryID: nextCode}));
+    }
+
+    let handleAddPage = async(nextCode = true)=>{
         let allCountries = await getAllCountries();
         setIsAllCountries(allCountries)
         dispatch(initial_state_country_of_origin())
+        nextCode && await getNextCode();
     }
 
     let handleSubmit = async()=>{
-        if(id){
-            let checkNameCountryFirst = isAllCountries.filter(store => store?.CountryName === myData?.CountryName && store?.CountryID !== id);
-            if(checkNameCountryFirst.length){
-                messageApi.error("هذا الاسم مسجل مسبقا !")
+        setIsLoading(true)
+        try {
+            if(id){
+                let checkNameCountryFirst = isAllCountries.filter(store => store?.CountryName === myData?.CountryName && store?.CountryID !== id);
+                if(checkNameCountryFirst.length){
+                    messageApi.error("هذا الاسم مسجل مسبقا !")
+                }else{
+                    let status = await putCountry(myData);
+                    if(status === true){
+                        navigate("/stock/country_of_origin/add", { replace: true });
+                        messageApi.success("تم تعديل البلد بنجاح !")
+                    }
+                }
             }else{
-                let status = await putCountry(myData);
-                if(status === true){
-                    navigate("/stock/country_of_origin/add", { replace: true });
-                    messageApi.success("تم تعديل البلد بنجاح !")
-                    dispatch(initial_state_country_of_origin());
+                let checkNameCountryFirst = isAllCountries.filter(store => store?.CountryName === myData?.CountryName);            
+                if(checkNameCountryFirst.length){
+                    messageApi.error("هذا الاسم مسجل مسبقا !")
+                }else{
+                    let status = await postNewCountry(myData);
+                    if(status === true){
+                        await handleAddPage()
+                        messageApi.success("تم اضافة البلد بنجاح !")
+                    }
                 }
             }
-        }else{
-            let checkNameCountryFirst = isAllCountries.filter(store => store?.CountryName === myData?.CountryName);            
-            if(checkNameCountryFirst.length){
-                messageApi.error("هذا الاسم مسجل مسبقا !")
-            }else{
-                let status = await postNewCountry(myData);
-                if(status === true){
-                    await handleAddPage()
-                    messageApi.success("تم اضافة البلد بنجاح !")
-                }
-            }
+            setIsLoading(false)
+        } finally {
+            setIsLoading(false)
         }
     }
 
@@ -73,7 +84,7 @@ const AddEditCountryOfOrigin = ()=>{
         if(id){
             getDataEditPage()
         }else{
-            dispatch(update_country_of_origin({}))
+            handleAddPage()
         }
     }, [id])
 
@@ -85,7 +96,7 @@ const AddEditCountryOfOrigin = ()=>{
             <div className="flex flex-wrap justify-center">
                 <div className="w-full flex justify-between border-b pb-4 mb-4">
                     <h3 className="text-lg font-bold">إضافة بلد منشأ</h3>
-                    <Button type="primary" disabled={!myData?.CountryName} onClick={handleSubmit} icon={<SaveOutlined />}>حفظ</Button>
+                    <Button type="primary" disabled={!myData?.CountryName || isLoading} onClick={handleSubmit} icon={isLoading ? <LoadingOutlined /> : <SaveOutlined />}>حفظ</Button>
                 </div>
 
                 <div className="flex flex-wrap w-full sm:w-8/12 md:w-6/12 lg:w-4/12">

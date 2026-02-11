@@ -9,6 +9,16 @@ export const getAllCountries = async()=>{
     }
 }
 
+
+export const getNextCodeCountry = async()=>{
+    try {
+        let response = await MainAPI.get(`Stock/Countries/NextId`)
+        return response?.data?.ResponseObject;       
+    } catch (error) {
+        console.error("خطاء في جلب الكود التالي");
+    }
+}
+
 export const postNewCountry = async(data)=>{
     try {
         let response = await MainAPI.post(`Sys/Countries`, data)

@@ -1,17 +1,17 @@
 import DeleteBtn from "../../../components/DeleteBtn";
 import EditBtn from "../../../components/EditBtn";
-import TableMainData from "../../../components/TableMainData";
+import TableMainData, { getColumnSearchProps } from "../../../components/TableMainData";
 
 const columns = [
   {
     title: 'كود بلد المنشأ',
     dataIndex: 'CountryID',
-    key: 'name',
+    ...getColumnSearchProps('CountryID', "كود بلد المنشأ")
   },
   {
     title: 'اسم بلد المنشأ',
     dataIndex: 'CountryName',
-    key: 'age',
+    ...getColumnSearchProps('CountryName', "اسم بلد المنشأ")
   },
   {
     title: 'إجراء',

@@ -143,13 +143,13 @@ const TreeProduct = ({tableName, handleEditRow, ele, onlyCategories, updateSelec
                                 }else if(edit_product_type_2){
                                     let arr = [];
                                     let removePrefix = info.node.key?.replace("-cat", "");
-                                    let check = categories.filter(ele => ele.CategoryID === Number(removePrefix))[0];
+                                    let check = categories?.filter(ele => ele.CategoryID === Number(removePrefix))[0];
                                   
                                     if(check && check.UpCategoryID === 0){
                                         dispatch(edit_product_type_2({Productname: info.node.title, CategoryId: removePrefix}))
                                     }else if(check){
                                         function recurGetParent(categories, CateID){
-                                            let filterCategories = categories.filter(ele => ele.CategoryID === CateID)[0];
+                                            let filterCategories = categories?.filter(ele => ele.CategoryID === CateID)[0];
                                             filterCategories && arr.push(filterCategories.CategoryName);
                                             if(filterCategories.UpCategoryID !== 0){                                                
                                                 recurGetParent(categories, filterCategories.UpCategoryID);

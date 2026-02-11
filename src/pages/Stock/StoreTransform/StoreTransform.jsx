@@ -6,33 +6,39 @@ import useGet from "../../../hooks/useGet";
 import { useEffect } from "react";
 import DeleteBtn from "../../../components/DeleteBtn";
 import EditBtn from "../../../components/EditBtn";
-import TableMainData from "../../../components/TableMainData";
+import TableMainData, { getColumnSearchProps } from "../../../components/TableMainData";
+import ButtonPrintReportPage from "../../../components/PrintReport";
+import { handleOnlyDate } from "../../../helpers";
 
 const columns = [
   {
     title: 'رقم المستند',
-    dataIndex: 'TransDoc',
-    key: 'name',
+    dataIndex: 'DocNo',
+    ...getColumnSearchProps('DocNo', "رقم المستند")
   },
   {
     title: 'تاريخ المستند',
-    dataIndex: 'DocDate',
-    key: 'age',
+    search: "DocDate",
+    render: (record)=>(
+      <span>{handleOnlyDate(record.DocDate)}</span>
+    ),
+    ...getColumnSearchProps('DocDate', "تاريخ المستند")
+
   },
   {
     title: 'من مخزن',
-    dataIndex: 'StoreId',
-    key: 'age',
-  },
+    dataIndex: 'StoreName',
+    ...getColumnSearchProps('StoreName', "من مخزن")  },
   {
     title: 'الى مخزن',
-    dataIndex: 'StoreId',
-    key: 'age',
+    dataIndex: 'ToStoreName',
+    ...getColumnSearchProps('ToStoreName', "الى مخزن")
   },
   {
     title: 'ملاحظات',
     dataIndex: 'Notes',
-    key: 'age',
+    search: "Notes",
+    ...getColumnSearchProps('Notes', "ملاحظات")
   },
   {
     title: 'إجراء',
@@ -40,6 +46,7 @@ const columns = [
       <>
         <EditBtn url={`edit/${record.TransDoc}`} />
         <DeleteBtn url={`Stock/TransForm?TransDoc=${record.TransDoc}`} />
+        <ButtonPrintReportPage WindowName={"TransFormInvoice"} DocId={record.TransDoc} />
       </>
 
     ),

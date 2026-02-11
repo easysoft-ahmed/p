@@ -3,8 +3,39 @@ import useGet from "../hooks/useGet";
 import MessageRequest from "./MessageRequest";
 import { regxMatchFilterTable } from "../helpers";
 import { Link } from "react-router-dom";
-import { Button, Input, Spin, Table } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
+import { Button, Input, Space, Spin, Table } from "antd";
+import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
+
+
+export   const getColumnSearchProps = (dataIndex, title) => ({
+    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+      <div style={{ padding: 8 }}>
+        <Input
+          placeholder={`بحث في ${title}`}
+          value={selectedKeys[0]}
+          onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+          onPressEnter={() => {
+            confirm();
+            setSearchText(selectedKeys[0]);
+          }}
+          style={{ marginBottom: 8, display: 'block' }}
+        />
+        <Space>
+          <Button type="primary" onClick={() => { confirm(); setSearchText(selectedKeys[0]); }} size="small" style={{ width: 90 }}>
+            بحث
+          </Button>
+          <Button onClick={() => { clearFilters(); setSearchText(''); }} size="small" style={{ width: 90 }}>
+            إعادة تعيين
+          </Button>
+        </Space>
+      </div>
+    ),
+    filterIcon: (filtered) => <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />,
+    onFilter: (value, record) =>
+      record[dataIndex] ? record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()) : '',
+  });
+
+
 
 const TableMainData = ({columns, URL, title})=>{
     let {getDataAsync } = useGet();
@@ -39,13 +70,7 @@ const TableMainData = ({columns, URL, title})=>{
 
             <Spin spinning={myData === null ? true:false} fullscreen />
 
-            <Table dataSource={myDataOnSearch} columns={columns.map(ele =>{ return {...ele,
-                    onHeaderCell: (column) => ({
-                      onClick: () => setPropSearch(column?.dataIndex || column?.search ? column:null),
-                      style: { cursor: 'pointer' },
-                    }),
-
-            }})} />
+            <Table dataSource={myDataOnSearch} columns={columns} />
         </>
 
     )

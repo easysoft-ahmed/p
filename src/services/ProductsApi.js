@@ -9,6 +9,15 @@ export const getAllProducts = async()=>{
     }
 }
 
+export const getNextCodeProduct = async()=>{
+    try {
+        let response = await MainAPI.get(`Stock/Products/NextId`)
+        return response?.data?.ResponseObject;       
+    } catch (error) {
+        console.error("خطاء في جلب الكود التالي");
+    }
+}
+
 export const postNewProduct = async(data)=>{
     try {
         let response = await MainAPI.post(`Stock/Products`, data)
