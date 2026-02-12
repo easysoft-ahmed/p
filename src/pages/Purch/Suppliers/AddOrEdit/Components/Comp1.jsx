@@ -24,8 +24,8 @@ const Comp1 = ()=>{
                         <input type="text" disabled value={myData?.VendorID || ""} onChange={e => changeValue(e.target.value, "VendorID")} />
                     </div>
                     <div className="input_label_basic ps-2 w-4/12">
-                        <label htmlFor="">أسم المورد</label>
-                        <input type="text" value={myData?.VendorName || ""} onChange={e => changeValue(e.target.value, "VendorName")} />
+                        <label htmlFor="VendorName" className="label_required">أسم المورد</label>
+                        <input type="text" id="VendorName" value={myData?.VendorName || ""} onChange={e => changeValue(e.target.value, "VendorName")} />
                     </div>
                     <div className="input_label_basic ps-2 w-5/12">
                         <label htmlFor="">العنوان</label>

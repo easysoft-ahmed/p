@@ -65,7 +65,6 @@ const columns = [
         <EditBtn url={`edit/${record.TransDoc}`} />
         <DeleteBtn url={`Stock/Trans?TransDoc=${record.TransDoc}`} />
         <ButtonPrintReportPage WindowName={"StockInvoice"} DocId={record.TransDoc} />
-
       </>
 
     ),

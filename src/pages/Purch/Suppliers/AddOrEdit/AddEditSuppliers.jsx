@@ -1,7 +1,7 @@
 import { Button, Tabs } from "antd";
 import Comp1 from "./Components/Comp1";
 import Comp2 from "./Components/Comp2";
-import { SaveOutlined } from "@ant-design/icons";
+import { LoadingOutlined, SaveOutlined } from "@ant-design/icons";
 import Comp3 from "./Components/Comp3";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
@@ -18,7 +18,8 @@ const AddEditSuppliers = ()=>{
     let {putDataAsync} = usePut();
     let [msg, setMsg] = useState("");
     const navigate = useNavigate();
-    
+    let [isLoading, setIsLoading] = useState(false)
+
     let myData = useSelector(state => state.supplier.value);
 
     let {id} = useParams();
@@ -52,22 +53,35 @@ const AddEditSuppliers = ()=>{
         await getDataEditPage()
     }
 
+    // let getNextCode = async()=>{
+    //     const nextCode = await getNextCodeUnit();
+    //     dispatch(update_unit({UnitID: nextCode}));
+    // }
+
+    let handleAddPage = async(nextCode = true)=>{
+        dispatch(init_state_supplier());
+        await callGetManyDataForSelectInput()
+        document.getElementById("VendorName")?.focus();
+        // nextCode && await getNextCode()
+    }
 
     let handleSubmit = async()=>{
         setMsg(false)
-        console.log(myData);
-        
-        if(id){
-            let status = await putDataAsync("Purch/Vendors", myData);
-            navigate("/purch/suppliers/add", { replace: true });
-            status?.ResponseObject && dispatch(init_state_supplier())
-            status?.ResponseObject && setMsg(true);
-        }else{
-            let status = await postDataAsync("Purch/Vendors", myData);
-            status?.ResponseObject && dispatch(init_state_supplier());
-            status?.ResponseObject && setMsg(true)
+        setIsLoading(true)
+        try {
+            if(id){
+                let status = await putDataAsync("Purch/Vendors", myData);
+                navigate("/purch/suppliers/add", { replace: true });
+                status?.ResponseObject && setMsg(true);
+            }else{
+                let status = await postDataAsync("Purch/Vendors", myData);
+                handleAddPage();
+                status?.ResponseObject && setMsg(true)
+            }
+            setIsLoading(false)
+        } finally {
+            setIsLoading(false)
         }
-
     }
 
 
@@ -76,8 +90,7 @@ const AddEditSuppliers = ()=>{
         if(id){
             getDataEditPage_callGetManyDataForSelectInput()
         }else{
-            dispatch(init_state_supplier())
-            callGetManyDataForSelectInput()
+            handleAddPage()
         }
 
     }, [id])
@@ -90,7 +103,7 @@ const AddEditSuppliers = ()=>{
             <div className="flex flex-wrap justify-center">
                 <div className="w-full flex justify-between border-b pb-4 mb-4">
                     <h3 className="text-lg font-bold">إضافة مورد</h3>
-                    <Button type="primary" onClick={handleSubmit} icon={<SaveOutlined />}>حفظ</Button>
+                    <Button disabled={!myData?.VendorName || isLoading} type="primary" onClick={handleSubmit} icon={isLoading ? <LoadingOutlined /> : <SaveOutlined />}>حفظ</Button>
                 </div>
 
                 <Tabs

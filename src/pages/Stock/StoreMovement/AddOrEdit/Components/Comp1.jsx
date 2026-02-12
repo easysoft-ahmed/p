@@ -1,26 +1,15 @@
-import { SaveOutlined } from "@ant-design/icons";
+import { LoadingOutlined, SaveOutlined } from "@ant-design/icons";
 import { Button, DatePicker, Radio, Select, Switch } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import dayjs from "dayjs";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { edit_store_movement, init_state_store_movement } from "../stateStoreMovement";
-import usePost from "../../../../../hooks/usePost";
-import MessageRequest from "../../../../../components/MessageRequest";
-import usePut from "../../../../../hooks/usePut";
-import { useState } from "react";
-import ButtonPrintReportPage from "../../../../../components/PrintReport";
 function genUniqueId() {
   return Math.random().toString(9).substring(2, 7);
 }
 
 const Comp1 = ()=>{
-    let {id} = useParams();
-    let {postDataAsync} = usePost();
-    let {putDataAsync} = usePut();
-    let [msg, setMsg] = useState("");
-    const navigate = useNavigate();
-
     let myData = useSelector(state => state.store_movement.value);
     let dispatch = useDispatch();
     let changeValue = (eventOrValue, prop)=>{
@@ -33,36 +22,12 @@ const Comp1 = ()=>{
         }
     }
 
-    let handleSubmit = async()=>{
-        setMsg(false)
-        if(id){
-            let status = await putDataAsync("Stock/Trans", myData);
-            navigate("/stock/stores_movement/add", { replace: true });
-            status?.ResponseObject && dispatch(init_state_store_movement())
-            status?.ResponseObject && setMsg(true);
-        }else{
-            let status = await postDataAsync("Stock/Trans", myData);
-            status?.ResponseObject && dispatch(init_state_store_movement());
-            status?.ResponseObject && setMsg(true)
-        }
-
-    }
 
     
     return(
         <>
-            <MessageRequest data={msg}/>
         
             <div className="flex flex-wrap justify-center">
-                <div className="w-full flex justify-between border-b pb-4 mb-4">
-                    <h3 className="text-lg font-bold">إضافة حركة مخزن</h3>
-                    <div className="flex gap-4">
-                        <Button onClick={handleSubmit} type="primary" icon={<SaveOutlined />}>حفظ</Button>
-                        {id &&
-                            <ButtonPrintReportPage WindowName={"StockInvoice"} DocId={id} />
-                        }
-                    </div>
-                </div>
 
                 <div className="flex flex-wrap w-full">
                     <div className="input_label_basic pe-4 w-2/12">

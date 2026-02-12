@@ -1,18 +1,18 @@
 import { MainAPI } from "../lib/axios"
 
-export const getAllCustomers = async()=>{
+export const getAllSalesInvoice = async()=>{
     try {
-        let response = await MainAPI.get(`Sales/Customers`)
+        let response = await MainAPI.get(`Sales`)
         return response?.data?.ResponseObject;       
     } catch (error) {
-        console.error("خطاء في جلب العملاء");
+        console.error("خطاء في جلب المبيعات");
     }
 }
 
 
-export const getNextCodeCustomer = async()=>{
+export const getNextCodeSalesInvoice = async()=>{
     try {
-        let response = await MainAPI.get(`Sales/Customers/NextId`)
+        let response = await MainAPI.get(`Sales/NextId`)
         return response?.data?.ResponseObject;       
     } catch (error) {
         console.error("خطاء في جلب الكود التالي");

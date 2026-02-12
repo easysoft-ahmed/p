@@ -1,7 +1,7 @@
 import { Button, Tabs } from "antd";
 import Comp1 from "./Components/Comp1";
 import Comp2 from "./Components/Comp2";
-import { SaveOutlined } from "@ant-design/icons";
+import { LoadingOutlined, SaveOutlined } from "@ant-design/icons";
 import Comp3 from "./Components/Comp3";
 import { useNavigate, useParams } from "react-router-dom";
 import usePost from "../../../../hooks/usePost";
@@ -10,8 +10,9 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useGet from "../../../../hooks/useGet";
 import MessageRequest from "../../../../components/MessageRequest";
-import { edit_customer, init_state_customer } from "./stateCustomer";
+import { edit_customer, init_state_customer, update_customer } from "./stateCustomer";
 import { getManyDataForSelectInput } from "../../../../api";
+import { getNextCodeCustomer } from "../../../../services/CustomersApi";
 
 const AddEditCustomers = ()=>{
     let {id} = useParams();
@@ -19,6 +20,7 @@ const AddEditCustomers = ()=>{
     let {postDataAsync} = usePost();
     let {putDataAsync} = usePut();
     let [msg, setMsg] = useState("");
+    let [isLoading, setIsLoading] = useState(false)
     const navigate = useNavigate();
 
     let myData = useSelector(state => state.customer.value);
@@ -50,20 +52,37 @@ const AddEditCustomers = ()=>{
         await getDataEditPage()
     }
 
-    
+    let getNextCode = async()=>{
+        const nextCode = await getNextCodeCustomer();
+        dispatch(update_customer({CustomerID: nextCode}));
+    }
+
+    let handleAddPage = async(nextCode = true)=>{
+        dispatch(init_state_customer());
+        nextCode && await getNextCode();
+        await callGetManyDataForSelectInput()
+        document.getElementById("CustomerName")?.focus();
+    }
+
     
     let handleSubmit = async()=>{
-        setMsg(false)
-        if(id){
-            let status = await putDataAsync("Sales/Customers", myData);
-            navigate("/sales/customers/add", { replace: true });
-            status?.ResponseObject && dispatch(init_state_customer())
-            status?.ResponseObject && setMsg(true);
-        }else{
-            let status = await postDataAsync("Sales/Customers", myData);
-            status?.ResponseObject && dispatch(init_state_customer());
-            status?.ResponseObject && setMsg(true)
+        setMsg(false);
+        setIsLoading(true);
+        try {
+            if(id){
+                let status = await putDataAsync("Sales/Customers", myData);
+                navigate("/sales/customers/add", { replace: true });
+                status?.ResponseObject && setMsg(true);
+            }else{
+                let status = await postDataAsync("Sales/Customers", myData);
+                status?.ResponseObject && setMsg(true);
+                handleAddPage();
+            }
+            setIsLoading(false);
+        } finally {
+            setIsLoading(false);
         }
+
         
     }
     
@@ -71,8 +90,7 @@ const AddEditCustomers = ()=>{
         if(id){
             getDataEditPage_callGetManyDataForSelectInput()
         }else{
-            dispatch(init_state_customer())
-            callGetManyDataForSelectInput()
+            handleAddPage()
         }
 
     }, [id])
@@ -84,7 +102,7 @@ const AddEditCustomers = ()=>{
             <div className="flex flex-wrap justify-center">
                 <div className="w-full flex justify-between border-b pb-4 mb-4">
                     <h3 className="text-lg font-bold">إضافة عميل</h3>
-                    <Button type="primary" onClick={handleSubmit} icon={<SaveOutlined />}>حفظ</Button>
+                    <Button disabled={!myData?.CustomerName || isLoading} type="primary" onClick={handleSubmit} icon={isLoading ? <LoadingOutlined /> : <SaveOutlined />}>حفظ</Button>
                 </div>
 
                 <Tabs

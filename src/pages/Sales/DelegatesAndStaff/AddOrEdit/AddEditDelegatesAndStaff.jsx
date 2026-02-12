@@ -1,4 +1,4 @@
-import { SaveOutlined } from "@ant-design/icons";
+import { LoadingOutlined, SaveOutlined } from "@ant-design/icons";
 import { Button, Select, Switch } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import usePost from "../../../../hooks/usePost";
@@ -7,13 +7,15 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import useGet from "../../../../hooks/useGet";
-import { edit_delegates_and_staff, init_delegates_and_staff } from "./stateDelegatesAndStaff";
+import { edit_delegates_and_staff, init_delegates_and_staff, update_delegates_and_staff } from "./stateDelegatesAndStaff";
 import MessageRequest from "../../../../components/MessageRequest";
+import { getNextCodeStaff } from "../../../../services/StaffApi";
 
 const AddEditDelegatesAndStaff = ()=>{
     let {postDataAsync} = usePost();
     let {putDataAsync} = usePut();
     let [msg, setMsg] = useState("");
+    let [isLoading, setIsLoading] = useState(false)
     const navigate = useNavigate();
     
     let myData = useSelector(state => state.delegates_and_staff.value);
@@ -43,22 +45,36 @@ const AddEditDelegatesAndStaff = ()=>{
 
     }
 
+    let getNextCode = async()=>{
+        const nextCode = await getNextCodeStaff();
+        dispatch(update_delegates_and_staff({SellerId: nextCode}));
+    }
+
+    let handleAddPage = async(nextCode = true)=>{
+        dispatch(init_delegates_and_staff());
+        document.getElementById("SellerName")?.focus();
+        nextCode && await getNextCode()
+    }
 
 
     let handleSubmit = async()=>{
         setMsg(false)
-        console.log(myData);
-        
-        if(id){
-            let status = await putDataAsync("Sales/Sellers", myData);
-            navigate("/sales/delegates_staff/add", { replace: true });
-            status?.ResponseObject && dispatch(init_delegates_and_staff())
-            status?.ResponseObject && setMsg(true);
-        }else{
-            let status = await postDataAsync("Sales/Sellers", myData);
-            status?.ResponseObject && dispatch(init_delegates_and_staff());
-            status?.ResponseObject && setMsg(true)
+        setIsLoading(true)
+        try {
+            if(id){
+                let status = await putDataAsync("Sales/Sellers", myData);
+                navigate("/sales/delegates_staff/add", { replace: true });
+                status?.ResponseObject && setMsg(true);
+            }else{
+                let status = await postDataAsync("Sales/Sellers", myData);
+                status?.ResponseObject && setMsg(true)
+                handleAddPage();
+            }
+            setIsLoading(false);
+        } finally {
+            setIsLoading(false);
         }
+        
 
     }
 
@@ -68,7 +84,7 @@ const AddEditDelegatesAndStaff = ()=>{
         if(id){
             getDataEditPage()
         }else{
-            dispatch(init_delegates_and_staff())
+            handleAddPage()
         }
 
     }, [id])
@@ -80,7 +96,7 @@ const AddEditDelegatesAndStaff = ()=>{
             <div className="flex flex-wrap justify-center">
                 <div className="w-full flex justify-between border-b pb-4 mb-4">
                     <h3 className="text-lg font-bold">إضافة مندوب</h3>
-                    <Button type="primary" onClick={handleSubmit} icon={<SaveOutlined />}>حفظ</Button>
+                    <Button disabled={!myData?.SellerName || isLoading} type="primary" onClick={handleSubmit} icon={isLoading ? <LoadingOutlined /> : <SaveOutlined />}>حفظ</Button>
                 </div>
 
                 <div className="flex flex-wrap w-full sm:w-8/12 md:w-6/12 lg:w-5/12">

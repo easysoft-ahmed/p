@@ -8,3 +8,14 @@ export const getAllStaff = async()=>{
         console.error("خطاء في جلب المندوبين");
     }
 }
+
+
+
+export const getNextCodeStaff = async()=>{
+    try {
+        let response = await MainAPI.get(`Sales/Sellers/NextId`)
+        return response?.data?.ResponseObject;       
+    } catch (error) {
+        console.error("خطاء في جلب الكود التالي");
+    }
+}

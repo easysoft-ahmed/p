@@ -1,17 +1,19 @@
 import DeleteBtn from "../../../components/DeleteBtn";
 import EditBtn from "../../../components/EditBtn";
-import TableMainData from "../../../components/TableMainData";
+import TableMainData, { getColumnSearchProps } from "../../../components/TableMainData";
 
 const columns = [
   {
     title: 'كود المندوب',
     dataIndex: 'SellerID',
     key: 'SellerID',
+    ...getColumnSearchProps('SellerID', "كود المندوب")
   },
   {
     title: 'اسم البائع',
     dataIndex: 'SellerName',
     key: 'SellerName',
+    ...getColumnSearchProps('SellerName', "اسم البائع")
   },
   {
     title: 'إجراء',

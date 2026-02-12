@@ -15,11 +15,6 @@ function genUniqueId() {
 }
 
 const Comp1 = ()=>{
-    let {id} = useParams();
-    let {postDataAsync} = usePost();
-    let {putDataAsync} = usePut();
-    let [msg, setMsg] = useState("");
-    const navigate = useNavigate();
     
     let myData = useSelector(state => state.store_transform.value);
     let dispatch = useDispatch();
@@ -33,37 +28,11 @@ const Comp1 = ()=>{
         }
     }
 
-    let handleSubmit = async()=>{
-        setMsg(false)
-        if(id){
-            let status = await putDataAsync("Stock/TransForm", myData);
-            navigate("/stock/store_transform/add", { replace: true });
-            status?.ResponseObject && dispatch(init_state_store_transform())
-            status?.ResponseObject && setMsg(true);
-        }else{
-            let status = await postDataAsync("Stock/TransForm", myData);
-            status?.ResponseObject && dispatch(init_state_store_transform());
-            status?.ResponseObject && setMsg(true)
-        }
-
-    }
     
 
     return(
         <>
-            <MessageRequest data={msg}/>
-
             <div className="flex flex-wrap justify-center">
-                <div className="w-full flex justify-between border-b pb-4 mb-4">
-                    <h3 className="text-lg font-bold">إضافة تحويل من مخزن</h3>
-                    <div className="flex gap-4">
-                        <Button type="primary" onClick={handleSubmit} icon={<SaveOutlined />}>حفظ</Button>
-                        {id &&
-                            <ButtonPrintReportPage WindowName={"TransFormInvoice"} DocId={id} />
-                        }
-                    </div>
-
-                </div>
 
                 <div className="flex flex-wrap w-full">
                     <div className=" flex flex-wrap w-full lg:w-6/12">

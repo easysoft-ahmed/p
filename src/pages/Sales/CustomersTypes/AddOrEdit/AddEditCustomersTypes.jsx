@@ -16,6 +16,7 @@ const AddEditCustomersTypes = ()=>{
     let {postDataAsync} = usePost();
     let {putDataAsync} = usePut();
     let [msg, setMsg] = useState("");
+    let [isLoading, setIsLoading] = useState(false)
     const navigate = useNavigate();
 
     let myData = useSelector(state => state.customer_type.value);
@@ -51,24 +52,43 @@ const AddEditCustomersTypes = ()=>{
         }
     }
 
+    // let getNextCode = async()=>{
+    //     const nextCode = await getNextCodeUnit();
+    //     dispatch(update_unit({UnitID: nextCode}));
+    // }
+
+    let handleAddPage = async(nextCode = true)=>{
+        dispatch(init_customer_type());
+        await callGetManyDataForSelectInput()
+        document.getElementById("CustTypeName").focus();
+        // nextCode && await getNextCode()
+    }
+
+
     let handleSubmit = async()=>{
-        setMsg(false)
-        if(id){
-            let status = await putDataAsync("Sales/CustomerTypes", myData);
-            navigate("/sales/customers_types/add", { replace: true });
-            status?.ResponseObject && setMsg(true);
-            status?.ResponseObject && dispatch(init_customer_type())
-        }else{
-            let status = await postDataAsync("Sales/CustomerTypes", myData);
-            status?.ResponseObject && dispatch(init_customer_type());
-            status?.ResponseObject && setMsg(true)
+        setMsg(false);
+        setIsLoading(true)
+        try {
+            if(id){
+                let status = await putDataAsync("Sales/CustomerTypes", myData);
+                navigate("/sales/customers_types/add", { replace: true });
+                status?.ResponseObject && setMsg(true);
+            }else{
+                let status = await postDataAsync("Sales/CustomerTypes", myData);
+                status?.ResponseObject && setMsg(true)
+                handleAddPage();
+            }
+            setIsLoading(false)
+        } finally {
+            setIsLoading(false)
         }
+        
 
     }
 
     let getDataEditPage_callGetManyDataForSelectInput = async()=>{
         await callGetManyDataForSelectInput();
-        await getDataEditPage()
+        await getDataEditPage();
     }
 
 
@@ -76,8 +96,9 @@ const AddEditCustomersTypes = ()=>{
         if(id){
             getDataEditPage_callGetManyDataForSelectInput()
         }else{
-            dispatch(init_customer_type())
-            callGetManyDataForSelectInput()
+            // dispatch(init_customer_type())
+            // callGetManyDataForSelectInput()
+            handleAddPage()
         }
 
     }, [id])
@@ -89,7 +110,7 @@ const AddEditCustomersTypes = ()=>{
             <div className="flex flex-wrap justify-center">
                 <div className="w-full flex justify-between border-b pb-4 mb-4">
                     <h3 className="text-lg font-bold">إضافة نوع العميل</h3>
-                    <Button type="primary" onClick={handleSubmit} icon={<SaveOutlined />}>حفظ</Button>
+                    <Button disabled={!myData?.CustTypeName || isLoading} type="primary" onClick={handleSubmit} icon={isLoading ? <LoadingOutlined /> : <SaveOutlined />}>حفظ</Button>
                 </div>
 
                 <div className="flex flex-wrap w-full sm:w-8/12 md:w-6/12 lg:w-6/12">

@@ -6,13 +6,14 @@ import Comp1 from "./Components/Comp1";
 import Comp2 from "./Components/Comp2";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { edit_sales_invoice, init_state_sales_invoice } from "./stateSalesInvoice";
+import { edit_sales_invoice, init_state_sales_invoice, update_sales_invoice } from "./stateSalesInvoice";
 import { getManyDataForSelectInput } from "../../../../api";
 import MessageRequest from "../../../../components/MessageRequest";
 import { Button } from "antd";
-import { SaveOutlined } from "@ant-design/icons";
+import { LoadingOutlined, SaveOutlined } from "@ant-design/icons";
 import { unique } from "../../../../helpers";
 import ButtonPrintReportPage from "../../../../components/PrintReport";
+import { getNextCodeSalesInvoice } from "../../../../services/SalesInvoice";
 
 const AddEditSalesInvoice = ()=>{
     let {id} = useParams();
@@ -21,6 +22,7 @@ const AddEditSalesInvoice = ()=>{
     let {putDataAsync} = usePut();
     let [msg, setMsg] = useState("");
     const navigate = useNavigate();
+    let [isLoading, setIsLoading] = useState(false)
 
     let myData = useSelector(state => state.sales_invoice.value);
     let dispatch = useDispatch();
@@ -59,19 +61,34 @@ const AddEditSalesInvoice = ()=>{
         await getDataEditPage()
     }
 
-    
+    let getNextCode = async()=>{
+        const nextCode = await getNextCodeSalesInvoice();
+        dispatch(update_sales_invoice({DocNo: nextCode}));
+    }
+
+    let handleAddPage = async(nextCode = true)=>{
+        dispatch(init_state_sales_invoice());
+        nextCode && await getNextCode()
+        await callGetManyDataForSelectInput()
+    }
+
     
     let handleSubmit = async()=>{
         setMsg(false)
-        if(id){
-            let status = await putDataAsync("Sales", myData);
-            navigate("/sales/sales_invoice/add", { replace: true });
-            status?.ResponseObject && dispatch(init_state_sales_invoice())
-            status?.ResponseObject && setMsg(true);
-        }else{
-            let status = await postDataAsync("Sales", myData);
-            status?.ResponseObject && dispatch(init_state_sales_invoice());
-            status?.ResponseObject && setMsg(true)
+        setIsLoading(true)
+        try {
+            if(id){
+                let status = await putDataAsync("Sales", myData);
+                navigate("/sales/sales_invoice/add", { replace: true });
+                status?.ResponseObject && setMsg(true);
+            }else{
+                let status = await postDataAsync("Sales", myData);
+                status?.ResponseObject && setMsg(true);
+                handleAddPage()
+            }
+            setIsLoading(false)
+        } finally {
+            setIsLoading(false)
         }
         
     }
@@ -80,8 +97,7 @@ const AddEditSalesInvoice = ()=>{
         if(id){
             getDataEditPage_callGetManyDataForSelectInput()
         }else{
-            dispatch(init_state_sales_invoice())
-            callGetManyDataForSelectInput()
+            handleAddPage()
         }
 
     }, [id])
@@ -95,7 +111,7 @@ const AddEditSalesInvoice = ()=>{
                 <div className="w-full flex justify-between border-b pb-4 mb-4">
                     <h3 className="text-lg font-bold">إضافة فاتورة مبيعات</h3>
                     <div className="flex gap-4">
-                        <Button type="primary" onClick={handleSubmit} icon={<SaveOutlined />}>حفظ</Button>
+                    <Button disabled={!myData?.SalesItems?.length || isLoading} type="primary" onClick={handleSubmit} icon={isLoading ? <LoadingOutlined/> : <SaveOutlined />}>حفظ</Button>
                         {id &&
                             <ButtonPrintReportPage WindowName={"SalesInvoice"} DocId={id} />
                         }
