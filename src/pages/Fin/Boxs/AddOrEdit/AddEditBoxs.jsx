@@ -1,4 +1,4 @@
-import { CloseOutlined, SaveOutlined } from "@ant-design/icons";
+import { CloseOutlined, LoadingOutlined, SaveOutlined } from "@ant-design/icons";
 import { Button, DatePicker, Input, Radio, Select } from "antd";
 import { useEffect, useState } from "react";
 import useGet from "../../../../hooks/useGet";
@@ -10,6 +10,7 @@ import { edit_box, init_box } from "./stateBox";
 import { getManyDataForSelectInput } from "../../../../api";
 import dayjs from "dayjs";
 import MessageRequest from "../../../../components/MessageRequest";
+import { getNextCodeBox } from "../../../../services/BoxsApi";
 
 const AddEditBoxs = ()=>{
     let {id} = useParams();
@@ -18,6 +19,7 @@ const AddEditBoxs = ()=>{
     let {putDataAsync} = usePut();
     let [msg, setMsg] = useState("");
     const navigate = useNavigate();
+    let [isLoading, setIsLoading] = useState(false)
 
     let myData = useSelector(state => state.box.value);
     let dispatch = useDispatch();
@@ -52,19 +54,37 @@ const AddEditBoxs = ()=>{
         }
     }
 
+    
+    let getNextCode = async()=>{
+        const nextCode = await getNextCodeBox();
+        dispatch(edit_box({BoxId: nextCode}));
+    }
+
+    let handleAddPage = async(nextCode = true)=>{
+        dispatch(init_box())
+        nextCode && await getNextCode();
+        await callGetManyDataForSelectInput()
+
+    }
+
     let handleSubmit = async()=>{
         setMsg(false)
-        if(id){
-            let status = await putDataAsync("Fin/boxs", myData);
-            navigate("/financial/boxs/add", { replace: true });
-            status?.ResponseObject && setMsg(true);
-            status?.ResponseObject && dispatch(init_box())
-        }else{
-            let status = await postDataAsync("Fin/boxs", myData);
-            status?.ResponseObject && dispatch(init_box());
-            status?.ResponseObject && setMsg(true)
+        setIsLoading(true)
+        try {
+            if(id){
+                let status = await putDataAsync("Fin/boxs", myData);
+                navigate("/financial/boxs/add", { replace: true });
+                status?.ResponseObject && setMsg(true);
+                handleAddPage()
+            }else{
+                let status = await postDataAsync("Fin/boxs", myData);
+                status?.ResponseObject && setMsg(true)
+                handleAddPage()
+            }
+            setIsLoading(false)
+        } finally {
+            setIsLoading(false)
         }
-
     }
 
     let getDataEditPage_callGetManyDataForSelectInput = async()=>{
@@ -77,8 +97,7 @@ const AddEditBoxs = ()=>{
         if(id){
             getDataEditPage_callGetManyDataForSelectInput()
         }else{
-            dispatch(init_box())
-            callGetManyDataForSelectInput()
+            handleAddPage()
         }
 
     }, [id])
@@ -90,7 +109,7 @@ const AddEditBoxs = ()=>{
             <div className="flex flex-wrap justify-center">
                 <div className="w-full flex justify-between border-b pb-4 mb-4">
                     <h3 className="text-lg font-bold">إضافة خزينة</h3>
-                    <Button type="primary" onClick={handleSubmit} icon={<SaveOutlined />}>حفظ</Button>
+                    <Button type="primary" disabled={!myData?.BoxName || isLoading} onClick={handleSubmit} icon={isLoading ? <LoadingOutlined /> : <SaveOutlined />}>حفظ</Button>
                 </div>
 
                 <div className="flex flex-wrap w-full sm:w-8/12 md:w-6/12 lg:w-4/12">

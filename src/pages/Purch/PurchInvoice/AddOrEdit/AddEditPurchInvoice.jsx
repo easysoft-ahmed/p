@@ -8,10 +8,11 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { unique } from "../../../../helpers";
 import { getManyDataForSelectInput } from "../../../../api";
-import { edit_purch_invoice, init_state_purch_invoice } from "./statePurchInvoice";
+import { edit_purch_invoice, init_state_purch_invoice, update_purch_invoice } from "./statePurchInvoice";
 import { Button } from "antd";
-import { SaveOutlined } from "@ant-design/icons";
+import { LoadingOutlined, SaveOutlined } from "@ant-design/icons";
 import MessageRequest from "../../../../components/MessageRequest";
+import { getNextCodePurchInvoice } from "../../../../services/PurchInvoice";
 
 const AddEditPurchInvoice = ()=>{
     let {id} = useParams();
@@ -20,6 +21,7 @@ const AddEditPurchInvoice = ()=>{
     let {putDataAsync} = usePut();
     let [msg, setMsg] = useState("");
     const navigate = useNavigate();
+    let [isLoading, setIsLoading] = useState(false)
 
     let myData = useSelector(state => state.purch_invoice.value);
     let dispatch = useDispatch();
@@ -58,29 +60,45 @@ const AddEditPurchInvoice = ()=>{
         await getDataEditPage()
     }
 
-    
+    let getNextCode = async()=>{
+        const nextCode = await getNextCodePurchInvoice();
+        dispatch(update_purch_invoice({DocNo: nextCode}));
+    }
+
+    let handleAddPage = async(nextCode = true)=>{
+        dispatch(init_state_purch_invoice());
+        nextCode && await getNextCode()
+        await callGetManyDataForSelectInput()
+    }
+
     
     let handleSubmit = async()=>{
         setMsg(false)
-        if(id){
-            let status = await putDataAsync("Purch", myData);
-            navigate("/purch/purch_invoice/add", { replace: true });
-            status?.ResponseObject && dispatch(init_state_purch_invoice())
-            status?.ResponseObject && setMsg(true);
-        }else{
-            let status = await postDataAsync("Purch", myData);
-            status?.ResponseObject && dispatch(init_state_purch_invoice());
-            status?.ResponseObject && setMsg(true)
+        setIsLoading(true)
+        try {
+            if(id){
+                let status = await putDataAsync("Purch", myData);
+                navigate("/purch/purch_invoice/add", { replace: true });
+                status?.ResponseObject && setMsg(true);
+                handleAddPage()
+            }else{
+                let status = await postDataAsync("Purch", myData);
+                status?.ResponseObject && setMsg(true)
+                handleAddPage()
+            }
+            setIsLoading(false)
+        } finally {
+            setIsLoading(false)
         }
         
     }
-    
+
+        
     useEffect(()=>{
         if(id){
             getDataEditPage_callGetManyDataForSelectInput()
         }else{
-            dispatch(init_state_purch_invoice())
-            callGetManyDataForSelectInput()
+            handleAddPage()
         }
 
     }, [id])
@@ -92,7 +110,7 @@ const AddEditPurchInvoice = ()=>{
             <div className="flex flex-wrap justify-center">
                 <div className="w-full flex justify-between border-b pb-4 mb-4">
                     <h3 className="text-lg font-bold">إضافة فاتورة مشتريات</h3>
-                    <Button type="primary" onClick={handleSubmit} icon={<SaveOutlined />}>حفظ</Button>
+                    <Button disabled={!myData?.PurchItems?.length || isLoading} type="primary" onClick={handleSubmit} icon={isLoading ? <LoadingOutlined/> : <SaveOutlined />}>حفظ</Button>
                 </div>
                 <Comp1 />
                 <Comp2 />

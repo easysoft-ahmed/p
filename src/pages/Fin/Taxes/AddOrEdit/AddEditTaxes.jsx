@@ -1,4 +1,4 @@
-import { SaveOutlined } from "@ant-design/icons";
+import { LoadingOutlined, SaveOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import useGet from "../../../../hooks/useGet";
@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { edit_tax, init_tax } from "./stateTax";
 import { getManyDataForSelectInput } from "../../../../api";
 import MessageRequest from "../../../../components/MessageRequest";
+import { getNextCodeTax } from "../../../../services/TaxsApi";
 
 const AddEditTaxes = ()=>{
     let {id} = useParams();
@@ -17,6 +18,7 @@ const AddEditTaxes = ()=>{
     let {putDataAsync} = usePut();
     let [msg, setMsg] = useState("");
     const navigate = useNavigate();
+    let [isLoading, setIsLoading] = useState(false)
 
     let myData = useSelector(state => state.tax.value);
     let dispatch = useDispatch();
@@ -42,20 +44,36 @@ const AddEditTaxes = ()=>{
 
     }
 
+    let getNextCode = async()=>{
+        const nextCode = await getNextCodeTax();
+        dispatch(edit_tax({TaxId: nextCode}));
+    }
+
+    let handleAddPage = async(nextCode = true)=>{
+        dispatch(init_tax())
+        nextCode && await getNextCode();
+    }
+
     let handleSubmit = async()=>{
         setMsg(false)
-        if(id){
-            let status = await putDataAsync("Fin/Taxs", myData);
-            navigate("/financial/taxes/add", { replace: true });
-            status?.ResponseObject && setMsg(true);
-            status?.ResponseObject && dispatch(init_tax())
-        }else{
-            let status = await postDataAsync("Fin/Taxs", myData);
-            status?.ResponseObject && dispatch(init_tax());
-            status?.ResponseObject && setMsg(true)
+        setIsLoading(true)
+        try {
+            if(id){
+                let status = await putDataAsync("Fin/Taxs", myData);
+                navigate("/financial/taxes/add", { replace: true });
+                status?.ResponseObject && setMsg(true);
+                handleAddPage()
+            }else{
+                let status = await postDataAsync("Fin/Taxs", myData);
+                status?.ResponseObject && setMsg(true)
+                handleAddPage()
+            }
+            setIsLoading(false)
+        } finally {
+            setIsLoading(false)
         }
-
     }
+
 
     let getDataEditPage_callGetManyDataForSelectInput = async()=>{
         await getDataEditPage()
@@ -66,9 +84,8 @@ const AddEditTaxes = ()=>{
         if(id){
             getDataEditPage_callGetManyDataForSelectInput()
         }else{
-            dispatch(init_tax())
+            handleAddPage()
         }
-
     }, [id])
 
     return(
@@ -78,7 +95,7 @@ const AddEditTaxes = ()=>{
             <div className="flex flex-wrap justify-center">
                 <div className="w-full flex justify-between border-b pb-4 mb-4">
                     <h3 className="text-lg font-bold">إضافة ضريبة</h3>
-                    <Button type="primary" onClick={handleSubmit} icon={<SaveOutlined />}>حفظ</Button>
+                    <Button type="primary" disabled={!myData?.TaxName || isLoading} onClick={handleSubmit} icon={isLoading ? <LoadingOutlined /> : <SaveOutlined />}>حفظ</Button>
                 </div>
 
                 <div className="flex flex-wrap w-full sm:w-8/12 md:w-6/12 lg:w-4/12">
