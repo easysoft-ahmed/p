@@ -12,6 +12,7 @@ import { SelectCostCenters } from "../../../components/SelectDataApi/SelectCostC
 import { SelectStores } from "../../../components/SelectDataApi/SelectStores";
 import { SelectReportFiles } from "../../../components/SelectDataApi/SelectReportFiles";
 import PrintMainReport from "../../../components/PrintMainReport";
+import { SelectCustomersTypes } from "../../../components/SelectDataApi/SelectCustomersType";
 
 const TotalSales = ()=>{
     let [isFilter, setIsFilter] = useState({});    
@@ -60,9 +61,6 @@ const TotalSales = ()=>{
                     </div>
                     <div className="input_label_basic w-4/12">
                         <label htmlFor="">مورد / عميل</label>
-                        <SelectCustomersTypes currentValue={isFilter?.VendorTypeID} methodSelect={(option)=> setIsFilter(state => {return {...state, VendorTypeID: option?.VendorTypeID}})}  />
-                        <SelectCustomersTypes currentValue={isFilter?.VendorTypeID} methodSelect={(option)=> setIsFilter(state => {return {...state, VendorTypeID: option?.VendorTypeID}})}  />
-                        <SelectCustomersTypes currentValue={isFilter?.VendorTypeID} methodSelect={(option)=> setIsFilter(state => {return {...state, VendorTypeID: option?.VendorTypeID}})}  />
                         <SelectCustomersTypes currentValue={isFilter?.VendorTypeID} methodSelect={(option)=> setIsFilter(state => {return {...state, VendorTypeID: option?.VendorTypeID}})}  />
                     </div>
                     <div className="input_label_basic w-4/12">

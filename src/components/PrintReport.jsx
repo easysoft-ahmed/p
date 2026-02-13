@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { getFilesReport, postPrintReport } from "../services/PrintReportApi";
 import { LoadingOutlined, PrinterFilled } from "@ant-design/icons";
 
-const ButtonPrintReportPage = ({WindowName, DocId, title})=>{
+const ButtonPrintReportPage = ({WindowName, DocId, title,  text})=>{
     let [isFilesReport, setIsFilesReport] = useState([]);
     let [isLoading, setIsLoading] = useState(null);
     let callGetFilesReport = async()=>{
@@ -46,12 +46,23 @@ const ButtonPrintReportPage = ({WindowName, DocId, title})=>{
         <iframe id="my-iframe" style={{display: "none"}} />
         {
             isFilesReport?.length === 1 ?
-                <Button icon={isLoading ? <LoadingOutlined /> : <PrinterFilled />} disabled={isLoading} onClick={()=> callPostPrintReport(isFilesReport[0]) }>{title ? title : "طباعة"}</Button>
+                <div className={!text && "cursor-pointer p-2 border rounded-md"}  onClick={()=> !isLoading && callPostPrintReport(isFilesReport[0]) }>
+                    {isLoading ? <LoadingOutlined /> : <PrinterFilled />} 
+                    <span className="inline-flex px-2">
+                        {title ? title : "طباعة"}
+
+                    </span>
+                </div>
                 :
                 <Dropdown menu={{ items:  isFilesReport.map(ele => {return {label: <div onClick={()=> callPostPrintReport(isFilesReport[0]) }>{ele}</div>}})}} trigger={['click']}>
                     <a onClick={(e) => e.preventDefault()}>
                         <Space>
-                            <Button disabled={isLoading} icon={isLoading ? <LoadingOutlined /> : <PrinterFilled />}>{title ? title : "طباعة"}</Button>
+                            <div className={!text && "cursor-pointer p-2 border rounded-md"} >
+                                {isLoading ? <LoadingOutlined /> : <PrinterFilled />} 
+                                <span className="inline-flex px-2">
+                                    {title ? title : "طباعة"}
+                                </span>
+                            </div>
                         </Space>
                     </a>
                 </Dropdown>    

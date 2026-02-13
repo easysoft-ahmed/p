@@ -131,7 +131,7 @@ const TreeProduct = ({tableName, handleEditRow, ele, onlyCategories, updateSelec
                         titleRender={(node)=>{return <span>{node?.title} <span className="font-bold"> - {node?.key?.replace("-cat", "")}</span></span>}}
                         showLine
                         switcherIcon={<DownOutlined />}
-                        defaultExpandedKeys={['0-0-0']}
+                        // defaultExpandedKeys={['0-0-0']}
                         onSelect={
                             (keys, info)=>{
                                 if(handleEditRow){
