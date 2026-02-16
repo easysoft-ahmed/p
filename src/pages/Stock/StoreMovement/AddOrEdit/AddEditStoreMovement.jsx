@@ -13,6 +13,7 @@ import { LoadingOutlined, SaveOutlined } from "@ant-design/icons";
 import usePut from "../../../../hooks/usePut";
 import usePost from "../../../../hooks/usePost";
 import { getNextCodeStockTrans } from "../../../../services/StockTrans";
+import MessageRequest from "../../../../components/MessageRequest";
 
 const AddEditStoreMovement = ()=>{
     let {id} = useParams();
@@ -21,6 +22,7 @@ const AddEditStoreMovement = ()=>{
     let {getDataAsync} = useGet();
     let [isLoading, setIsLoading] = useState(false)
     let myData = useSelector(state => state.store_movement.value);
+    let [msg, setMsg] = useState("");
 
     // let checkPageType = useLocation().pathname.indexOf("add") ? true:false;
     // let pageType = {add: checkPageType , edit: !checkPageType};

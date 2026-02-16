@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 let pathWebSite = {
+    "reports": {title: {ar: "تقارير", en: ""}},
     "add": {title: {ar: "إضافة", en: ""}},
     "edit": {title: {ar: "تعديل", en: ""}},
     "/": {title: {ar: "الرئيسية"}},
@@ -31,6 +32,43 @@ let pathWebSite = {
     "print_barcode": {title: {ar: "طباعة باركود", en: ""}},
     "purch_order": {title: {ar: "امر شراء", en: ""}},
     "purch_request": {title: {ar: "طلب شراء", en: ""}},
+    "real_inventory": {title: {ar: "حركة الجرد الفعلي ", en: ""}},
+    "daily_stock": {title: {ar: "يومية المخزون", en: ""}},
+    "daily_transform_stock": {title: {ar: "يومية التحويلات المخزنية", en: ""}},
+    "card_product": {title: {ar: "كارت الصنف", en: ""}},
+    "qty_products": {title: {ar: "ارصدة الاصناف", en: ""}},
+    "low_products": {title: {ar: "الاصناف الراكدة", en: ""}},
+    "limit_products": {title: {ar: "الحدود المخزنية للاصناف", en: ""}},
+    "purch_invoice": {title: {ar: "فاتورة المشتريات", en: ""}},
+    "purch_return_invoice": {title: {ar: "فاتورة مرتد المشتريات", en: ""}},
+    "total_purch": {title: {ar: "إجمالي المشتريات", en: ""}},
+    "suppliers_acc_statement": {title: {ar: "كشف حساب / ارصدة الموردين", en: ""}},
+    "purch_expenses": {title: {ar: "مصروفات المشتريات", en: ""}},
+    "total_order_purch": {title: {ar: "إجمالي طلبات الشراء", en: ""}},
+    "total_command_purch": {title: {ar: "إجمالي اومر الشراء", en: ""}},
+    "delegates_staff": {title: {ar: "المندوبين و العاملين", en: ""}},
+    "customers_types": {title: {ar: "انواع العملاء", en: ""}},
+    "customers": {title: {ar: "العملاء", en: ""}},
+    "sale": {title: {ar: "عرض خاص", en: ""}},
+    "offers_price": {title: {ar: "عرض سعر", en: ""}},
+    "sales_invoice": {title: {ar: "فاتورة مبيعات", en: ""}},
+    "sales_return_invoice": {title: {ar: "فاتورة مرتد مبيعات", en: ""}},
+    "total_sales": {title: {ar: "إجمالي المبيعات", en: ""}},
+    "customers_acc_statement": {title: {ar: "كشف حساب / ارصدة العملاء", en: ""}},
+    "profit_sales_products": {title: {ar: "ربحية الاصناف المباعة", en: ""}},
+    "total_customers_movement": {title: {ar: "إجمالي حركة العملاء", en: ""}},
+    "low_customers": {title: {ar: "العملاء الراكدة", en: ""}},
+    "total_due_invoice": {title: {ar: "إجمالي الفواتير المستحقة", en: ""}},
+    "currencies": {title: {ar: "العملات", en: ""}},
+    "taxes": {title: {ar: "الضرائب", en: ""}},
+    "boxs": {title: {ar: "الخزن", en: ""}},
+    "banks": {title: {ar: "البنوك", en: ""}},
+    "code_cash_flow": {title: {ar: "البنود ( مقبوضات - مدفوعات)", en: ""}},
+    "rank_cash_flow": {title: {ar: "تصنيف البنود ( مقبوضات - مدفوعات)", en: ""}},
+    "cash_receipt": {title: {ar: "إيصالات قبض", en: ""}},
+    "payment_receipt": {title: {ar: "إيصالات دفع", en: ""}},
+    "suppliers_types": {title: {ar: "انواع الموردين", en: ""}},
+    "suppliers": {title: {ar: "الموردين", en: ""}},
 }
 
 
@@ -98,7 +136,11 @@ const Breadcrumb = ()=>{
                             <svg className="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
                             </svg>
-                            <Link to={handleMakeCurrentPath(arrayPath, path)} className="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white">{pathWebSite[path]?.title?.ar || "غير معرفة حاليا"}</Link>
+                            {path === "reports" ?
+                                <span className="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400">{pathWebSite[path]?.title?.ar || "غير معرفة حاليا"}</span>
+                                :
+                                <Link to={handleMakeCurrentPath(arrayPath, path)} className="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white">{pathWebSite[path]?.title?.ar || "غير معرفة حاليا"}</Link>
+                            }
                         </div>
                     </li>
               )}

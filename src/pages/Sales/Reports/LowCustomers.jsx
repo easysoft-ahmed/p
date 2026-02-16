@@ -14,23 +14,23 @@ const LowCustomers = ()=>{
 
             <div className="flex flex-wrap justify-between items-start w-full">
                 <div className="flex flex-wrap items-end w-full [&>*]:px-2">
-                    <div className="input_label_basic w-4/12">
+                    <div className="input_label_basic w-6/12">
                         <label htmlFor="">من تاريخ</label>
                         <DatePicker defaultValue={dayjs()} />
                     </div>
-                    <div className="input_label_basic w-4/12">
+                    <div className="input_label_basic w-6/12">
                         <label htmlFor="">معدل الدوران</label>
                         <Input defaultValue={30} type="number" />
                     </div>
-                    <div className="input_label_basic w-4/12">
+                    <div className="input_label_basic w-6/12">
                         <label htmlFor="">نوع العميل</label>
                         <SelectCustomersTypes currentValue={isFilter?.VendorTypeID} methodSelect={(option)=> setIsFilter(state => {return {...state, VendorTypeID: option?.VendorTypeID}})}  />
                     </div>
-                    <div className="input_label_basic w-4/12">
+                    <div className="input_label_basic w-6/12">
                         <label htmlFor="">العميل</label>
                         <SelectCustomers currentValue={isFilter?.VendorTypeID} methodSelect={(option)=> setIsFilter(state => {return {...state, VendorTypeID: option?.VendorTypeID}})}  />
                     </div>
-                    <div className="input_label_basic w-4/12">
+                    <div className="input_label_basic w-6/12">
                         <label htmlFor="">التقارير</label>
                         <SelectReportFiles currentValue={isFilter?.ReportName} methodSelect={(value)=> setIsFilter(state => {return {...state, ReportName: value}})} WindowName={"CustomersLastUseReport"} />
                     </div>

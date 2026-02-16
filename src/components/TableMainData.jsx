@@ -54,7 +54,7 @@ const TableMainData = ({columns, URL, title})=>{
 
     return(
         <>
-            <MessageRequest data={myData}/>
+            {/* <MessageRequest data={myData}/> */}
 
             <div className="flex justify-between">
               <Link to="add">

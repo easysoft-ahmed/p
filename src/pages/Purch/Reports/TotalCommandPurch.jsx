@@ -12,38 +12,19 @@ import { SelectCostCenters } from "../../../components/SelectDataApi/SelectCostC
 import { SelectStores } from "../../../components/SelectDataApi/SelectStores";
 import { SelectReportFiles } from "../../../components/SelectDataApi/SelectReportFiles";
 import PrintMainReport from "../../../components/PrintMainReport";
+import FilterDateReport from "../../../components/FilterDateReport";
 
 const TotalCommandPurch = ()=>{
-    let [isFilter, setIsFilter] = useState({});    
-
-    const options = [
-        {value: 0, label: "اليوم"},
-        {value: 1, label: "امس"},
-        {value: 2, label: "اول امس"},
-        {value: 3, label: "الاسبوع الحالي"},
-        {value: 4, label: "الاسبوع الماضي"},
-        {value: 5, label: "الشهر الحالي"},
-        {value: 6, label: "الشهر الماضي"},
-        {value: 7, label: "العام الحالي"},
-        {value: 8, label: "خلال فترة"},
-    ]
+    let [isFilter, setIsFilter] = useState({
+        FromDate: dayjs().format("YYYY/MM/DD"), ToDate:  dayjs().format("YYYY/MM/DD")
+    });    
+    
+    
     return (
         <>
-
-            <div className="flex flex-wrap justify-between w-full">
-                <div className="w-full">
-                    <Radio.Group block buttonStyle="solid" optionType="button" options={options} defaultValue="Apple" />
-                </div>
-                <div className="w-full border-b mt-5"></div>
-                <div className="flex flex-wrap w-full [&>*]:px-2">
-                    <div className="input_label_basic w-4/12">
-                        <label htmlFor="">من تاريخ</label>
-                        <DatePicker disabled defaultValue={dayjs()} />
-                    </div>
-                    <div className="input_label_basic w-4/12">
-                        <label htmlFor="">الى تاريخ</label>
-                        <DatePicker disabled defaultValue={dayjs()}  />
-                    </div>
+            <div className="flex flex-wrap justify-between items-start w-full">
+                <div className="flex flex-wrap items-end w-full [&>*]:px-2">
+                    <FilterDateReport isFilter={isFilter} setIsFilter={setIsFilter} />
                     <div className="input_label_basic w-4/12">
                         <label htmlFor="">نوع المورد</label>
                         <SelectSuppliersType currentValue={isFilter?.VendorTypeID} methodSelect={(option)=> setIsFilter(state => {return {...state, VendorTypeID: option?.VendorTypeID}})}  />

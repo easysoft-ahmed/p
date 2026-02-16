@@ -123,30 +123,30 @@ const MainLayout = () => {
                 //   icon: <AccountsIcon  />,
                 //   label: <Link to="/system">النظام</Link>,
                 // },
-                  {
-                    key: '2',
-                    icon: collapsed && <AccountsIcon />,
-                    label: <Link to="/accounts">الحسابات</Link>,
-                    children: [
-                      {
-                        key: '2-1',
-                        label: 'الاكواد',
-                        children: [
-                          { key: '2-1-1', label: <Link to="/accounts/accounts_codes">أكواد الحسابات </Link> },
-                          { key: '2-1-2', label: <Link to="/accounts/helps_codes">أكواد اليوميات المساعدة </Link> },
-                        ],
-                      },
-                      {
-                        key: '2-2',
-                        label: 'التقارير',
-                        children: [
-                          { key: '2-2-1', label: <Link to="/accounts/accounts_codes">اجمالي قيود اليومية </Link> },
-                          { key: '2-2-2', label: <Link to="/accounts/helps_codes">أكواد اليوميات المساعدة </Link> },
-                          { key: '2-2-2', label: <Link to="/accounts/helps_codes">أكواد اليوميات المساعدة </Link> },
-                        ],
-                      },
-                    ],
-                  },
+                  // {
+                  //   key: '2',
+                  //   icon: collapsed && <AccountsIcon />,
+                  //   label: <Link to="/accounts">الحسابات</Link>,
+                  //   children: [
+                  //     {
+                  //       key: '2-1',
+                  //       label: 'الاكواد',
+                  //       children: [
+                  //         { key: '2-1-1', label: <Link to="/accounts/accounts_codes">أكواد الحسابات </Link> },
+                  //         { key: '2-1-2', label: <Link to="/accounts/helps_codes">أكواد اليوميات المساعدة </Link> },
+                  //       ],
+                  //     },
+                  //     {
+                  //       key: '2-2',
+                  //       label: 'التقارير',
+                  //       children: [
+                  //         { key: '2-2-1', label: <Link to="/accounts/accounts_codes">اجمالي قيود اليومية </Link> },
+                  //         { key: '2-2-2', label: <Link to="/accounts/helps_codes">أكواد اليوميات المساعدة </Link> },
+                  //         { key: '2-2-2', label: <Link to="/accounts/helps_codes">أكواد اليوميات المساعدة </Link> },
+                  //       ],
+                  //     },
+                  //   ],
+                  // },
                   {
                     key: '3',
                     icon: collapsed && <StockIcon />,

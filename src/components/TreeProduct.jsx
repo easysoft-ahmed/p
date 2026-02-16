@@ -32,7 +32,7 @@ const TreeProduct = ({tableName, handleEditRow, ele, onlyCategories, updateSelec
         event.preventDefault(); // Prevent default browser context menu
         
         if(treeData[0]?.key){
-            setUpCategoryID(node.key?.slice(0, node.key?.indexOf("-cat", 0)))
+            setUpCategoryID(node?.key?.slice(0, node?.key?.indexOf("-cat", 0)))
         }
         setSelectedNode(node);
         setContextMenuPosition({ x: event.clientX, y: event.clientY });
@@ -84,8 +84,11 @@ const TreeProduct = ({tableName, handleEditRow, ele, onlyCategories, updateSelec
         }        
     }
     let handleEditCategory = async()=>{
+        
         let getCategory = await getDataAsync(`Stock/Categories?CategoryID=${selectedNode.key?.replace("-cat", "")}`);
-        if(getCategory?.ResponseObject[0]?.UpCategoryID){
+        let checkUpCategoryID = getCategory?.ResponseObject[0]?.UpCategoryID;
+        console.log(getCategory?.ResponseObject[0]?.UpCategoryID);
+        if(checkUpCategoryID || checkUpCategoryID === 0){
             let response = await putDataAsync( "Stock/Categories", {UpCategoryID: getCategory?.ResponseObject[0]?.UpCategoryID, CategoryName, CategoryId: selectedNode.key?.replace("-cat", "")});
             if(response?.ResponseObject){
                 handleProductTree(true);
