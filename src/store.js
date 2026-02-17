@@ -18,6 +18,8 @@ import customer from "./pages/Sales/Customers/AddOrEdit/stateCustomer"
 import customer_type from "./pages/Sales/CustomersTypes/AddOrEdit/stateCustomersTypes"
 import bank from "./pages/Fin/Banks/AddOrEdit/stateBank"
 import tax from "./pages/Fin/Taxes/AddOrEdit/stateTax"
+import cash_in from "./pages/Fin/CashReceipt/AddOrEdit/stateCashIn"
+import cash_out from "./pages/Fin/PaymentReceipt/AddOrEdit/stateCashOut"
 import currency from "./pages/Fin/Currencies/AddOrEdit/stateCurrency"
 import box from "./pages/Fin/Boxs/AddOrEdit/stateBox"
 import acc_code from "./pages/Acc/AccountsCodes/AddOrEdit/stateAccountCode"
@@ -40,7 +42,8 @@ export const store = configureStore({
   reducer: { global,
     unit, color, stock, size, size_group, country_of_origin, product,print_barcode, store_movement, store_transform, supplier, supplier_type,
     delegates_and_staff, customer, customer_type, bank, tax, currency, box, acc_code, acc_help, sales_invoice, ret_sales_invoice, purch_invoice,
-    return_purch_invoice, purch_request , purch_order, purch_setting, stock_setting, company_data, branch, user, advanced_search
+    return_purch_invoice, purch_request , purch_order, purch_setting, stock_setting, company_data, branch, user, advanced_search, cash_in,
+    cash_out
   },
 })
 

@@ -4,44 +4,46 @@ import { Link } from "react-router-dom";
 import MessageRequest from "../../../components/MessageRequest";
 import useGet from "../../../hooks/useGet";
 import { useEffect } from "react";
+import EditBtn from "../../../components/EditBtn";
+import DeleteBtn from "../../../components/DeleteBtn";
+import TableMainData from "../../../components/TableMainData";
 
 const columns = [
   {
     title: 'رقم الايصال',
-    dataIndex: 'BoxID',
-    key: 'name',
+    dataIndex: 'DocNo',
+    key: 'DocNo',
   },
   {
     title: 'تاريخ الايصال',
-    dataIndex: 'BoxName',
-    key: 'age',
+    dataIndex: 'DocDate',
+    key: 'DocDate',
   },
   {
     title: 'ملاحظات',
-    dataIndex: 'BoxName',
-    key: 'age',
+    dataIndex: 'Notes',
+    key: 'Notes',
+  },
+  {
+    title: 'إجراء',
+    render: (record) => (
+      <>
+        <EditBtn url={`edit/${record.DocNo}`} />
+        <DeleteBtn url={`Fin/CashIn?DocId=${record.DocID}`} />
+      </>
+
+    ),
+    key: 'DocId',
   },
 
 ];
 
 
 const CashReceipt = ()=>{
-  let {getData, resultGet, isLoadingGet, errorMsgGet} = useGet();
-  useEffect(()=>{
-    getData("Fin/Boxs")
-  }, [])
     return(
-        <>
-            <MessageRequest data={resultGet?.ResponseObject} errorMsg={errorMsgGet}/>
-
-            <Link to="/financial/cash_receipt/add">
-                <Button type="primary" iconPosition="start" icon={<PlusOutlined />}>إضافة ايصال قبض</Button>
-            </Link>
-            
-            <Spin spinning={isLoadingGet} fullscreen />
-
-            <Table dataSource={resultGet?.ResponseObject} columns={columns} />
-        </>
+      <>
+        <TableMainData columns={columns} URL={"Fin/CashIn"} title="ايصال قبض" />
+      </>
     )
 }
 

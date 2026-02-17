@@ -253,6 +253,7 @@ function App() {
               <Route path="cash_receipt">
                 <Route index element={<CashReceipt />} />
                 <Route path="add" element={<AddEditCashReceipt />} />
+                <Route path="edit/:id" element={<AddEditCashReceipt />} />
               </Route>
               <Route path="payment_receipt">
                 <Route index element={<PaymentReceipt />} />
