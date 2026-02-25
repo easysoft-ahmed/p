@@ -1,10 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit'
+import dayjs from 'dayjs';
 
 
 export const globalSlice = createSlice({
   name: 'global',
   initialState:{
-    value: {popupF3: false, popupF3Component: null, user_login: JSON.parse(window.localStorage.getItem("user_login")) || null}
+    value: {
+      popupF3: false, popupF3Component: null, user_login: JSON.parse(window.localStorage.getItem("user_login")) || null,
+      last_login: JSON.parse(window.localStorage.getItem("last_login")) || null
+
+    }
   },
   reducers: {
     edit_global: (state, {payload})=>{
@@ -18,8 +23,10 @@ export const globalSlice = createSlice({
     set_login_user: (state, {payload})=>{
       if(payload?.Token){
         localStorage.setItem("user_login", JSON.stringify(payload));
+        localStorage.setItem("last_login", JSON.stringify(dayjs().format("YYYY/MM/DD HH:MM")));
         localStorage.setItem("token", payload?.Token);
         state.value.user_login = payload;
+        state.value.last_login = dayjs().format("YYYY/MM/DD - HH:MM");
       }else{
         state.value.user_login = null
       }

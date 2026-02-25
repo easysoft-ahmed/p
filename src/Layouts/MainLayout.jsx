@@ -4,6 +4,7 @@ import user_image from "../../public/user_image.png";
 import Icon, {
     AccountBookOutlined,
   AppstoreOutlined,
+  FieldTimeOutlined,
   HomeOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -27,6 +28,7 @@ const { Header, Sider, Content } = Layout;
 const MainLayout = () => {
   let {pathname} = useLocation();
   let checkLogin = useSelector(state => state.global.value);
+  let last_login = useSelector(state => state.global.value?.last_login);
   let dispatch = useDispatch();
   let [whatIsSelect, setWhatIsSelect] = useState("");
   let handleLogout = ()=>{
@@ -381,6 +383,7 @@ const MainLayout = () => {
                 <Space>
   
                   <div onClick={(e) => e.preventDefault()} className='flex w-auto justify-end items-center gap-2 px-4 cursor-pointer'>
+                      <b className='font-sans font-semibold text-[#022a62]'><FieldTimeOutlined /> {last_login}  </b>
                       <b className='font-sans font-semibold text-[#022a62]'>{checkLogin?.user_login?.UserName || "مستخدم"}</b>
                       <img src={user_image} className='w-[30px] h-[30px]' alt="user image" />
                   </div>

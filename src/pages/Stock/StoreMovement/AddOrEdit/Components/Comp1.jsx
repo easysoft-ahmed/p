@@ -5,11 +5,13 @@ import dayjs from "dayjs";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { edit_store_movement, init_state_store_movement } from "../stateStoreMovement";
+import useStockSetting from "../../../../../hooks/useStockSetting";
 function genUniqueId() {
   return Math.random().toString(9).substring(2, 7);
 }
 
 const Comp1 = ()=>{
+    let {data} = useStockSetting()
     let myData = useSelector(state => state.store_movement.value);
     let dispatch = useDispatch();
     let changeValue = (eventOrValue, prop)=>{
@@ -20,9 +22,7 @@ const Comp1 = ()=>{
             let {id, value} = eventOrValue.target;
             dispatch(edit_store_movement({[id]: value}))
         }
-    }
-
-
+    }    
     
     return(
         <>
@@ -71,7 +71,7 @@ const Comp1 = ()=>{
                             className="w-full"
                             showSearch
                             id="StoreId" value={myData?.StoreId || 0} onChange={value => changeValue(value, "StoreId")}
-                            disabled
+                            disabled={data?.IsUseStoreInDet}
                         >
                             <Select.Option value={0}>-- غير محدد --</Select.Option>    
                                 {myData?.dataSelects?.stores?.map(store => 

@@ -1,4 +1,4 @@
-export const baseUrl = "http://136.243.199.247:4560/api/"
+export const baseUrl = "http://188.40.183.162:4560/api/"
 // export const baseUrl = "https://api.prosofteg.com:5001/api/"
 
 

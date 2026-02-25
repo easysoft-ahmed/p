@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { edit_product } from "../stateProduct";
 import TreeProduct from "../../../../../components/TreeProduct";
 import { useState } from "react";
+import { SelectCountries } from "../../../../../components/SelectDataApi/SelectCountries";
+import { SelectCategories } from "../../../../../components/SelectDataApi/SelectCategories";
 
 const Comp1 = ()=>{
     let myData = useSelector(state => state.product.value);
@@ -56,27 +58,26 @@ const Comp1 = ()=>{
 
 
 
-
                     <div className="input_label_basic ps-2 w-full">
                         <label htmlFor="CategoryId">نوع الصنف</label>
-                        <Select
+                        <SelectCategories currentValue={myData?.CategoryID} methodSelect={option => changeValue(option?.CategoryID, "CategoryID")} />
+
+                        {/* <Select
                             className="w-full"
                             showSearch
                             id="CategoryId" value={myData?.CategoryId} onChange={value => changeValue(value, "CategoryId")}
                             defaultValue={0}
                         >
                             <Select.Option value={0}>-- غير محدد --</Select.Option>    
-                                {/* {[{CategoryID: "1", CategoryName: "Cate Test"},{CategoryID: "2", CategoryName: "Cate Test 2"}].map(category => 
-                                    <Select.Option value={category?.CategoryID?.toString()}>{category.CategoryName}</Select.Option>    
-                                )} */}
                                 {myData?.dataSelects?.categories?.map(category => 
                                     <Select.Option value={category?.CategoryID?.toString()}>{category.CategoryName}</Select.Option>    
                                 )}
-                        </Select>
+                        </Select> */}
                     </div>
                     <div className="input_label_basic ps-2 w-full">
                         <label htmlFor="CountryID">بلد المنشأ</label>
-                        <Select 
+                        <SelectCountries currentValue={myData?.CountryID} methodSelect={option => changeValue(option?.CountryID, "CountryID")} />
+                        {/* <Select 
                             className="w-full" 
                             id="CountryID" 
                             value={myData?.CountryID} 
@@ -86,7 +87,7 @@ const Comp1 = ()=>{
                                 {myData?.dataSelects?.countries?.map(country => 
                                     <Select.Option value={country.CountryID}>{country.CountryName}</Select.Option>    
                                 )}
-                        </Select>
+                        </Select> */}
                     </div>
 
                     <div className="input_label_basic ps-2 w-4/12">

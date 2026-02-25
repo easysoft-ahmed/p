@@ -8,9 +8,11 @@ import useF3 from "../../../../../hooks/useF3";
 import { useEffect, useState } from "react";
 import useGet from "../../../../../hooks/useGet";
 import TreeProduct from "../../../../../components/TreeProduct";
+import useStockSetting from "../../../../../hooks/useStockSetting";
 
 const Comp2 = ()=>{
     let myData = useSelector(state => state.store_movement.value);
+    let {data} = useStockSetting()
 
     let dispatch = useDispatch();
     const {F3} = useF3();
@@ -30,7 +32,7 @@ const Comp2 = ()=>{
         dispatch(modified_tables_store_movement({tableName, actionType, fakeID, propsAndValue}))
     }
 
-    let defaultRow = {fakeID: unique(),ProductName: "", ProductID: "", UnitID: "", Qty: "", Price: "", Total: "", StoreId: "", Notes: ""}
+    let defaultRow = {fakeID: unique(),ProductName: "", ProductID: "", UnitID: "", Qty: "", Price: "", Total: "", StoreId: myData?.StoreId, Notes: ""}
     
     return(
         <>
@@ -137,7 +139,7 @@ const Comp2 = ()=>{
                                             (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
                                         }
                                         options={myData?.dataSelects?.stores?.map(store =>{ return {value: store.StoreID, label: store?.StoreName, ...store}})}
-
+                                        disabled={data?.IsUseStoreInDet}
                                     />
                                 </td>
                                 <td>

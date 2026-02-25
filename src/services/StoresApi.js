@@ -1,5 +1,6 @@
 import { MainAPI } from "../lib/axios"
 
+
 export const getAllStores = async()=>{
     try {
         let response = await MainAPI.get(`Stock/Stores`)
@@ -32,5 +33,17 @@ export const putStore = async(data)=>{
         return response?.data?.ResponseObject;       
     } catch (error) {
         console.error("خطاء في تعديل المخزن");
+    }
+}
+
+
+export const getStockSetting = async(data)=>{
+    try {
+        let response = await MainAPI.get(`Stock/Configuration`, data)
+        return response?.data?.ResponseObject;       
+
+    } catch (error) {
+        console.log(error);
+        
     }
 }

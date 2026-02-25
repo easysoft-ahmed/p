@@ -25,9 +25,7 @@ export const StoreMovementSlice = createSlice({
     },
     modified_tables_store_movement: (state, {payload})=>{
       let {tableName, data, actionType, fakeID, propsAndValue} = payload;
-      
-      console.log(payload);
-      
+            
 
       if(actionType === "add"){
         state.value[tableName] = [...state.value[tableName] || [] , data]        

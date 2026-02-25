@@ -19,7 +19,6 @@ const Comp1 = ()=>{
     let myData = useSelector(state => state.store_transform.value);
     let dispatch = useDispatch();
     let changeValue = (eventOrValue, prop)=>{
-        
         if(prop){
             dispatch(edit_store_transform({[prop]: eventOrValue}))
         }else{
@@ -51,7 +50,10 @@ const Comp1 = ()=>{
                                 value={myData.StoreName || myData.StoreId ? myData?.dataSelects?.stores?.filter(store => store.StoreID == myData.StoreId)[0]?.StoreName || myData.StoreId : ""}
                                 options={myData?.dataSelects?.stores?.map(store =>{ return {value: store.StoreID, label: store.StoreName, ...store}})}
                                 onChange={(value, record) =>{
-                                    dispatch(edit_store_transform({StoreId: record?.StoreID, StoreName: record?.StoreName}));
+                                    if(myData.ToStoreId !== record?.StoreID){
+                                        dispatch(edit_store_transform({StoreId: record?.StoreID, StoreName: record?.StoreName}));
+                                    }
+
                                 }}
                             />
                         </div>
@@ -61,7 +63,9 @@ const Comp1 = ()=>{
                                 className="w-full"
                                 value={myData.ToStoreName || myData.ToStoreId ? myData?.dataSelects?.stores?.filter(store => store.StoreID == myData.ToStoreId)[0]?.StoreName || myData.ToStoreId : ""}
                                 onChange={(value, record) =>{
-                                    dispatch(edit_store_transform({ToStoreId: record?.StoreID, ToStoreName: record?.StoreName}));
+                                    if(myData.StoreId !== record?.StoreID){
+                                        dispatch(edit_store_transform({ToStoreId: record?.StoreID, ToStoreName: record?.StoreName}));
+                                    }
                                 }}
                                 showSearch filterOption={(input, option) =>
                                     (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
