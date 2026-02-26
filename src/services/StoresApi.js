@@ -47,3 +47,13 @@ export const getStockSetting = async(data)=>{
         
     }
 }
+
+export const getProductBalInStore = async(ProdId, StoreId)=>{
+    try {
+        let response = await MainAPI.get(`Stock/CheckProdBal?StoreID=${StoreId}&ProductID=${ProdId}`)
+        return response?.data?.ResponseObject;       
+    } catch (error) {
+        console.log(error);
+    }
+}
+

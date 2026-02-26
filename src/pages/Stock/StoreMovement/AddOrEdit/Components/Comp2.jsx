@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import useGet from "../../../../../hooks/useGet";
 import TreeProduct from "../../../../../components/TreeProduct";
 import useStockSetting from "../../../../../hooks/useStockSetting";
+import ProductBal from "../../../../../components/ProductBal";
 
 const Comp2 = ()=>{
     let myData = useSelector(state => state.store_movement.value);
@@ -143,7 +144,7 @@ const Comp2 = ()=>{
                                     />
                                 </td>
                                 <td>
-                                    <Input defaultValue={ele.Qty} readOnly />
+                                    <ProductBal ProdId={ele.ProductID} StoreId={ele?.StoreId} />
                                 </td>
                             </tr>
                         )}

@@ -3,6 +3,9 @@ import { Button, DatePicker, Radio, Select, Switch } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { edit_return_purch_invoice } from "../stateReturnPurchInvoice";
 import dayjs from "dayjs";
+import QueryBalance from "../../../../../components/QueryBalance";
+import { SelectSuppliers } from "../../../../../components/SelectDataApi/SelectSuppliers";
+import { SelectCustomers } from "../../../../../components/SelectDataApi/SelectCustomers";
 
 const Comp1 = ()=>{
     let myData = useSelector(state => state.return_purch_invoice.value);
@@ -74,26 +77,34 @@ const Comp1 = ()=>{
 
                     <div className="input_label_basic pe-4 w-full lg:w-3/12">
                         <label htmlFor="">اسم الجهة</label>
-                        <Select
-                            className="w-full"
-                            value={myData?.[myData?.SideType === 0 ? "CustomerId" : myData?.SideType === 1 ? "VendorId":"SellerID"]} 
-                            onChange={(value, opt) =>{
-                                console.log(opt);
-                                
-                                dispatch(edit_return_purch_invoice({
-                                    [myData?.SideType === 0 ? "CustomerId" : myData?.SideType === 1 ? "VendorId":"SellerID"]: opt[myData?.SideType === 0 ? "CustomerID" : myData?.SideType === 1 ? "VendorID":"SellerID"] ,
-                                    [myData?.SideType === 0 ? "CustomerName" : myData?.SideType === 1 ? "VendorName":"SellerName"]: opt[myData?.SideType === 0 ? "CustomerName" : myData?.SideType === 1 ? "VendorName":"SellerName"]}))
-                            }}
-                            filterOption={(input, option) =>
-                                (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                        <div className="flex w-full">
+                            <div className="flex grow pe-2">
+                                {myData?.SideType === 0 ?
+                                    <SelectCustomers 
+                                        currentValue={myData?.CustomerId}
+                                        methodSelect={(opt) =>{
+                                            dispatch(edit_purch_invoice({ CustomerId: opt?.CustomerID, CustomerName: opt?.CustomerName}))
+                                    }} />
+                                    : myData?.SideType === 1 ?
+                                    <SelectSuppliers 
+                                        currentValue={myData?.VendorId}
+                                        methodSelect={(opt) =>{
+                                            dispatch(edit_purch_invoice({ VendorId: opt?.VendorID, VendorName: opt?.VendorName}))
+                                    }} />
+                                    : myData?.SideType === 2 &&
+                                    <SelectSuppliers
+                                        currentValue={myData?.SellerID}
+                                        methodSelect={(opt) =>{
+                                            dispatch(edit_purch_invoice({ SellerID: opt?.SellerID, SellerName: opt?.SellerName}))
+                                    }} />
+                                }
+                            </div>
+                            {[0, 1, 2].includes(myData?.SideType) &&
+                                <div className="w-auto">
+                                    <QueryBalance />
+                                </div> 
                             }
-                            showSearch
-                            options={
-                                myData?.dataSelects?.[myData?.SideType === 0 ? "customers" : myData?.SideType === 1 ? "suppliers":"staff"]?.map(item =>{
-                                    let test = {...item, value: item[myData?.SideType === 0 ? "CustomerID" : myData?.SideType === 1 ? "VendorID":"SellerID"], label: item[myData?.SideType === 0 ? "CustomerName" : myData?.SideType === 1 ? "VendorName":"SellerName"]}
-                                    return test
-                                })}
-                        />
+                        </div>
                     </div>
 
                     <div className="input_label_basic w-full lg:w-3/12">
