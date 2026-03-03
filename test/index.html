@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+                table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 18px;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        /* Zebra striping using nth-child */
+        tr:nth-child(even) {
+            background-color: #f9f9f9; /* Light gray for even rows */
+        }
+
+        tr:nth-child(odd) {
+            background-color: #ffffff; /* White for odd rows */
+        }
+
+        /* Optional hover effect */
+        tr:hover {
+            background-color: #f1f1f1; /* Highlight row on hover */
+        }
+
+    </style>
+
+    <script>
+        window.onload = ()=>{
+            let first_ele = document.getElementById("first_ele");
+            if(first_ele){
+                first_ele.focus();
+            }
+        }
+
+        document.addEventListener("keydown", (e)=>{
+            let {id} = e.target;
+            console.log(document.activeElement);
+            if(id == "reset_focus"){
+                e.preventDefault()
+                // document.getElementById("first_ele").focus();
+            }
+        })
+        console.log(document.activeElement);
+
+    </script>
+</head>
+<body>
+
+    <h2>Styled Table</h2>
+    <input type="text" id="first_ele">
+    <table>
+        <tr>
+            <th>Firstname</th>
+            <th style="display: none;">Lastname</th>
+            <th>Age</th>
+        </tr>
+        <tr>
+            <td>
+                <input type="text">
+            </td>
+            <td style="display: none;">
+                <input type="text">
+
+            </td>
+            <td>
+                <input type="text">
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="text">
+
+            </td>
+            <td style="display: none;">
+                <input type="text">
+
+            </td>
+            <td>
+                <input type="text">
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="text">
+            </td>
+            <td style="display: none;">
+                <input type="text">
+            </td>
+            <td>
+                <input type="text" id="reset_focus" placeholder="ss">
+            </td>
+        </tr>
+    </table>
+
+
+    <script>
+        console.log();
+        
+
+    </script>
+</body>
+</html>

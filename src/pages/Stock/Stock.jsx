@@ -1,0 +1,54 @@
+import ButtonPrintReportPage from "../../components/PrintReport";
+import TemplateOne from "../../Layouts/TemplateOne";
+
+const sections = [
+    {name: "الاكواد" , links: [
+        {label: "وحدات القياس", path: "units"},
+        // {label: "الالوان", path: "colors"},
+        // {label: "مجموعات المقاسات", path: "sizes_group"},
+        // {label: "المقاسات", path: "sizes"},
+        {label: "بلد المنشأ", path: "country_of_origin"},
+        {label: "الاصناف", path: "products"},
+        {label: "المخازن", path: "stores"},
+    ]},
+    {name: "أخرى", links: [
+        {label: "طباعة الباركود", path: "print_barcode"},
+        {label: "حركة المخزون", path: "stores_movement"},
+        {label: "التحويلات بين المخازن", path: "store_transform"},
+        {label: "حركة الجرد الفعلي", path: "real_inventory"},
+        {label: "قائمة الاسعار", path: "price_list"},
+        {label: "بحث متقدم للاصناف", path: "advanced_search"},
+    ]},
+    {name: "التقارير", links: [
+        {label: "يومية المخزون", path: "reports/daily_stock"},
+        {label: "يومية التحويلات المخزنية", path: "reports/daily_transform_stock"},
+        {label: "كارت الصنف", path: "reports/card_product"},
+        {label: "ارصدة الاصناف", path: "reports/qty_products"},
+        {label: "الاصناف الراكدة", path: "reports/low_products"},
+        {label: "الحدود المخزنية للاصناف", path: "reports/limit_products"},
+    ]},
+    {name: "الاعدادات", links: [
+        {label: "التثبيت و الخصائص", path: "settings"},
+    ]}  
+]
+
+const Stock = ()=>{
+    return(
+        <>
+            <TemplateOne data={sections} />
+            <div className="section_row">
+                <h2 className="w-full">اوامر طباعة</h2>
+                <div className="flex flex-wrap gap-4 w-full pt-4">
+                    <ButtonPrintReportPage title="وحدات القياس" WindowName={"UnitsReport"} DocId={1}/>
+                    <ButtonPrintReportPage title="انواع الاصناف" WindowName={"CategoriesReport"}  DocId={1}/>
+                    <ButtonPrintReportPage title="الاصناف" WindowName={"ProductsReport"}  DocId={1}/>
+                    <ButtonPrintReportPage title="المخازن" WindowName={"StoresReport"}  DocId={1}/>
+                </div>
+            </div>
+
+        </>
+    )
+}
+
+
+export default Stock;

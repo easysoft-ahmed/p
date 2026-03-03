@@ -1,0 +1,63 @@
+import DeleteBtn from "../../../components/DeleteBtn";
+import EditBtn from "../../../components/EditBtn";
+import ButtonPrintReportPage from "../../../components/PrintReport";
+import TableMainData, { getColumnSearchProps } from "../../../components/TableMainData";
+
+const columns = [
+  {
+    title: 'رقم الفاتورة',
+    dataIndex: 'DocID',
+    key: 'name',
+    ...getColumnSearchProps('DocID', "رقم الفاتورة")
+  },
+  {
+    title: 'اسم الجهة',
+    dataIndex: 'CustomerName',
+    key: 'age',
+    ...getColumnSearchProps('CustomerName', "اسم الجهة")
+  },
+  {
+    title: 'الرقم الدفتري',
+    dataIndex: 'DocTr_type',
+    key: 'age',
+    ...getColumnSearchProps('DocTr_type', "الرقم الدفتري")
+  },
+  {
+    title: 'تاريخ الفاتورة',
+    dataIndex: 'DocDate',
+    key: 'age',
+    ...getColumnSearchProps('DocDate', "تاريخ الفاتورة")
+  },
+  {
+    title: 'صافي القيمة',
+    dataIndex: 'NetTotal',
+    key: 'age',
+    ...getColumnSearchProps('NetTotal', "صافي القيمة")
+  },
+  {
+    title: 'ملاحظات',
+    dataIndex: 'Notes',
+    key: 'age',
+    ...getColumnSearchProps('Notes', "ملاحظات")
+  },
+  {
+    title: 'إجراء',
+    render: (record) => (
+      <>
+        {/* <EditBtn url={`edit/${record.DocNo}`} />
+        <DeleteBtn url={`Sales/RetSales?DocID=${record.DocID}`} /> */}
+        <ButtonPrintReportPage WindowName={"SalesRetInvoice"} DocId={record.DocID} />
+      </>
+    ),
+  },
+
+];
+
+
+const SalesReturnInvoice = ()=>{
+  return(
+    <TableMainData columns={columns} URL={"Sales/RetSales"} title="فاتورة مرتد مبيعات" />
+  )
+}
+
+export default SalesReturnInvoice;
