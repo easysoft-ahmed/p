@@ -14,6 +14,7 @@ import usePut from "../../../../hooks/usePut";
 import usePost from "../../../../hooks/usePost";
 import { getNextCodeStockTrans } from "../../../../services/StockTrans";
 import MessageRequest from "../../../../components/MessageRequest";
+import ResetBtn from "../../../../components/ResetBtn";
 
 const AddEditStoreMovement = ()=>{
     let {id} = useParams();
@@ -104,6 +105,7 @@ const AddEditStoreMovement = ()=>{
                     {id &&
                         <ButtonPrintReportPage WindowName={"StockInvoice"} DocId={id} />
                     }
+                    <ResetBtn resetMethod={handleAddPage} />
                 </div>
             </div>
         

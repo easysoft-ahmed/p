@@ -13,6 +13,7 @@ import { unique } from "../../../../helpers";
 import { edit_return_purch_invoice, init_state_return_purch_invoice, update_return_purch_invoice } from "./stateReturnPurchInvoice";
 import { getManyDataForSelectInput } from "../../../../api";
 import { getNextCodeRetPurchInvoice } from "../../../../services/RetPurchInvoice";
+import ResetBtn from "../../../../components/ResetBtn";
 
 const AddEditReturnPurchReturnInvoice = ()=>{
     let {id} = useParams();
@@ -108,7 +109,10 @@ const AddEditReturnPurchReturnInvoice = ()=>{
             <div className="flex flex-wrap justify-center">
                 <div className="w-full flex justify-between border-b pb-4 mb-4">
                     <h3 className="text-lg font-bold">إضافة فاتورة مرتد مشتريات</h3>
-                    <Button disabled={!myData?.PurchItems?.length || isLoading} type="primary" onClick={handleSubmit} icon={isLoading ? <LoadingOutlined/> : <SaveOutlined />}>حفظ</Button>
+                    <div className="flex gap-4">
+                        <Button disabled={!myData?.PurchItems?.length || isLoading} type="primary" onClick={handleSubmit} icon={isLoading ? <LoadingOutlined/> : <SaveOutlined />}>حفظ</Button>
+                        <ResetBtn resetMethod={handleAddPage} />
+                    </div>
                 </div>
                 <Comp1 />
                 <Comp2 />

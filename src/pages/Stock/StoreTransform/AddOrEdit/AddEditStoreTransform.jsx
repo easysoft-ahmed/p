@@ -14,6 +14,7 @@ import ButtonPrintReportPage from "../../../../components/PrintReport";
 import { LoadingOutlined, SaveOutlined } from "@ant-design/icons";
 import { getNextCodeStockTransform } from "../../../../services/StockTransform";
 import MessageRequest from "../../../../components/MessageRequest";
+import ResetBtn from "../../../../components/ResetBtn";
 
 const AddEditStoreTransform = ()=>{
     let {id} = useParams();
@@ -107,6 +108,7 @@ const AddEditStoreTransform = ()=>{
                     {id &&
                         <ButtonPrintReportPage WindowName={"TransFormInvoice"} DocId={id} />
                     }
+                    <ResetBtn resetMethod={handleAddPage} />
                 </div>
             </div>
 

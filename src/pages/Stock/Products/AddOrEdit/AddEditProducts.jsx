@@ -20,6 +20,7 @@ import MessageRequest from "../../../../components/MessageRequest";
 import TreeProduct from "../../../../components/TreeProduct";
 import ButtonPrintReportPage from "../../../../components/PrintReport";
 import { getNextCodeProduct, postNewProduct, putProduct } from "../../../../services/ProductsApi";
+import ResetBtn from "../../../../components/ResetBtn";
 
 const AddEditProducts = ()=>{
     let {id} = useParams();
@@ -108,6 +109,7 @@ const AddEditProducts = ()=>{
                     <h3 className="text-lg font-bold">إضافة صنف</h3>
                     <div className="flex gap-4">
                         <Button type="primary" disabled={!myData?.Productname || !myData?.CategoryId || isLoading} onClick={handleSubmit} icon={isLoading ? <LoadingOutlined /> : <SaveOutlined />}>حفظ</Button>
+                        <ResetBtn resetMethod={handleAddProduct} />
                     </div>
                 </div>
 

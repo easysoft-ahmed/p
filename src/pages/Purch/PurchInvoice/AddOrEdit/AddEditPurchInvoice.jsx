@@ -13,6 +13,7 @@ import { Button } from "antd";
 import { LoadingOutlined, SaveOutlined } from "@ant-design/icons";
 import MessageRequest from "../../../../components/MessageRequest";
 import { getNextCodePurchInvoice } from "../../../../services/PurchInvoice";
+import ResetBtn from "../../../../components/ResetBtn";
 
 const AddEditPurchInvoice = ()=>{
     let {id} = useParams();
@@ -110,7 +111,10 @@ const AddEditPurchInvoice = ()=>{
             <div className="flex flex-wrap justify-center">
                 <div className="w-full flex justify-between border-b pb-4 mb-4">
                     <h3 className="text-lg font-bold">إضافة فاتورة مشتريات</h3>
-                    <Button disabled={!myData?.PurchItems?.length || isLoading} type="primary" onClick={handleSubmit} icon={isLoading ? <LoadingOutlined/> : <SaveOutlined />}>حفظ</Button>
+                    <div className="flex gap-4">
+                        <Button disabled={!myData?.PurchItems?.length || isLoading} type="primary" onClick={handleSubmit} icon={isLoading ? <LoadingOutlined/> : <SaveOutlined />}>حفظ</Button>
+                        <ResetBtn resetMethod={handleAddPage} />
+                    </div>
                 </div>
                 <Comp1 />
                 <Comp2 />

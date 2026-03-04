@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import MessageRequest from "../../../../components/MessageRequest";
 import { getNextCodeUnit, getUnit, postNewUnit, putUnit } from "../../../../services/UnitsApi";
+import ResetBtn from "../../../../components/ResetBtn";
 
 const AddEditUnits = ()=>{
     let {id} = useParams();
@@ -82,6 +83,7 @@ const AddEditUnits = ()=>{
                     <h3 className="text-lg font-bold">{id ? "تعديل" : "إضافة"} وحدة القياس</h3>
                     <div className="flex gap-4">
                         <Button disabled={!myData?.UnitName || isLoading} type="primary" onClick={handleSubmit} icon={isLoading ? <LoadingOutlined /> : <SaveOutlined />}>حفظ</Button>
+                        <ResetBtn resetMethod={handleAddPage} />
                     </div>
                 </div>
                 <div className="flex flex-wrap w-full sm:w-8/12 md:w-6/12 lg:w-4/12">

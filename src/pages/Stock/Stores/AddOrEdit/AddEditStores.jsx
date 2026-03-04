@@ -11,6 +11,7 @@ import usePost from "../../../../hooks/usePost";
 import usePut from "../../../../hooks/usePut";
 import ButtonPrintReportPage from "../../../../components/PrintReport";
 import { getAllStores, getNextCodeStore, postNewStore, putStore } from "../../../../services/StoresApi";
+import ResetBtn from "../../../../components/ResetBtn";
 
 const AddEditStores = ()=>{
     let {id} = useParams();
@@ -121,6 +122,7 @@ const AddEditStores = ()=>{
                     <h3 className="text-lg font-bold">إضافة مخزن</h3>
                     <div className="flex gap-4">
                         <Button type="primary" disabled={!myData?.StoreName || !myData?.SellerID || isLoading} onClick={handleSubmit} icon={isLoading ? <LoadingOutlined /> : <SaveOutlined />}>حفظ</Button>
+                        <ResetBtn resetMethod={handleAddPage} />
                     </div>
                 </div>
 

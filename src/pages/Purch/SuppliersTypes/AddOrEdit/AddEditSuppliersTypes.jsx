@@ -9,6 +9,7 @@ import usePost from "../../../../hooks/usePost";
 import usePut from "../../../../hooks/usePut";
 import { edit_supplier_type, init_supplier_type, update_supplier_type } from "./stateSupplierType";
 import { getManyDataForSelectInput } from "../../../../api";
+import ResetBtn from "../../../../components/ResetBtn";
 
 const AddEditSuppliersTypes = ()=>{
     let {id} = useParams();
@@ -111,7 +112,10 @@ const AddEditSuppliersTypes = ()=>{
             <div className="flex flex-wrap justify-center">
                 <div className="w-full flex justify-between border-b pb-4 mb-4">
                     <h3 className="text-lg font-bold">إضافة نوع مورد</h3>
-                    <Button type="primary" disabled={!myData?.VendorTypeName || isLoading} onClick={handleSubmit} icon={isLoading ? <LoadingOutlined /> : <SaveOutlined />}>حفظ</Button>
+                    <div className="flex gap-4">
+                        <Button type="primary" disabled={!myData?.VendorTypeName || isLoading} onClick={handleSubmit} icon={isLoading ? <LoadingOutlined /> : <SaveOutlined />}>حفظ</Button>
+                        <ResetBtn resetMethod={handleAddPage} />
+                    </div>
                 </div>
 
                 <div className="flex flex-wrap w-full sm:w-8/12 md:w-6/12 lg:w-6/12">
