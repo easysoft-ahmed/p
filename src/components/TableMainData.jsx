@@ -16,15 +16,19 @@ export   const getColumnSearchProps = (dataIndex, title) => ({
           onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
           onPressEnter={() => {
             confirm();
-            setSearchText(selectedKeys[0]);
+            // setSearchText(selectedKeys[0]);
           }}
           style={{ marginBottom: 8, display: 'block' }}
         />
         <Space>
-          <Button type="primary" onClick={() => { confirm(); setSearchText(selectedKeys[0]); }} size="small" style={{ width: 90 }}>
+          <Button type="primary" onClick={() => { confirm();
+            // setSearchText(selectedKeys[0]);
+            }} size="small" style={{ width: 90 }}>
             بحث
           </Button>
-          <Button onClick={() => { clearFilters(); setSearchText(''); }} size="small" style={{ width: 90 }}>
+          <Button onClick={() => { clearFilters();
+            // setSearchText('');
+            }} size="small" style={{ width: 90 }}>
             إعادة تعيين
           </Button>
         </Space>

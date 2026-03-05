@@ -35,3 +35,13 @@ export const putProduct = async(data)=>{
         console.error("خطاء في تعديل وحدة القياس");
     }
 }
+
+
+export const getProductBySearch = async(searchObj)=>{
+    try {
+        let response = await MainAPI.get(`Stock/Products/Search`, {data: searchObj})
+        return response?.data?.ResponseObject;       
+    } catch (error) {
+        console.error("خطاء في جلب الكود التالي");
+    }
+}

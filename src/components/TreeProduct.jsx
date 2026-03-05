@@ -31,10 +31,11 @@ const TreeProduct = ({tableName, handleEditRow, ele, onlyCategories, updateSelec
     const handleRightClick = ({ event, node }) => {
         event.preventDefault(); // Prevent default browser context menu
         
-        if(treeData[0]?.key){
+        if(node){
+        // if(treeData[0]?.key){
             setUpCategoryID(node?.key?.slice(0, node?.key?.indexOf("-cat", 0)))
+            setSelectedNode(node);
         }
-        setSelectedNode(node);
         setContextMenuPosition({ x: event.clientX, y: event.clientY });
 
         if(node?.ProdType === 1 || treeData[0]?.key === null){
@@ -77,6 +78,7 @@ const TreeProduct = ({tableName, handleEditRow, ele, onlyCategories, updateSelec
     
     let handleAddCategory = async()=>{                
         let response = await postDataAsync( "Stock/Categories", {UpCategoryID, CategoryName});
+        
         if(response?.ResponseObject){
             handleProductTree(true);
             setModalAddElement(false);
@@ -87,7 +89,6 @@ const TreeProduct = ({tableName, handleEditRow, ele, onlyCategories, updateSelec
         
         let getCategory = await getDataAsync(`Stock/Categories?CategoryID=${selectedNode.key?.replace("-cat", "")}`);
         let checkUpCategoryID = getCategory?.ResponseObject[0]?.UpCategoryID;
-        console.log(getCategory?.ResponseObject[0]?.UpCategoryID);
         if(checkUpCategoryID || checkUpCategoryID === 0){
             let response = await putDataAsync( "Stock/Categories", {UpCategoryID: getCategory?.ResponseObject[0]?.UpCategoryID, CategoryName, CategoryId: selectedNode.key?.replace("-cat", "")});
             if(response?.ResponseObject){
@@ -99,6 +100,7 @@ const TreeProduct = ({tableName, handleEditRow, ele, onlyCategories, updateSelec
     }
     let handleDeleteCategory = async()=>{        
         let response = await deleteDataAsync( `Stock/Categories?CategoryID=${selectedNode?.key?.replace("-cat", "")}`);
+
         if(response?.ResponseObject){
             handleProductTree(true);
             setModalAddElement(false);
@@ -112,7 +114,7 @@ const TreeProduct = ({tableName, handleEditRow, ele, onlyCategories, updateSelec
         
 
         return(
-            <div className={`w-full ${!onlyCategories && "border-r"} px-4`} onContextMenu={event => handleRightClick({event})}>
+            <div className={`w-full ${!onlyCategories && "border-r"} px-4`} id="not-element" onContextMenu={event => handleRightClick({event})}>
                 <h3 className="font-bold mb-4"> شجرة الاصناف </h3>
                 <Modal title={
                     `${isTypeAction === "add" ? "إضافة" : isTypeAction === "edit" ? "تعديل" : isTypeAction === "delete" && "حذف"} 
