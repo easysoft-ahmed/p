@@ -9,6 +9,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { edit_currency, init_currency } from "./stateCurrency";
 import { getNextCodeCurr } from "../../../../services/CurrnciesApi";
+import ResetBtn from "../../../../components/ResetBtn";
 
 const AddEditCurrencies = ()=>{
     let {id} = useParams();
@@ -96,7 +97,10 @@ const AddEditCurrencies = ()=>{
             <div className="flex flex-wrap justify-center">
                 <div className="w-full flex justify-between border-b pb-4 mb-4">
                     <h3 className="text-lg font-bold">إضافة عملة</h3>
-                    <Button type="primary" disabled={!myData?.CurrName || isLoading} onClick={handleSubmit} icon={isLoading ? <LoadingOutlined /> : <SaveOutlined />}>حفظ</Button>
+                    <div className="flex gap-4">
+                        <Button type="primary" disabled={!myData?.CurrName || isLoading} onClick={handleSubmit} icon={isLoading ? <LoadingOutlined /> : <SaveOutlined />}>حفظ</Button>
+                        <ResetBtn resetMethod={handleAddPage} />
+                    </div>
                 </div>
 
                 <div className="flex flex-wrap w-full sm:w-8/12 md:w-6/12 lg:w-4/12">

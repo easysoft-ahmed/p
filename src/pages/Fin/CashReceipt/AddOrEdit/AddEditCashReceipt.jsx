@@ -10,6 +10,7 @@ import usePut from "../../../../hooks/usePut";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "antd";
 import { LoadingOutlined, SaveOutlined } from "@ant-design/icons";
+import ResetBtn from "../../../../components/ResetBtn";
 
 const AddEditCashReceipt = ()=>{
     let {id} = useParams();
@@ -82,7 +83,10 @@ const AddEditCashReceipt = ()=>{
         <div className="flex flex-wrap justify-center">
             <div className="w-full flex justify-between border-b pb-4 mb-4">
                 <h3 className="text-lg font-bold">إضافة ايصال قبض</h3>
-                <Button type="primary" disabled={!myData?.FinCashDets?.length || isLoading} onClick={handleSubmit} icon={isLoading ? <LoadingOutlined /> : <SaveOutlined />}>حفظ</Button>
+                <div className="flex gap-4">
+                    <Button type="primary" disabled={!myData?.FinCashDets?.length || isLoading} onClick={handleSubmit} icon={isLoading ? <LoadingOutlined /> : <SaveOutlined />}>حفظ</Button>
+                    <ResetBtn resetMethod={handleAddPage} />
+                </div>
             </div>
             <div className="w-full">
                 <Comp1 />

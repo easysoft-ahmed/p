@@ -13,6 +13,7 @@ import MessageRequest from "../../../../components/MessageRequest";
 import { edit_customer, init_state_customer, update_customer } from "./stateCustomer";
 import { getManyDataForSelectInput } from "../../../../api";
 import { getNextCodeCustomer } from "../../../../services/CustomersApi";
+import ResetBtn from "../../../../components/ResetBtn";
 
 const AddEditCustomers = ()=>{
     let {id} = useParams();
@@ -102,7 +103,10 @@ const AddEditCustomers = ()=>{
             <div className="flex flex-wrap justify-center">
                 <div className="w-full flex justify-between border-b pb-4 mb-4">
                     <h3 className="text-lg font-bold">إضافة عميل</h3>
-                    <Button disabled={!myData?.CustomerName || isLoading} type="primary" onClick={handleSubmit} icon={isLoading ? <LoadingOutlined /> : <SaveOutlined />}>حفظ</Button>
+                    <div className="flex gap-4">
+                        <Button disabled={!myData?.CustomerName || isLoading} type="primary" onClick={handleSubmit} icon={isLoading ? <LoadingOutlined /> : <SaveOutlined />}>حفظ</Button>
+                        <ResetBtn resetMethod={handleAddPage} />
+                    </div>
                 </div>
 
                 <Tabs

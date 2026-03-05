@@ -10,6 +10,7 @@ import useGet from "../../../../hooks/useGet";
 import { edit_delegates_and_staff, init_delegates_and_staff, update_delegates_and_staff } from "./stateDelegatesAndStaff";
 import MessageRequest from "../../../../components/MessageRequest";
 import { getNextCodeStaff } from "../../../../services/StaffApi";
+import ResetBtn from "../../../../components/ResetBtn";
 
 const AddEditDelegatesAndStaff = ()=>{
     let {postDataAsync} = usePost();
@@ -96,7 +97,10 @@ const AddEditDelegatesAndStaff = ()=>{
             <div className="flex flex-wrap justify-center">
                 <div className="w-full flex justify-between border-b pb-4 mb-4">
                     <h3 className="text-lg font-bold">إضافة مندوب</h3>
-                    <Button disabled={!myData?.SellerName || isLoading} type="primary" onClick={handleSubmit} icon={isLoading ? <LoadingOutlined /> : <SaveOutlined />}>حفظ</Button>
+                    <div className="flex gap-4">
+                        <Button disabled={!myData?.SellerName || isLoading} type="primary" onClick={handleSubmit} icon={isLoading ? <LoadingOutlined /> : <SaveOutlined />}>حفظ</Button>
+                        <ResetBtn resetMethod={handleAddPage} />
+                    </div>
                 </div>
 
                 <div className="flex flex-wrap w-full sm:w-8/12 md:w-6/12 lg:w-5/12">

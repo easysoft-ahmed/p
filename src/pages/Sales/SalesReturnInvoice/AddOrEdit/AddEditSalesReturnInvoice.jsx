@@ -14,6 +14,7 @@ import { LoadingOutlined, SaveOutlined } from "@ant-design/icons";
 import { unique } from "../../../../helpers";
 import ButtonPrintReportPage from "../../../../components/PrintReport";
 import { getNextCodeRetSalesInvoice } from "../../../../services/RetSalesInvoice";
+import ResetBtn from "../../../../components/ResetBtn";
 
 const AddEditSalesInvoice = ()=>{
     let {id} = useParams();
@@ -116,6 +117,7 @@ const AddEditSalesInvoice = ()=>{
                         {id &&
                             <ButtonPrintReportPage WindowName={"SalesInvoice"} DocId={id} />
                         }
+                        <ResetBtn resetMethod={handleAddPage} />
                     </div>
                 </div>
                 <Comp1 />
