@@ -38,8 +38,10 @@ export const putProduct = async(data)=>{
 
 
 export const getProductBySearch = async(searchObj)=>{
+    console.log(searchObj);
+    
     try {
-        let response = await MainAPI.get(`Stock/Products/Search`, {data: searchObj})
+        let response = await MainAPI.get(`Stock/Products/Search`, {params:{...searchObj}})
         return response?.data?.ResponseObject;       
     } catch (error) {
         console.error("خطاء في جلب الكود التالي");

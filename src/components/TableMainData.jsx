@@ -5,17 +5,28 @@ import { regxMatchFilterTable } from "../helpers";
 import { Link } from "react-router-dom";
 import { Button, Input, Space, Spin, Table } from "antd";
 import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
+import { getProductBySearch } from "../services/ProductsApi";
 
 
-export   const getColumnSearchProps = (dataIndex, title) => ({
+export   const getColumnSearchProps = (dataIndex, title, setNewData) => ({
     filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
       <div style={{ padding: 8 }}>
         <Input
           placeholder={`بحث في ${title}`}
           value={selectedKeys[0]}
           onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
-          onPressEnter={() => {
-            confirm();
+          onPressEnter={async() => {
+            if(setNewData){
+              let result = await getProductBySearch({
+                "SearchStrs":[
+                  "ProductName like '%ما%'",
+                  "CategoryName like '%ما%'"
+                ]
+              });
+              console.log(result);
+              
+            }
+            // confirm();
             // setSearchText(selectedKeys[0]);
           }}
           style={{ marginBottom: 8, display: 'block' }}
@@ -41,7 +52,7 @@ export   const getColumnSearchProps = (dataIndex, title) => ({
 
 
 
-const TableMainData = ({columns, URL, title})=>{
+const TableMainData = ({columns, URL, title, resultSearch})=>{
     let {getDataAsync } = useGet();
     let [propSearch, setPropSearch] = useState(null)
     let [myData, setMyData] = useState(null);
@@ -74,7 +85,7 @@ const TableMainData = ({columns, URL, title})=>{
 
             <Spin spinning={myData === null ? true:false} fullscreen />
 
-            <Table dataSource={myDataOnSearch} columns={columns} />
+            <Table dataSource={resultSearch || myDataOnSearch} columns={columns} />
         </>
 
     )

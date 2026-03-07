@@ -28,7 +28,7 @@ const Comp1 = ()=>{
                     footer={false}
                     onCancel={()=>setShowTree(false)}
                 >
-                    <TreeProduct updateSelectCategories={true} edit_product_type_2={edit_product} onlyCategories={true}  />
+                    <TreeProduct updateSelectCategories={true} closeTree={()=>setShowTree(false)}  />
                 </Modal>
 
                 <div className="flex flex-wrap w-full sm:w-8/12 md:w-6/12 lg:w-9/12">

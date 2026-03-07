@@ -7,21 +7,18 @@ import { useEffect, useState } from "react";
 
 
 const Products = ()=>{
-    const [searchParams, setSearchParams] = useSearchParams();
-    const ProductnameFilter = searchParams.get('Productname') || '';
-    let [isDataSource, setIsDataSource] = useState([]);
+  let [newData, setNewData] = useState(null)
+  let [isDataSource, setIsDataSource] = useState([]);
     const columns = [
       {
         title: 'رقم الصنف',
         dataIndex: 'ProductID',
-        filteredValue: ProductnameFilter ? [ProductnameFilter] : null,
-
         ...getColumnSearchProps('ProductID', "رقم الصنف")
       },
       {
         title: 'إسم الصنف',
         dataIndex: 'Productname',
-        ...getColumnSearchProps('Productname', "إسم الصنف")
+        ...getColumnSearchProps('Productname', "إسم الصنف", setNewData)
       },
       {
         title: 'Product Name',
@@ -72,7 +69,7 @@ const Products = ()=>{
     ];
     
     return(
-      <TableMainData columns={columns} dataSource={isDataSource} URL={"Stock/Products"} title="صنف" />
+      <TableMainData columns={columns} dataSource={isDataSource} resultSearch={newData} URL={"Stock/Products"} title="صنف" />
     )
 }
 

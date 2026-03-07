@@ -1,5 +1,5 @@
-import { DownOutlined } from "@ant-design/icons";
-import { Dropdown, Input, Menu, Modal, Tree } from "antd";
+import { DownOutlined, StopOutlined } from "@ant-design/icons";
+import { Button, Dropdown, Input, Menu, Modal, Tree } from "antd";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useGet from "../hooks/useGet";
@@ -8,11 +8,15 @@ import usePost from "../hooks/usePost";
 import { edit_product } from "../pages/Stock/Products/AddOrEdit/stateProduct";
 import usePut from "../hooks/usePut";
 import useDelete from "../hooks/useDelete";
+import { useNavigate } from "react-router-dom";
 
-const TreeProduct = ({tableName, handleEditRow, ele, onlyCategories, updateSelectCategories, edit_product_type_2})=>{
+const TreeProduct = ({tableName, handleEditRow, ele, onlyCategories, updateSelectCategories, edit_product_type_2, closeTree})=>{
     const [contextMenuVisible, setContextMenuVisible] = useState(false);
     const [contextMenuPosition, setContextMenuPosition] = useState({ x: 0, y: 0 });
     const [selectedNode, setSelectedNode] = useState(null);
+    
+    const navigate = useNavigate();
+    
     let [UpCategoryID, setUpCategoryID] = useState(0);
     let [isTypeAction, setIsTypeAction] = useState(null)
     let [CategoryName, setCategoryName] = useState("");
@@ -23,10 +27,14 @@ const TreeProduct = ({tableName, handleEditRow, ele, onlyCategories, updateSelec
     let {postDataAsync} = usePost();
     let {putDataAsync} = usePut();
     let {deleteDataAsync} = useDelete();
-
+    
     let [treeData, setTreeData] = useState([]);
     let categories = useSelector(state => state.product.value?.dataSelects?.categories)
+    const [expandedKeys, setExpandedKeys] = useState(null);
 
+    const onExpand = (expandedKeysValue) => {
+        setExpandedKeys(expandedKeysValue);
+    };
 
     const handleRightClick = ({ event, node }) => {
         event.preventDefault(); // Prevent default browser context menu
@@ -108,6 +116,8 @@ const TreeProduct = ({tableName, handleEditRow, ele, onlyCategories, updateSelec
         }        
     }
 
+  
+    
     useEffect(()=>{
         handleProductTree()
     }, [])
@@ -115,7 +125,10 @@ const TreeProduct = ({tableName, handleEditRow, ele, onlyCategories, updateSelec
 
         return(
             <div className={`w-full ${!onlyCategories && "border-r"} px-4`} id="not-element" onContextMenu={event => handleRightClick({event})}>
-                <h3 className="font-bold mb-4"> شجرة الاصناف </h3>
+                <h3 className="font-bold mb-4">
+                    شجرة الاصناف
+                    <Button icon={<StopOutlined />} style={{marginRight: "10px"}} type="text" onClick={()=>setExpandedKeys([])} />
+                </h3>
                 <Modal title={
                     `${isTypeAction === "add" ? "إضافة" : isTypeAction === "edit" ? "تعديل" : isTypeAction === "delete" && "حذف"} 
                      ${isTypeAction === "add" ? UpCategoryID === 0 ? "جذر" : "عنصر" : ""}
@@ -133,14 +146,22 @@ const TreeProduct = ({tableName, handleEditRow, ele, onlyCategories, updateSelec
 
                 <div dir="ltr" className="w-full flex flex-wrap justify-between gap-2" >
                     <Tree
+                        defaultExpandAll={expandedKeys}
+                        expandedKeys={expandedKeys}
+                        onExpand={onExpand}
                         titleRender={(node)=>{return <span>{node?.title} <span className="font-bold"> - {node?.key?.replace("-cat", "")}</span></span>}}
                         showLine
                         switcherIcon={<DownOutlined />}
                         // defaultExpandedKeys={['0-0-0']}
                         onSelect={
                             (keys, info)=>{
+                                if(info.node.ProdType === 2 && !handleEditRow ){
+                                    navigate(`/stock/products/edit/${info.node.key}`, { replace: true });
+                                    closeTree()
+                                }
+
                                 if(handleEditRow){
-                                    if(info.node.ProdType === 2){
+                                    if(info.node.ProdType === 2 ){
                                         handleEditRow(tableName, "edit", ele.fakeID, {ProductName: info.node.title, ProductID: info.node.key});
                                         dispatch(edit_global({popupF3: false, popupF3Component: null}))
                                     };
@@ -149,7 +170,7 @@ const TreeProduct = ({tableName, handleEditRow, ele, onlyCategories, updateSelec
                                     let arr = [];
                                     let removePrefix = info.node.key?.replace("-cat", "");
                                     let check = categories?.filter(ele => ele.CategoryID === Number(removePrefix))[0];
-                                  
+
                                     if(check && check.UpCategoryID === 0){
                                         dispatch(edit_product_type_2({Productname: info.node.title, CategoryId: Number(removePrefix)}))
                                     }else if(check){
