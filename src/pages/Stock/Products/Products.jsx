@@ -8,7 +8,6 @@ import { useEffect, useState } from "react";
 
 const Products = ()=>{
   let [newData, setNewData] = useState(null)
-  let [isDataSource, setIsDataSource] = useState([]);
     const columns = [
       {
         title: 'رقم الصنف',
@@ -69,7 +68,7 @@ const Products = ()=>{
     ];
     
     return(
-      <TableMainData columns={columns} dataSource={isDataSource} resultSearch={newData} URL={"Stock/Products"} title="صنف" />
+      <TableMainData columns={columns} resultSearch={newData} URL={"Stock/Products"} title="صنف" />
     )
 }
 

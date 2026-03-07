@@ -18,28 +18,35 @@ export   const getColumnSearchProps = (dataIndex, title, setNewData) => ({
           onPressEnter={async() => {
             if(setNewData){
               let result = await getProductBySearch({
-                "SearchStrs":[
-                  "ProductName like '%ما%'",
-                  "CategoryName like '%ما%'"
-                ]
+                "SearchStrs": [ `ProductName like '%${selectedKeys[0]}%'`]
               });
-              console.log(result);
-              
+
+              if(selectedKeys[0]?.length){ setNewData(result || []) }
+              else{ setNewData(null) }
+            }else{
+              confirm();
+              setSearchText(selectedKeys[0]);
             }
-            // confirm();
-            // setSearchText(selectedKeys[0]);
           }}
           style={{ marginBottom: 8, display: 'block' }}
         />
         <Space>
-          <Button type="primary" onClick={() => { confirm();
-            // setSearchText(selectedKeys[0]);
+          <Button type="primary" onClick={async() => {
+              if(setNewData){
+                let result = await getProductBySearch({
+                  "SearchStrs": [ `ProductName like '%${selectedKeys[0]}%'`]
+                });
+
+                if(selectedKeys[0]?.length){ setNewData(result || []) }
+                else{ setNewData(null) }
+              }else{
+                confirm();
+                // setSearchText(selectedKeys[0]);
+              }
             }} size="small" style={{ width: 90 }}>
             بحث
           </Button>
-          <Button onClick={() => { clearFilters();
-            // setSearchText('');
-            }} size="small" style={{ width: 90 }}>
+          <Button onClick={() => { setNewData && setNewData(null); clearFilters();}} size="small" style={{ width: 90 }}>
             إعادة تعيين
           </Button>
         </Space>
