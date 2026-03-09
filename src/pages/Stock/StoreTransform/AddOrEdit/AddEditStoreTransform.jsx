@@ -104,7 +104,7 @@ const AddEditStoreTransform = ()=>{
             <div className="w-full flex justify-between border-b pb-4 mb-4">
                 <h3 className="text-lg font-bold">إضافة تحويل من مخزن</h3>
                 <div className="flex gap-4">
-                    <Button disabled={!myData?.StockItems?.length || isLoading} type="primary" onClick={handleSubmit} icon={isLoading ? <LoadingOutlined/> : <SaveOutlined />}>حفظ</Button>
+                    <Button disabled={!myData?.TransFormItems?.length || !myData?.TransFormItems[0]?.ProductID  || isLoading} type="primary" onClick={handleSubmit} icon={isLoading ? <LoadingOutlined/> : <SaveOutlined />}>حفظ</Button>
                     {id &&
                         <ButtonPrintReportPage WindowName={"TransFormInvoice"} DocId={id} />
                     }

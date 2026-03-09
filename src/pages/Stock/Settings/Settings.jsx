@@ -56,10 +56,10 @@ const Settings = ()=>{
                             <Select id="StoreCost" showSearch className="w-full my-2" value={myData?.StoreCost || ""}
                                 onChange={(value, opt) => changeValue(value, "StoreCost")}
                             >
-                                <Select.Option value={0}>المتوسط المرجح</Select.Option>
-                                <Select.Option value={1}>أخر سعر شراء</Select.Option>
-                                <Select.Option value={2}>الوارد اولا يصرف اولا</Select.Option>
-                                <Select.Option value={3}>الوارد اولا يصرف اخيرا</Select.Option>
+                                <Select.Option value={1}>المتوسط المرجح</Select.Option>
+                                <Select.Option value={2}>أخر سعر شراء</Select.Option>
+                                <Select.Option value={3}>الوارد اولا يصرف اولا</Select.Option>
+                                <Select.Option value={4}>الوارد اولا يصرف اخيرا</Select.Option>
                             </Select>
                         </div>
                         <div className="w-4/12">
@@ -67,9 +67,9 @@ const Settings = ()=>{
                             <Select id="StoreTrans" showSearch className="w-full my-2" value={myData?.StoreTrans || ""}
                                 onChange={(value, opt) => changeValue(value, "StoreTrans")}
                             >
-                                <Select.Option value={0}>السماح باجراء الحركة</Select.Option>
-                                <Select.Option value={1}>تحذير مع السماح باجراء الحركة</Select.Option>
-                                <Select.Option value={2}>منع الحركة نهائيا</Select.Option>
+                                <Select.Option value={1}>السماح باجراء الحركة</Select.Option>
+                                <Select.Option value={2}>تحذير مع السماح باجراء الحركة</Select.Option>
+                                <Select.Option value={3}>منع الحركة نهائيا</Select.Option>
                             </Select>
                         </div>
                         <div className="w-3/12">

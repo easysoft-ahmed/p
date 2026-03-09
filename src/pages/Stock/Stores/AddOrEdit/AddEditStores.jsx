@@ -12,6 +12,7 @@ import usePut from "../../../../hooks/usePut";
 import ButtonPrintReportPage from "../../../../components/PrintReport";
 import { getAllStores, getNextCodeStore, postNewStore, putStore } from "../../../../services/StoresApi";
 import ResetBtn from "../../../../components/ResetBtn";
+import { SelectStaff } from "../../../../components/SelectDataApi/SelectStaff";
 
 const AddEditStores = ()=>{
     let {id} = useParams();
@@ -151,15 +152,7 @@ const AddEditStores = ()=>{
 
                     <div className="input_label_basic ps-2 w-full">
                         <label htmlFor="SellerID" className="label_required">مسؤول المخزن</label>
-                        <Select
-                            className="w-full"
-                            allowClear value={myData?.SellerID || ""} onChange={value => changeValue(value, "SellerID")}
-                            id="SellerID"
-                            showSearch filterOption={(input, option) =>
-                                (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
-                            }
-                            options={myData?.dataSelects?.staff?.map(staf =>{ return {value: staf.SellerID, label: staf.SellerName, ...staf}})}
-                        />
+                        <SelectStaff currentValue={myData?.SellerID || ""} methodSelect={option => changeValue(option.SellerID, "SellerID")} />
                     </div>
 
                     <div className="input_label_basic ps-2 w-6/12">

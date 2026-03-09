@@ -63,7 +63,7 @@ const TreeProduct = ({tableName, handleEditRow, ele, onlyCategories, updateSelec
         }else if(e.key === "delete"){
             setIsTypeAction("delete");
         }
-        setModalAddElement(true);
+        ["add_root", "add_branch", "edit", "delete", ].includes(e.key) && setModalAddElement(true);
         // setContextMenuVisible(false);
     };
     
@@ -202,6 +202,12 @@ const TreeProduct = ({tableName, handleEditRow, ele, onlyCategories, updateSelec
                                                 <Menu.Item  id="dropmenu_item_branch" key="add_branch">إضافة نوع فرع</Menu.Item>
                                                 <Menu.Item id="dropmenu_item_edit" key="edit">تعديل</Menu.Item>
                                                 <Menu.Item id="dropmenu_item_delete" key="delete">حذف</Menu.Item>
+                                                <Menu.Item id="under_grade1" key="under_grade1">توحيد سعر الشراء</Menu.Item>
+                                                <Menu.Item id="under_grade2" key="under_grade2">توحيد سعر البيع</Menu.Item>
+                                                <Menu.Item id="under_grade3" key="under_grade3">توحيد الخصم قيمة او نسبة</Menu.Item>
+                                                <Menu.Item id="under_grade4" key="under_grade4">توحيد الحد الادنى</Menu.Item>
+                                                <Menu.Item id="under_grade5" key="under_grade5">الحد الاقصى</Menu.Item>
+                                                <Menu.Item id="under_grade6" key="under_grade6">حد الطلب</Menu.Item>
                                             </>
                                         }
                                     </Menu>

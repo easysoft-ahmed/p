@@ -47,10 +47,11 @@ const Comp1 = ()=>{
                         <div className="input_label_basic pe-4 w-full lg:w-6/12">
                             <label htmlFor="">من مخزن</label>
                             <Select className="w-full"
+                                allowClear
                                 value={myData.StoreName || myData.StoreId ? myData?.dataSelects?.stores?.filter(store => store.StoreID == myData.StoreId)[0]?.StoreName || myData.StoreId : ""}
                                 options={myData?.dataSelects?.stores?.map(store =>{ return {value: store.StoreID, label: store.StoreName, ...store}})}
                                 onChange={(value, record) =>{
-                                    if(myData.ToStoreId !== record?.StoreID){
+                                    if(myData.ToStoreId !== record?.StoreID || value === undefined){
                                         dispatch(edit_store_transform({StoreId: record?.StoreID, StoreName: record?.StoreName}));
                                     }
 
@@ -61,9 +62,11 @@ const Comp1 = ()=>{
                             <label htmlFor="">الى مخزن</label>
                             <Select
                                 className="w-full"
+                                allowClear
                                 value={myData.ToStoreName || myData.ToStoreId ? myData?.dataSelects?.stores?.filter(store => store.StoreID == myData.ToStoreId)[0]?.StoreName || myData.ToStoreId : ""}
                                 onChange={(value, record) =>{
-                                    if(myData.StoreId !== record?.StoreID){
+                                
+                                    if(myData.StoreId !== record?.StoreID || value === undefined){
                                         dispatch(edit_store_transform({ToStoreId: record?.StoreID, ToStoreName: record?.StoreName}));
                                     }
                                 }}

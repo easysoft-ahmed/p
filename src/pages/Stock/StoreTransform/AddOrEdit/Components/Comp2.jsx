@@ -1,4 +1,4 @@
-import { DownOutlined, PlusOutlined, SaveOutlined } from "@ant-design/icons";
+import { CloseCircleOutlined, DownOutlined, PlusOutlined, SaveOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Select, Switch, Tree } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { edit_store_transform, modified_tables_store_transform } from "../stateStoreTransform";
@@ -51,7 +51,9 @@ const Comp2 = ()=>{
 
                         <tr>
                             {/* index */}
-                            <td className="text-center">1</td>
+                            <td className="text-center">
+                                <button onClick={()=> dispatch(modified_tables_store_transform({tableName: "TransFormItems", actionType: "remove", fakeID: ele.fakeID}))}><CloseCircleOutlined /></button>
+                            </td>
                             <td>
                                 <Input value={ele.ProductID} />
                             </td>
@@ -115,9 +117,10 @@ const Comp2 = ()=>{
                             <td>
                                 <Select
                                     className="w-full"
+                                    allowClear
                                     value={ele.StoreName || ele.StoreId ? myData?.dataSelects?.stores?.filter(store => store.StoreID == ele.StoreId)[0]?.StoreName || ele.StoreId : ""}
                                     onChange={(value, record) =>{
-                                        if(ele?.ToStoreId !== record?.StoreID){
+                                        if(ele?.ToStoreId !== record?.StoreID  || value === undefined){
                                             handleEditRow("TransFormItems", "edit", ele.fakeID , {StoreId: record?.StoreID, StoreName: record?.StoreName})
                                         }
                                     }}
@@ -130,9 +133,10 @@ const Comp2 = ()=>{
                             <td>
                                 <Select
                                     className="w-full"
+                                    allowClear
                                     value={ele.ToStoreName || ele.ToStoreId ? ele?.dataSelects?.stores?.filter(store => store.StoreID == ele.ToStoreId)[0]?.StoreName || ele.ToStoreId : ""}
                                     onChange={(value, record) =>{
-                                        if(ele?.StoreId !== record?.StoreID){
+                                        if(ele?.StoreId !== record?.StoreID || value === undefined){
                                             handleEditRow("TransFormItems", "edit", ele.fakeID , {ToStoreId: record?.StoreID, ToStoreName: record?.StoreName})
                                         }
                                     }}
