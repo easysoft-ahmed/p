@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { edit_store_movement, init_state_store_movement } from "../stateStoreMovement";
 import useStockSetting from "../../../../../hooks/useStockSetting";
+import { SelectStores } from "../../../../../components/SelectDataApi/SelectStores";
 function genUniqueId() {
   return Math.random().toString(9).substring(2, 7);
 }
@@ -67,7 +68,8 @@ const Comp1 = ()=>{
 
                     <div className="input_label_basic pe-4 w-full lg:w-2/12">
                         <label htmlFor="">المخزن</label>
-                        <Select
+                        <SelectStores disabled={data?.IsUseStoreInDet} currentValue={myData?.StoreId} methodSelect={value => changeValue(value?.StoreID, "StoreId")} />
+                        {/* <Select
                             className="w-full"
                             showSearch
                             id="StoreId" value={myData?.StoreId || 0} onChange={value => changeValue(value, "StoreId")}
@@ -77,7 +79,7 @@ const Comp1 = ()=>{
                                 {myData?.dataSelects?.stores?.map(store => 
                                     <Select.Option value={store.StoreID}>{store.StoreName}</Select.Option>    
                                 )}
-                        </Select>
+                        </Select> */}
                     </div>
 
                     <div className="input_label_basic w-full lg:w-2/12">

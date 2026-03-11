@@ -13,7 +13,7 @@ import ProductBal from "../../../../../components/ProductBal";
 
 const Comp2 = ()=>{
     let myData = useSelector(state => state.store_movement.value);
-    let {data} = useStockSetting()
+    let {settingData} = useStockSetting();
 
     let dispatch = useDispatch();
     const {F3} = useF3();
@@ -50,7 +50,7 @@ const Comp2 = ()=>{
                             <th scope="col" class="px-6 py-3">الكمية</th>
                             <th scope="col" class="px-6 py-3">السعر</th>
                             <th scope="col" class="px-6 py-3">الاجمالي</th>
-                            {data?.IsUseStoreInDet && <th scope="col" class="px-6 py-3">اسم المخزن</th>}
+                            {settingData?.IsUseStoreInDet && <th scope="col" class="px-6 py-3">اسم المخزن</th>}
                             <th scope="col" class="px-6 py-3">رصيد الصنف</th>
                         </tr>
                     </thead>
@@ -73,12 +73,13 @@ const Comp2 = ()=>{
                                             let unitsGroup = [{value: record?.MainUnitId, label: record?.MainUnitName}];
                                             record?.SubUnitId &&  unitsGroup.push({value: record?.SubUnitId, label: record?.SubUnitName, })
                                             record?.UseUnitID && unitsGroup.push({value: record?.UseUnitID, label: record?.UseUnitName})
-
-                                            handleEditRow("StockItems", "edit", ele.fakeID,{
-                                                ProductName: value, ProductID: record?.ProductID, UnitID: record?.MainUnitId,
-                                                unitsGroup, Qty: 1, Price: record?.MainUnitPrice, Total: record?.MainUnitPrice * 1,
-                                                record: {...record}
-                                            });
+                                            if(settingData?.IsRepeatProd || !myData?.StockItems?.filter(ele => ele?.ProductID === record?.ProductID)[0]){
+                                                handleEditRow("StockItems", "edit", ele.fakeID,{
+                                                    ProductName: value, ProductID: record?.ProductID, UnitID: record?.MainUnitId,
+                                                    unitsGroup, Qty: 1, Price: record?.MainUnitPrice, Total: record?.MainUnitPrice * 1,
+                                                    record: {...record}
+                                                });
+                                            }
                                         }}
                                         showSearch filterOption={(input, option) =>{
                                             let byProductID = (option?.ProductID ?? '').toLowerCase().includes(input.toLowerCase());
@@ -132,7 +133,7 @@ const Comp2 = ()=>{
                                 <td>
                                     <Input value={ele.Total} readOnly />
                                 </td>
-                                {data?.IsUseStoreInDet &&
+                                {settingData?.IsUseStoreInDet &&
                                     <td>
                                         <Select
                                             className="w-full" placeholder="-- غير محدد --"
@@ -142,7 +143,7 @@ const Comp2 = ()=>{
                                                 (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
                                             }
                                             options={myData?.dataSelects?.stores?.map(store =>{ return {value: store.StoreID, label: store?.StoreName, ...store}})}
-                                            disabled={data?.IsUseStoreInDet}
+                                            disabled={settingData?.IsUseStoreInDet}
                                         />
                                     </td>
                                 }

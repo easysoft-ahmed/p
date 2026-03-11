@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react"
 import { getAllStores } from "../../services/StoresApi"
-import { Select } from "antd"
+import { Modal, Select } from "antd"
+import { isF3Pressed } from "../../utlis/PressF3"
 
-export const SelectStores = ({currentValue, methodSelect})=>{
+export const SelectStores = ({currentValue, methodSelect , disabled = false})=>{
     let [data, setData] = useState(null)
     let [isLoading, setIsLoading] = useState(false)
-
+    let [isOpenModal, setIsOpenModal] = useState(false)
     let callApi = async()=>{
         setIsLoading(true)
         try {
@@ -23,10 +24,16 @@ export const SelectStores = ({currentValue, methodSelect})=>{
 
     return(
         <>
+            <Modal open={isOpenModal}>
+                Stores
+            </Modal>
             <Select
                 value={currentValue} // هذا السطر هو الذي يجعله "يختار" فعلياً ويظهر النص
                 onSelect={(_ , option) => methodSelect(option)} // تحديث الحالة عند التغيير
                 className="w-full" 
+                disabled={disabled}
+                showSearch
+                onKeyDown={(event) =>{ isF3Pressed(event) && setIsOpenModal(true)}}
                 notFoundContent={isLoading && !data ? "جاري البحث ..." : " لم يتم العثور على بيانات"}
                 options={data} fieldNames={{value: "StoreID", label: "StoreName"}}
             />

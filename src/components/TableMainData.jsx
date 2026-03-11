@@ -31,6 +31,9 @@ export   const getColumnSearchProps = (dataIndex, title, setNewData) => ({
           style={{ marginBottom: 8, display: 'block' }}
         />
         <Space>
+          <Button onClick={() => { setNewData && setNewData(null); clearFilters();}} size="small" style={{ width: 90 }}>
+            إعادة تعيين
+          </Button>
           <Button type="primary" onClick={async() => {
               if(setNewData){
                 let result = await getProductBySearch({
@@ -45,9 +48,6 @@ export   const getColumnSearchProps = (dataIndex, title, setNewData) => ({
               }
             }} size="small" style={{ width: 90 }}>
             بحث
-          </Button>
-          <Button onClick={() => { setNewData && setNewData(null); clearFilters();}} size="small" style={{ width: 90 }}>
-            إعادة تعيين
           </Button>
         </Space>
       </div>
@@ -92,7 +92,7 @@ const TableMainData = ({columns, URL, title, resultSearch})=>{
 
             <Spin spinning={myData === null ? true:false} fullscreen />
 
-            <Table dataSource={resultSearch || myDataOnSearch} columns={columns} />
+            <Table locale={{filterConfirm: "بحث", filterReset: 'إعادة تعيين'}} dataSource={resultSearch || myDataOnSearch} columns={columns} />
         </>
 
     )

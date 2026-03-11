@@ -4,10 +4,12 @@ import EditBtn from "../../../components/EditBtn";
 import TableMainData, { getColumnSearchProps } from "../../../components/TableMainData";
 import { getProductBySearch } from "../../../services/ProductsApi";
 import { useEffect, useState } from "react";
+import useCategories from "../../../hooks/useCategories";
 
 
 const Products = ()=>{
   let [newData, setNewData] = useState(null)
+  let {data} = useCategories();
     const columns = [
       {
         title: 'رقم الصنف',
@@ -37,7 +39,10 @@ const Products = ()=>{
       {
         title: 'التصنيف',
         dataIndex: 'CategoryName',
-        ...getColumnSearchProps('CategoryName', "التصنيف")
+        filters: data?.map(ele => { return {...ele, text: ele?.CategoryName, value: ele?.CategoryName}}) || [],
+        onFilter: (value, record) => record.CategoryName.startsWith(value),
+
+        // ...getColumnSearchProps('CategoryName', "التصنيف")
       },
       {
         title: 'المنشأ',

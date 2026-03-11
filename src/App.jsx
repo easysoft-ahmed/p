@@ -157,7 +157,8 @@ const ContentModel = ()=>{
 
 function App() {
   const dispatch = useDispatch();
-  const globalState = useSelector(state => state.global.value)
+  const globalState = useSelector(state => state.global.value);
+
   return (
     <>
 

@@ -10,7 +10,7 @@ const useStockSetting = ()=>{
     useEffect(()=>{
         handleGetSetting()
     }, [])
-    return {data}
+    return {settingData: data}
 }
 
 export default useStockSetting;

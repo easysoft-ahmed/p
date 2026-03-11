@@ -8,11 +8,14 @@ import { edit_global } from "../../../../../redux/stateGlobal";
 import { useEffect, useState } from "react";
 import useGet from "../../../../../hooks/useGet";
 import TreeProduct from "../../../../../components/TreeProduct";
+import useStockSetting from "../../../../../hooks/useStockSetting";
 
 const Comp2 = ()=>{
     let myData = useSelector(state => state.store_transform.value);
     let dispatch = useDispatch();
     const {F3} = useF3();
+    let {settingData} = useStockSetting();
+
     let changeValue = (eventOrValue, prop)=>{
         
         if(prop){
@@ -61,18 +64,21 @@ const Comp2 = ()=>{
                                     <Select
                                         className="w-full"
                                         value={ele.ProductName}
-                                        // value={ele.ProductName || ele.ProductID ? myData?.dataSelects?.products?.filter(product => product.ProductID == ele.ProductID)[0]?.Productname || "الصنف غير متوفر ربما تم حذفة" : ele.ProductID}                                    
+                                        // value={ele.ProductName || ele.ProductID ? myData?.dataSelects?.products?.filter(product => product.ProductID == ele.ProductID)[0]?.Productname || "الصنف غير متوفر ربما تم حذفة" : ele.ProductID} 
                                         onChange={(value, record) =>{
                                             let unitsGroup = [{value: record?.MainUnitId, label: record?.MainUnitName}];
                                             record?.SubUnitId &&  unitsGroup.push({value: record?.SubUnitId, label: record?.SubUnitName, })
                                             record?.UseUnitID && unitsGroup.push({value: record?.UseUnitID, label: record?.UseUnitName})
+                                        
+                                            if(settingData?.IsRepeatProd || !myData?.TransFormItems?.filter(ele => ele?.ProductID === record?.ProductID)[0]){
+                                                handleEditRow("TransFormItems", "edit", ele.fakeID,{
+                                                    ProductName: value, ProductID: record?.value, UnitID: record?.MainUnitId, StoreId: record?.StoreId,
+                                                    unitsGroup, Qty: 1, Price: record?.MainUnitPrice, Total: record?.MainUnitPrice * 1,
+                                                    record: {...record}
+                                                });
+                                            }
 
 
-                                            handleEditRow("TransFormItems", "edit", ele.fakeID,{
-                                                ProductName: value, ProductID: record?.value, UnitID: record?.MainUnitId, StoreId: record?.StoreId,
-                                                unitsGroup, Qty: 1, Price: record?.MainUnitPrice, Total: record?.MainUnitPrice * 1,
-                                                record: {...record}
-                                            });
                                         }}
                                         showSearch filterOption={(input, option) =>
                                             (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
