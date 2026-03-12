@@ -68,7 +68,7 @@ const Comp1 = ()=>{
 
                     <div className="input_label_basic pe-4 w-full lg:w-2/12">
                         <label htmlFor="">المخزن</label>
-                        <SelectStores disabled={data?.IsUseStoreInDet} currentValue={myData?.StoreId} methodSelect={value => changeValue(value?.StoreID, "StoreId")} />
+                        <SelectStores disabled={!data?.IsUseStoreInDet} currentValue={myData?.StoreId} methodSelect={value => changeValue(value?.StoreID, "StoreId")} />
                         {/* <Select
                             className="w-full"
                             showSearch

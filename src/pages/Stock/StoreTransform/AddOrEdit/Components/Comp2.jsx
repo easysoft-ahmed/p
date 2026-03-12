@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import useGet from "../../../../../hooks/useGet";
 import TreeProduct from "../../../../../components/TreeProduct";
 import useStockSetting from "../../../../../hooks/useStockSetting";
+import { SelectStores } from "../../../../../components/SelectDataApi/SelectStores";
 
 const Comp2 = ()=>{
     let myData = useSelector(state => state.store_transform.value);
@@ -121,7 +122,19 @@ const Comp2 = ()=>{
                                     onChange={(e) => handleEditRow("TransFormItems", "edit", ele.fakeID, {Qty: e.target.value })}/>
                             </td>
                             <td>
-                                <Select
+                                <SelectStores
+                                    currentValue={ele.StoreName || ele.StoreId ? myData?.dataSelects?.stores?.filter(store => store.StoreID == ele.StoreId)[0]?.StoreName || ele.StoreId : ""}
+                                    methodSelect={
+                                        (value) =>{
+                                            if(ele?.ToStoreId !== value?.StoreID  || value === undefined){
+                                                handleEditRow("TransFormItems", "edit", ele.fakeID , {StoreId: value?.StoreID, StoreName: value?.StoreName})
+                                            }
+                                        }
+                                    }
+                                />
+
+
+                                {/* <Select
                                     className="w-full"
                                     allowClear
                                     value={ele.StoreName || ele.StoreId ? myData?.dataSelects?.stores?.filter(store => store.StoreID == ele.StoreId)[0]?.StoreName || ele.StoreId : ""}
@@ -134,10 +147,21 @@ const Comp2 = ()=>{
                                         (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
                                     }
                                     options={myData?.dataSelects?.stores?.map(store =>{ return {value: store.StoreID, label: store.StoreName, ...store}})}
-                                />
+                                /> */}
                             </td>
                             <td>
-                                <Select
+                                <SelectStores
+                                    currentValue={ele.ToStoreName || ele.ToStoreId ? ele?.dataSelects?.stores?.filter(store => store.StoreID == ele.ToStoreId)[0]?.StoreName || ele.ToStoreId : ""}
+                                    methodSelect={
+                                        (value) =>{
+                                            if(ele?.StoreId !== value?.StoreID || value === undefined){
+                                                handleEditRow("TransFormItems", "edit", ele.fakeID , {ToStoreId: value?.StoreID, ToStoreName: value?.StoreName})
+                                            }
+                                        }
+                                    }
+                                />
+
+                                {/* <Select
                                     className="w-full"
                                     allowClear
                                     value={ele.ToStoreName || ele.ToStoreId ? ele?.dataSelects?.stores?.filter(store => store.StoreID == ele.ToStoreId)[0]?.StoreName || ele.ToStoreId : ""}
@@ -150,7 +174,7 @@ const Comp2 = ()=>{
                                         (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
                                     }
                                     options={myData?.dataSelects?.stores?.map(store =>{ return {value: store.StoreID, label: store.StoreName, ...store}})}
-                                />
+                                /> */}
                             </td>
                         </tr>
                     )}

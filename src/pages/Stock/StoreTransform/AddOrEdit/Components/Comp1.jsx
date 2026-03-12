@@ -10,6 +10,7 @@ import usePut from "../../../../../hooks/usePut";
 import { useState } from "react";
 import MessageRequest from "../../../../../components/MessageRequest";
 import ButtonPrintReportPage from "../../../../../components/PrintReport";
+import { SelectStores } from "../../../../../components/SelectDataApi/SelectStores";
 function genUniqueId() {
   return Math.random().toString(9).substring(2, 7);
 }
@@ -46,35 +47,30 @@ const Comp1 = ()=>{
 
                         <div className="input_label_basic pe-4 w-full lg:w-6/12">
                             <label htmlFor="">من مخزن</label>
-                            <Select className="w-full"
-                                allowClear
-                                value={myData.StoreName || myData.StoreId ? myData?.dataSelects?.stores?.filter(store => store.StoreID == myData.StoreId)[0]?.StoreName || myData.StoreId : ""}
-                                options={myData?.dataSelects?.stores?.map(store =>{ return {value: store.StoreID, label: store.StoreName, ...store}})}
-                                onChange={(value, record) =>{
-                                    if(myData.ToStoreId !== record?.StoreID || value === undefined){
-                                        dispatch(edit_store_transform({StoreId: record?.StoreID, StoreName: record?.StoreName}));
+                            <SelectStores
+                                currentValue={myData.StoreName || myData.StoreId ? myData?.dataSelects?.stores?.filter(store => store.StoreID == myData.StoreId)[0]?.StoreName || myData.StoreId : ""}
+                                methodSelect={
+                                    (value) =>{
+                                        if(myData.ToStoreId !== value?.StoreID || value === undefined){
+                                            dispatch(edit_store_transform({StoreId: value?.StoreID, StoreName: value?.StoreName}));
+                                        }
                                     }
-
-                                }}
+                                }
                             />
                         </div>
                         <div className="input_label_basic pe-4 w-full lg:w-6/12">
                             <label htmlFor="">الى مخزن</label>
-                            <Select
-                                className="w-full"
-                                allowClear
-                                value={myData.ToStoreName || myData.ToStoreId ? myData?.dataSelects?.stores?.filter(store => store.StoreID == myData.ToStoreId)[0]?.StoreName || myData.ToStoreId : ""}
-                                onChange={(value, record) =>{
-                                
-                                    if(myData.StoreId !== record?.StoreID || value === undefined){
-                                        dispatch(edit_store_transform({ToStoreId: record?.StoreID, ToStoreName: record?.StoreName}));
+                            <SelectStores
+                                currentValue={myData.ToStoreName || myData.ToStoreId ? myData?.dataSelects?.stores?.filter(store => store.StoreID == myData.ToStoreId)[0]?.StoreName || myData.ToStoreId : ""}
+                                methodSelect={
+                                    (value) =>{
+                                        if(myData.StoreId !== value?.StoreID || value === undefined){
+                                            dispatch(edit_store_transform({ToStoreId: value?.StoreID, ToStoreName: value?.StoreName}));
+                                        }
                                     }
-                                }}
-                                showSearch filterOption={(input, option) =>
-                                    (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
                                 }
-                                options={myData?.dataSelects?.stores?.map(store =>{ return {value: store.StoreID, label: store.StoreName, ...store}})}
                             />
+
                         </div>
                     </div>
                     

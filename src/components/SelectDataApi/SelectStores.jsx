@@ -1,7 +1,34 @@
 import { useEffect, useState } from "react"
 import { getAllStores } from "../../services/StoresApi"
-import { Modal, Select } from "antd"
+import { Modal, Select, Table } from "antd"
 import { isF3Pressed } from "../../utlis/PressF3"
+
+
+
+const TableStores = ({dataSource, selectMethod, closeModal})=>{
+    let columns = [
+        {
+            title: "كود المخزن",
+            dataIndex: "StoreID"
+        },
+        {
+            title: "اسم المخزن",
+            dataIndex: "StoreName"
+        },
+    ]
+    return(
+        <Table className="mt-5" columns={columns} dataSource={dataSource} 
+            onRow={(record, rowIndex) => {
+                return {
+                    onClick: (event) => {
+                        selectMethod(record);
+                        closeModal()
+                    },
+                };
+            }}
+        />
+    )
+}
 
 export const SelectStores = ({currentValue, methodSelect , disabled = false})=>{
     let [data, setData] = useState(null)
@@ -24,8 +51,8 @@ export const SelectStores = ({currentValue, methodSelect , disabled = false})=>{
 
     return(
         <>
-            <Modal open={isOpenModal}>
-                Stores
+            <Modal open={isOpenModal} title="جدول المخازن" footer={false}>
+                <TableStores dataSource={data} selectMethod={methodSelect} closeModal={() => setIsOpenModal(false)} />
             </Modal>
             <Select
                 value={currentValue} // هذا السطر هو الذي يجعله "يختار" فعلياً ويظهر النص
@@ -33,6 +60,7 @@ export const SelectStores = ({currentValue, methodSelect , disabled = false})=>{
                 className="w-full" 
                 disabled={disabled}
                 showSearch
+                allowClear
                 onKeyDown={(event) =>{ isF3Pressed(event) && setIsOpenModal(true)}}
                 notFoundContent={isLoading && !data ? "جاري البحث ..." : " لم يتم العثور على بيانات"}
                 options={data} fieldNames={{value: "StoreID", label: "StoreName"}}

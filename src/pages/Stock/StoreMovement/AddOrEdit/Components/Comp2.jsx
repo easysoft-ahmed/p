@@ -10,6 +10,7 @@ import useGet from "../../../../../hooks/useGet";
 import TreeProduct from "../../../../../components/TreeProduct";
 import useStockSetting from "../../../../../hooks/useStockSetting";
 import ProductBal from "../../../../../components/ProductBal";
+import { SelectStores } from "../../../../../components/SelectDataApi/SelectStores";
 
 const Comp2 = ()=>{
     let myData = useSelector(state => state.store_movement.value);
@@ -135,15 +136,12 @@ const Comp2 = ()=>{
                                 </td>
                                 {settingData?.IsUseStoreInDet &&
                                     <td>
-                                        <Select
-                                            className="w-full" placeholder="-- غير محدد --"
-                                            value={ele.StoreId ? myData?.dataSelects?.stores?.filter(store => store.StoreID == ele.StoreId)[0]?.StoreName || ele.StoreId : null}
-                                            onChange={(value) => handleEditRow("StockItems", "edit", ele.fakeID, {StoreId: value})}
-                                            showSearch filterOption={(input, option) =>
-                                                (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                                        <SelectStores
+                                            disabled={!settingData?.IsUseStoreInDet}
+                                            currentValue={ele.StoreId ? myData?.dataSelects?.stores?.filter(store => store.StoreID == ele.StoreId)[0]?.StoreName || ele.StoreId : null}
+                                            methodSelect={
+                                                (value) => handleEditRow("StockItems", "edit", ele.fakeID, {StoreId: value?.StoreID})
                                             }
-                                            options={myData?.dataSelects?.stores?.map(store =>{ return {value: store.StoreID, label: store?.StoreName, ...store}})}
-                                            disabled={settingData?.IsUseStoreInDet}
                                         />
                                     </td>
                                 }
